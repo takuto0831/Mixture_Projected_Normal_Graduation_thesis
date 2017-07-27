@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt]{jarticle}
+\documentclass[a4j,12pt]{jarticle}
 \setlength{\textwidth}{170mm}
 \setlength{\textheight}{260mm}
 \setlength{\oddsidemargin}{-5mm}
@@ -53,6 +53,8 @@
 %%%%%これ以下, 本文%%%%%
 
 \section{はじめに}
+
+現在、様々な分類手法が存在するが、
 
 \section{理論}
 
@@ -186,17 +188,20 @@ $m$人のユーザーと$n$個のアイテムを考える。ユーザの評価�
 
 $$ R \approx P  Q^T$$
 
-具体的な方法は行列$P,Q$を適当な乱数を発生させて、それを初期状態として更新していく確率的勾配降下を用いた最適化手法である。実際の評価値と近似式より計算される推定値の誤差を最も小さくすることで、実際の評価がない部分についても推定を行うことができる。結果を以下に示す。
+具体的な方法は行列$P,Q$を適当な乱数を発生させて、それを初期状態として更新していく確率的勾配降下を用いた最適化手法である。実際の評価値と近似式より計算される推定値の誤差を最も小さくすることで、実際の評価がない部分についても推定を行うことができる。結果を以下に示す。\cite{Kamo00}\cite{藤田12},
 
 \underline{Mean squared error :  0.883252}
 
 \addcontentsline{toc}{section}{参考文献} %目次に参考文献を入れる
+
+% 参考文献の書き方１
 \begin{thebibliography}{5}
 \bibitem{}  Anant Jaitha (2017). An Introduction to the Theory and Applications of Bayesian Networks 
 %\bibitem{}　
 \end{thebibliography}
 
-\newpage
-\section{付録}
+% 参考文献の書き方２
+\bibliographystyle{jplain}
+\bibliography{bunken}
 
 \end{document}
