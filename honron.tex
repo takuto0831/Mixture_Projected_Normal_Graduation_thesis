@@ -54,7 +54,7 @@
 
 \section{はじめに}
 
-現在、様々な分類手法が存在するが、
+現在、様々な分類手法が存在するが、その中でもグラフィカルモデルに興味を持った。
 
 \section{理論}
 
@@ -66,11 +66,15 @@
 
 \section{謝辞}
 
+塩濱先生、佐藤先生の多大な尽力もあり、この卒業論文を書き上げることができたと思います。また先生だけでなく院生の方々にも大変お世話になりました。
+
+%%%%%ここまで, 本文%%%%%
+
 ベイジアンネットワークの主な性質は以下の4つが挙げられる。
 
 グラフィカルモデル/有向かつ非巡回なグラフ/ナイーブベイズモデルの発展形/決定木モデルの特殊系
 
-ベイズの定理とベイズ推論に基づく、グラフィカルモデルである。ベイズの定理は式$(\ref{eq:eq1})$で表され、$H$はHypothesis、$E$はEvidence、$c$はbackground contextを意味する。ベイズの定理の重要な利用として chain ruleがあり式$(\ref{eq:eq2})$で表される。
+ベイズの定理とベイズ推論に基づく、グラフィカルモデルである。ベイズの定理は式$(\ref{eq:eq1})$で表され、$H$はHypothesis、$E$はEvidence、$c$はbackground contextを意味する。ベイズの定理の重要な利用として chain rule があり式$(\ref{eq:eq2})$で表される。
 
 \begin{equation}
 \label{eq:eq1}
@@ -139,7 +143,10 @@ I(X, Y | C) &=& H(X|C) - H(X|Y, C) \\
 
 \begin{eqnarray*}
 H(X) &=& - \sum_x p(x) \log p(x) \\
-H(X, C) &=& - \sum_x \sum_c p(x) p(c) \log p(x) \log p(c)
+H(X, Y) &=& - \sum_x \sum_c p(x) p(y) \log p(x) \log p(y)　\\
+H(X| Y) &=& - \int_x \int_y p(x, y) \log p(x| y) dx dy \\
+           &=& - \int_x \int_y p(x, y) \log p(x, y) dx dy + \int_x \int_y p(x, y) \log p(x) dx dy \\
+           &=& H[X, Y] - H[Y] 
 \end{eqnarray*}
 
 上記の例に対して条件付相互情報量を求める。結果を以下に示す。
