@@ -148,7 +148,24 @@ TAN 型のベイジアンネットワークを用いた分類器は, 各変数�
 
 TAN 型のベイジアンネットワークは Naive Bayes 型のベイジアンネットワークを元に, 関係性の強い説明変数について相互情報量をもとにリンクを与える. その際, 元のクラスラベルの値を条件とした条件付相互情報量を用いる. ここでは条件付相互情報量をTAN 構造の仮定の下で最大化する.
 
-まず KL情報量(相対エントロピー)~\cite{Meyer}について説明する. KL情報量は式(\ref{KL}) に示したように, 確率分布の近似に用いられる. Kl情報量が小さいほど二つの分布が近似していることを表し, $p(x) = q(x)$ となるときKL情報量は$0$となる.
+まず, エントロピーについて説明する. エントロピーは式(\ref{entropy})のように表され, 不確かさ(乱雑さ)の指標とされる. $p(x)$は各変数の取りうる値の出現確率を表している. 全ての確率が等しいとき($1/N)$, エントロピーは最大となり, $\log N$となる. あるひとつの値の確率が$1$となり, 他の全ての確率が$0$となるとき, エントロピーは最小となり, $0$である. 同様に結合エントロピー(式(\ref{jointentropy})), 条件付エントロピー, (式(\ref{conditionalentropy}))についても示しておく.
+
+\begin{eqnarray}
+\label{entropy}
+H(X) &=& - \int_x p(x) \log p(x) 
+\end{eqnarray}
+
+\begin{eqnarray}
+\label{jointentropy}
+H(X, Y) &=& - \int_x \int_y p(x) p(y) \log p(x) \log p(y) \\
+\label{conditionalentropy}
+H(X| Y) &=& - \int_x \int_y p(x, y) \log p(x| y) dx dy \nonumber \\
+           &=& - \int_x \int_y p(x, y) \log p(x, y) dx dy + \int_x \int_y p(x, y) \log p(x) dx dy \nonumber \\
+           &=& H(X, Y) - H(Y)
+\end{eqnarray}
+
+
+次に KL情報量(相対エントロピー)~\cite{Meyer}について説明する. KL情報量は式(\ref{KL}) に示したように, 確率分布の近似に用いられる. KL情報量が小さいほど二つの分布が近似していることを表し, $p(x) = q(x)$ となるときKL情報量は$0$となる.
 
 \begin{eqnarray}
 \label{KL}
@@ -156,31 +173,44 @@ KL(p(x) | q(x)) &=& - \int p(x) \log q(x) dx - \left(- \int p(x) \log p(x) dx \r
                     &=& - \int p(x) \log \frac{q(x)}{p(x)} dx
 \end{eqnarray}
 
+相互情報量と条件付相互情報量について以下のように定義する.
 
-
-\begin{eqnarray}
+\begin{eqnarray*}
 \mbox{相互情報量} &=& I(X, Y) \\
 \mbox{条件付相互情報量} &=& I(X, Y | C)
+\end{eqnarray*}
+
+ここで相互情報量と条件付相互情報量をKL情報量の式で表すと以下のように表せる. 相互情報量は$X$と$Y$の依存度を表している. 式(\ref{MI})より $X$と$Y$が独立のとき$p(x, y) = p(x) p(y)$となり, KL情報量の定義より $I(X, Y) = 0$となる. すなわち依存関係がある場合に相互情報量は大きくなる. 条件付相互情報量についても同様である. 
+
+\begin{eqnarray}
+\label{MI}
+I(X, Y) &=& KL(p(x, y) | p(x) q(x)) \nonumber \\
+          &=& - \int \int p(x, y) \log \frac{p(x, y)}{p(x) q(x)} dx dy 
 \end{eqnarray}
 
-ここで条件付相互情報量をエントロピーの式で表すと以下のように表せる。
+\begin{eqnarray}
+\label{CMI}
+I(X, Y | Z) &=&  KL(p(x, y| z) | p(x|z) q(x|z)) \nonumber \\
+              &=& - \int \int \int p(x, y, z) \log \frac{p(x, y|z)}{p(x|z) q(x|z)} dx dy dz \nonumber \\
+               &=& - \int \int \int p(x, y, z) \log p(x, y, z) dx dy dz  \nonumber \\
+                &&+ \int \int \int p(x, y, z) \log p(x| z) dx dy dz 
+\end{eqnarray}
 
-\begin{eqnarray*}
-I(X, Y | C) &=& H(X|C) - H(X|Y, C) \\
-               &=& H(X, C) + H(Y, C) - H(X, Y, C) - H(C)
-\end{eqnarray*}
+相互情報量と条件付相互情報量は, エントロピーの定義式(式(\ref{entropy}), 式(\ref{jointentropy}), 式(\ref{conditionalentropy}))を用いて置き換えることができる.  
 
-エントロピーは以下の式で求められる。$p(x)$は各変数の取りうる値の出現確率を表している。
+\begin{eqnarray}
+\label{MIentropy}
+I(X, Y) &=& H(X) - H(X|Y) \nonumber \\
+         &=& H(X) - H(X, Y) + H(Y)
+\end{eqnarray}
 
-\begin{eqnarray*}
-H(X) &=& - \sum_x p(x) \log p(x) \\
-H(X, Y) &=& - \sum_x \sum_c p(x) p(y) \log p(x) \log p(y)　\\
-H(X| Y) &=& - \int_x \int_y p(x, y) \log p(x| y) dx dy \\
-           &=& - \int_x \int_y p(x, y) \log p(x, y) dx dy + \int_x \int_y p(x, y) \log p(x) dx dy \\
-           &=& H[X, Y] - H[Y] 
-\end{eqnarray*}
+\begin{eqnarray}
+\label{CMIentropy}
+I(X, Y | Z) &=& H(X| Z) - H(X| Y, Z) \nonumber \\
+               &=& H(X, Z) + H(Y, Z) - H(X, Y, Z) - H(Z)
+\end{eqnarray}
 
-上記の例に対して条件付相互情報量を求める。結果を以下に示す。
+TAN 型のベイジアンネットワークでは式(\ref{CMIentropy})に示した, 条件付相互情報量の式を元に親ノード以外のノード間にリンクを与えている. パラメータ学習はナイーブベイズモデルと同様に,  訓練データから親ノードと各ノードの値を用いて条件付き確率を求める. 予測を行う際には, 各変数に値を与えてそれぞれ親ノードの値の確率を求め, それらの確率の総和で親ノードの値を決定する.
 
 \subsection{MDL基準}
 
@@ -270,8 +300,11 @@ user-No	&	age	&	gender	&	occupation	&	item-No	& rating \\ \hline \hline
 
 \subsection{実験結果}
 
+第2章で示した, Naive Bayes 型, TAN 型のベイジアンネットワークモデルを用いて, 予測を行う. TAN 型のベイジアンネットワークについては式(\ref{CMIentropy})を用いて, 関係性の強い変数を決定する. 変数として, age, gender, occupation, item.No を選んだ場合の条件付相互情報量を表(\ref{CMIsample})に示す.
+
 \begin{table}[H]
 \begin{center}
+\label{CMIsample}
 \caption{条件付相互情報量}
 \begin{tabular}{|c||c|c|c|c|} \hline  
 & age & gender & occupation & item.No \\ \hline \hline
@@ -283,14 +316,15 @@ item.No &  &  &  & 6.564 \\ \hline
 \end{center}
 \end{table}
 
-実際に有向辺を与える部分を太字で強調した. 表からわかるように (ocupation, item.No) 間のほうが値が大きいがここに線を引くと閉路ができてしまうのでその次に大きい値を用いていることがわかる.
+実際にリンクを与える部分を太字で強調した. 表からわかるように (ocupation, item.No) 間のほうが値が大きいがここに線を引くと閉路ができてしまうのでその次に大きい値を用いていることがわかる.
 
-これらの手順により相互情報量をもとに無向辺を与える. ここで相互情報量をもとに有向辺を与えることができないことに注意する. 有向辺を決定するのは上記の条件のうち2つ目を用いてベイジアンネットワークを構成する.
+これらの手順により相互情報量をもとに無向辺を与える. ここで相互情報量をもとに有向辺を与えることができないことに注意する. 有向辺を決定するのはTAN 型のベイジアンネットワークにおける条件を用いてベイジアンネットワークを構成する.
 
-前項で定めたグラフモデルをもとに, 全変数の取りうる値について条件付確率を求める. 一例を以下に示す. これらの条件付確率表(CPT)をもとにテストデータについて最も確率の高いレイティングを出力とする.
+前項で定めたグラフモデルをもとに, 全変数の取りうる値について条件付確率を求める. ここでも一例を表(\ref{CPTsample})に示す. これらの条件付確率表(CPT)をもとにテストデータについて最も確率の高いレイティングを出力とする.
 
 \begin{table}[H]
 \begin{center}
+\label{CPTsample}
 \caption{条件付確率表の例 (occupatin = executive)}
 \begin{tabular}{|c||c|c|c|c|c|} \hline  
 gender/rating & 1 & 2 & 3 & 4 & 5 \\ \hline \hline
@@ -299,6 +333,10 @@ M & 0.886 & 0.910 & 0.757 & 0.878 & 0.852 \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
+
+\subsubsection{性能評価}
+
+第2章で示した, Naive Bayes 型, TAN 型のベイジアンネットワークモデルを用いて, 予測を行う. 性能評価はMSEを用いた. 結果を表(\ref{modelmse})に示す.
 
 \begin{table}[H]
 \begin{center}
@@ -321,6 +359,8 @@ AdaBoost, バギングとの組み合わせを実装する. 以前読んだ論�
 
 \section{謝辞}
 %%%%%%%%書きましょう
+
+
 
 \newpage
 \addcontentsline{toc}{section}{参考文献} %目次に参考文献を入れる
