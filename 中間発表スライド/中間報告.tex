@@ -1,9 +1,10 @@
 \documentclass[dvipdfmx]{beamer}
 
-\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}} % x‚Ì•¶š‰»‚¯‚ğ§Œä(“ú–{Œê‚Ìê‡•K{)
-\setbeamertemplate{navigation symbols}{} %ƒiƒrƒQ[ƒVƒ‡ƒ“ƒo[‚ğÁ‚·
+\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}} % æ ã®æ–‡å­—åŒ–ã‘ã‚’åˆ¶å¾¡(æ—¥æœ¬èªã®å ´åˆå¿…é ˆ)
+\setbeamertemplate{navigation symbols}{} %ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ãƒãƒ¼ã‚’æ¶ˆã™
 
-%%% ˆÈ‰º3‚Â‚Íƒnƒ“ƒhƒAƒEƒgˆóü—p
+
+%%% ä»¥ä¸‹3ã¤ã¯ãƒãƒ³ãƒ‰ã‚¢ã‚¦ãƒˆå°åˆ·ç”¨
 %\documentclass[dvipdfm,handout]{beamer}
 %\usepackage{pgfpages}
 \usepackage{comment}
@@ -13,7 +14,7 @@
 %\pgfpagesuselayout{4 on 1}[border shrink=3mm]
 
 
-% •t˜^‚ğƒy[ƒW”Ô†‚ÉŠÜ‚ß‚È‚¢‚½‚ß‚ÌƒRƒ}ƒ“ƒh
+% ä»˜éŒ²ã‚’ãƒšãƒ¼ã‚¸ç•ªå·ã«å«ã‚ãªã„ãŸã‚ã®ã‚³ãƒãƒ³ãƒ‰
 \newcommand{\backupbegin}{
 \newcounter{framenumberappendix}
 \setcounter{framenumberappendix}{\value{framenumber}}
@@ -23,7 +24,7 @@
 \addtocounter{framenumber}{\value{framenumberappendix}}
 }
 
-%%% ƒƒCƒ“ƒe[ƒ}
+%%% ãƒ¡ã‚¤ãƒ³ãƒ†ãƒ¼ãƒ
 %\usetheme{Berkeley}
 %\usetheme{CambridgeUS}
 %\usetheme{Default}
@@ -43,7 +44,7 @@
 
 %\useoutertheme{default}
 
-%%% ƒJƒ‰[ƒe[ƒ}iÈ—ª‰Âj
+%%% ã‚«ãƒ©ãƒ¼ãƒ†ãƒ¼ãƒï¼ˆçœç•¥å¯ï¼‰
 \useoutertheme{infolines}
 \usecolortheme[RGB={64,64,64}]{structure}     
 %\definecolor{babyblue}{rgb}{0.54,0.81,0.94}                                                                                                
@@ -58,8 +59,8 @@
 %\usecolortheme{rose}
 %\usecolortheme{seahorse}
 
-%%% ƒtƒHƒ“ƒg
-\renewcommand{\kanjifamilydefault}{\gtdefault} % “ú–{ŒêƒtƒHƒ“ƒg‚ğƒSƒVƒbƒN
+%%% ãƒ•ã‚©ãƒ³ãƒˆ
+\renewcommand{\kanjifamilydefault}{\gtdefault} % æ—¥æœ¬èªãƒ•ã‚©ãƒ³ãƒˆã‚’ã‚´ã‚·ãƒƒã‚¯
 \usefonttheme[onlymath]{serif}
 \usefonttheme[onlylarge]{structurebold}
 %\usefonttheme{professionalfonts}
@@ -68,23 +69,22 @@
 \fontseries{\seriesdefault}
 \fontshape{\shapedefault}
 \selectfont
-%\mathversion{bold} % ”®ƒtƒHƒ“ƒg‚ğbold‘Ì
+%\mathversion{bold} % æ•°å¼ãƒ•ã‚©ãƒ³ãƒˆã‚’boldä½“
 
-%%% ƒCƒ“ƒi[, ƒAƒEƒ^[ƒe[ƒ}iÈ—ª‰Âj
+%%% ã‚¤ãƒ³ãƒŠãƒ¼, ã‚¢ã‚¦ã‚¿ãƒ¼ãƒ†ãƒ¼ãƒï¼ˆçœç•¥å¯ï¼‰
 %\useinnertheme{circles}
 %\useoutertheme{infolines}
 
-
-%\logo{\includegraphics[width=1.5cm, height=1.5cm]{.jpg}} % ƒƒS‚ğ‚¢‚ê‚é
-\setbeamertemplate{navigation symbols}{} % ƒiƒrƒQ[ƒVƒ‡ƒ“ƒo[‚È‚µ
-%\setbeamertemplate{background}[grid][step=5mm] % ”wŒiƒOƒŠƒbƒh
-\setbeamertemplate{footline}[frame number] % ƒy[ƒW”Ô†‚Ì•\¦
+%\logo{\includegraphics[width=1.5cm, height=1.5cm]{.jpg}} % ãƒ­ã‚´ã‚’ã„ã‚Œã‚‹
+\setbeamertemplate{navigation symbols}{} % ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ãƒãƒ¼ãªã—
+%\setbeamertemplate{background}[grid][step=5mm] % èƒŒæ™¯ã‚°ãƒªãƒƒãƒ‰
+\setbeamertemplate{footline}[frame number] % ãƒšãƒ¼ã‚¸ç•ªå·ã®è¡¨ç¤º
 \setbeamerfont{footline}{size=\small,series=\bfseries}
 \setbeamercolor{footline}{fg=black,bg=black}
-\setbeamertemplate{caption}[numbered] % }•\”Ô†‚Ì•\¦
-%\setbeamerfont*{frametitle}{size=\normalsize,series=\bfseries} % ƒtƒŒ[ƒ€•¶š‚Ì‘å‚«‚³
-\setbeamerfont*{frametitle}{size=\large,series=\bfseries} % ƒtƒŒ[ƒ€‚²‚Æ‚ÌƒtƒHƒ“ƒg‚ğİ’è•ÏX‚Å‚«‚éB
-\setbeamertemplate{frametitle}[default][center] % ƒ^ƒCƒgƒ‹‚ğ’†‰›Šñ‚¹‚Éİ’è•ÏX‚Å‚«‚éB
+\setbeamertemplate{caption}[numbered] % å›³è¡¨ç•ªå·ã®è¡¨ç¤º
+%\setbeamerfont*{frametitle}{size=\normalsize,series=\bfseries} % ãƒ•ãƒ¬ãƒ¼ãƒ æ–‡å­—ã®å¤§ãã•
+\setbeamerfont*{frametitle}{size=\large,series=\bfseries} % ãƒ•ãƒ¬ãƒ¼ãƒ ã”ã¨ã®ãƒ•ã‚©ãƒ³ãƒˆã‚’è¨­å®šå¤‰æ›´ã§ãã‚‹ã€‚
+\setbeamertemplate{frametitle}[default][center] % ã‚¿ã‚¤ãƒˆãƒ«ã‚’ä¸­å¤®å¯„ã›ã«è¨­å®šå¤‰æ›´ã§ãã‚‹ã€‚
 
 \definecolor {mycolor1} {rgb} {0.00, 0.39, 0.00}
 \definecolor {mycolor2} {rgb} {0.55, 0.27, 0.07}
@@ -93,13 +93,13 @@
 \definecolor {mycolorTitle} {rgb} {0.85, 0.855, 0.85}
 \definecolor {mycolorHeader} {rgb} {0.93, 0.935, 0.93}
 
-%ƒwƒbƒ_[‚Æƒ^ƒCƒgƒ‹‚ÌF(fg‚Å•¶š‚ÌF•Ï‚¦‚ç‚ê‚é)
+%ãƒ˜ãƒƒãƒ€ãƒ¼ã¨ã‚¿ã‚¤ãƒˆãƒ«ã®è‰²(fgã§æ–‡å­—ã®è‰²å¤‰ãˆã‚‰ã‚Œã‚‹)
 \setbeamercolor{frametitle}{bg = mycolorHeader}
 \setbeamercolor{title}{bg = mycolorTitle}
 
 \def\conpage{7}
 
-%%% ƒpƒbƒP[ƒW
+%%% ãƒ‘ãƒƒã‚±ãƒ¼ã‚¸
 \usepackage[japanese]{babel}
 \usepackage{inputenc}
 \usepackage{times}
@@ -127,15 +127,15 @@
 \newcommand{\mapright}[1]{\mathop{\longrightarrow}\limits_{#1}}
 \newcommand{\argmax}{\mathop{\rm argmax}\limits}
 
-\renewcommand{\figurename}{}}
-\renewcommand{\tablename}{•\}
+\renewcommand{\figurename}{å›³}
+\renewcommand{\tablename}{è¡¨}
 
 %%% Title, Author, etc.
-\title[ƒ^ƒCƒgƒ‹]{’†ŠÔ•ñ}
-%\subtitle[ƒTƒuƒ^ƒCƒgƒ‹]{}
-\author[”­•\Ò–¼]{‰–à_Œ¤‹†º\\¬’Ø‘ôl}
-\institute[Š‘®]{“Œ‹—‰È‘åŠw\ HŠw•”Œo‰cHŠw‰È4”N\\ŠwĞ”Ô† 4414036}
-\date[“ú•t]{2017”N9Œ28“ú}
+\title[ã‚¿ã‚¤ãƒˆãƒ«]{ä¸­é–“å ±å‘Š}
+%\subtitle[ã‚µãƒ–ã‚¿ã‚¤ãƒˆãƒ«]{}
+\author[ç™ºè¡¨è€…å]{å¡©æ¿±ç ”ç©¶å®¤\\å°åªç¢äºº}
+\institute[æ‰€å±]{æ±äº¬ç†ç§‘å¤§å­¦\ å·¥å­¦éƒ¨çµŒå–¶å·¥å­¦ç§‘4å¹´\\å­¦ç±ç•ªå· 4414036}
+\date[æ—¥ä»˜]{2017å¹´9æœˆ28æ—¥}
 
 \begin{document}
 
@@ -143,31 +143,36 @@
 \titlepage
 \end{frame}
 	
-\begin{frame}{–ÚŸ}
+\begin{frame}{ç›®æ¬¡}
 \tableofcontents
 \end{frame}
 
-\section{‚Ü‚Æ‚ß‚Æ¡Œã‚Ì‰Û‘è}
-\begin{frame}{‚Ü‚Æ‚ß‚Æ¡Œã‚Ì‰Û‘è}
-%Œ‹‰Ê‚Ì‚Ü‚Æ‚ß
+\section{ãƒ™ã‚¤ã‚¸ã‚¢ãƒ³ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ ã‚»ãƒŸãƒŠãƒ¼ã«ã¤ã„ã¦}
+\begin{frame}{ãƒ™ã‚¤ã‚¸ã‚¢ãƒ³ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ ã‚»ãƒŸãƒŠãƒ¼ã«ã¤ã„ã¦}
+ãƒ™ã‚¤ã‚¸ã‚¢ãƒ³ãƒãƒƒãƒˆãƒ¯ãƒ¼ã‚¯ã‚»ãƒŸãƒŠãƒ¼ã«ã¤ã„ã¦ç°¡å˜ã«èª¬æ˜ã™ã‚‹.
+\end{frame}
+
+\section{ã¾ã¨ã‚ã¨ä»Šå¾Œã®èª²é¡Œ}
+\begin{frame}{ã¾ã¨ã‚ã¨ä»Šå¾Œã®èª²é¡Œ}
+%çµæœã®ã¾ã¨ã‚
 \begin{itemize}
 \setlength{\itemsep}{0.5cm}
-\item %Œ»“_Š”‰¿‚Æ‚Ì‘ŠŠÖ‚ª‚‚¢ŒXŒü‚©‚çC
-ÀÛ‚ÌŠ”‰¿‚Æ‚Ì‘ŠŠÖ‚ª‚‚¢ŒXŒü‚É‚ ‚é‚½‚ßCŒ©’Ê‚µ‚É—\‘zPER‚ğ—p‚¢‚Äƒ|[ƒgƒtƒHƒŠƒI‚ğ\¬‚·‚é‚±‚Æ‚Åû‰v‚ªˆê”Ô‘å‚«‚­‚È‚Á‚½D
+\item %ç¾æ™‚ç‚¹æ ªä¾¡ã¨ã®ç›¸é–¢ãŒé«˜ã„å‚¾å‘ã‹ã‚‰ï¼Œ
+å®Ÿéš›ã®æ ªä¾¡ã¨ã®ç›¸é–¢ãŒé«˜ã„å‚¾å‘ã«ã‚ã‚‹ãŸã‚ï¼Œè¦‹é€šã—ã«äºˆæƒ³PERã‚’ç”¨ã„ã¦ãƒãƒ¼ãƒˆãƒ•ã‚©ãƒªã‚ªã‚’æ§‹æˆã™ã‚‹ã“ã¨ã§åç›ŠãŒä¸€ç•ªå¤§ãããªã£ãŸï¼
 
-%Œ©’Ê‚µ‚Ìƒf[ƒ^‚ÍŒ»“_Š”‰¿‚Æ‚Ì˜A“®«‚ª‹­‚¢‚½‚ßC
-\item ‚»‚ê‚¼‚ê‚ÌŒ©’Ê‚µ‚ğ‰Á‚¦‚½Black--Littermanƒ‚ƒfƒ‹‚Ìû‰v‚ª‚·‚×‚Äƒxƒ“ƒ`ƒ}[ƒN‚ğã‰ñ‚Á‚½D
-%—\‘zPER‚ÍŒ»“_‚ÌŠ”‰¿‚Æ‘ŠŠÖ‚ª‚‚¢‚½‚ß
+%è¦‹é€šã—ã®ãƒ‡ãƒ¼ã‚¿ã¯ç¾æ™‚ç‚¹æ ªä¾¡ã¨ã®é€£å‹•æ€§ãŒå¼·ã„ãŸã‚ï¼Œ
+\item ãã‚Œãã‚Œã®è¦‹é€šã—ã‚’åŠ ãˆãŸBlack--Littermanãƒ¢ãƒ‡ãƒ«ã®åç›ŠãŒã™ã¹ã¦ãƒ™ãƒ³ãƒãƒãƒ¼ã‚¯ã‚’ä¸Šå›ã£ãŸï¼
+%äºˆæƒ³PERã¯ç¾æ™‚ç‚¹ã®æ ªä¾¡ã¨ç›¸é–¢ãŒé«˜ã„ãŸã‚
 
-%\item %Œ©’Ê‚µ‚É‚æ‚Á‚ÄCû‰v‚ª‘å‚«‚­‚È‚éÅ—Ç‚ÈƒŠƒoƒ‰ƒ“ƒX•p“x‚ğŒ©‚Â‚¯‚é•K—v‚ª‚ ‚éD
+%\item %è¦‹é€šã—ã«ã‚ˆã£ã¦ï¼Œåç›ŠãŒå¤§ãããªã‚‹æœ€è‰¯ãªãƒªãƒãƒ©ãƒ³ã‚¹é »åº¦ã‚’è¦‹ã¤ã‘ã‚‹å¿…è¦ãŒã‚ã‚‹ï¼
 
-%\item Œ©’Ê‚µ‚É‚æ‚Á‚Äˆê”Ôû‰v‚ğ“¾‚ç‚ê‚éƒŠƒoƒ‰ƒ“ƒX‚Ì•p“x‚ğŒ©‚Â‚¯‚éD
+%\item è¦‹é€šã—ã«ã‚ˆã£ã¦ä¸€ç•ªåç›Šã‚’å¾—ã‚‰ã‚Œã‚‹ãƒªãƒãƒ©ãƒ³ã‚¹ã®é »åº¦ã‚’è¦‹ã¤ã‘ã‚‹ï¼
 
-\item Black--Littermanƒ‚ƒfƒ‹‚Å“¾‚ç‚ê‚½Œ‹‰Ê‚É‚¨‚¢‚ÄƒŠƒXƒN‚ÆƒŠƒ^[ƒ“‚ÌŠÖŒW«‚Í³‚Ì‘ŠŠÖ‚ğ‚ÂD
+\item Black--Littermanãƒ¢ãƒ‡ãƒ«ã§å¾—ã‚‰ã‚ŒãŸçµæœã«ãŠã„ã¦ãƒªã‚¹ã‚¯ã¨ãƒªã‚¿ãƒ¼ãƒ³ã®é–¢ä¿‚æ€§ã¯æ­£ã®ç›¸é–¢ã‚’æŒã¤ï¼
 %\end{itemize}
 %\vspace{1zh}
 
-\item ¡Œã‚Ì‰Û‘è‚Æ‚µ‚ÄC•ªÍŠúŠÔ‚Ì•ÏXCˆÙ‚È‚éƒf[ƒ^‚ğ—p‚¢‚Ä‚à“¯—l‚ÌŒ‹‰Ê‚ª“¾‚ç‚ê‚é‚©‚ÌŒŸØ‚ğ‚·‚é•K—v‚ª‚ ‚éD
+\item ä»Šå¾Œã®èª²é¡Œã¨ã—ã¦ï¼Œåˆ†ææœŸé–“ã®å¤‰æ›´ï¼Œç•°ãªã‚‹ãƒ‡ãƒ¼ã‚¿ã‚’ç”¨ã„ã¦ã‚‚åŒæ§˜ã®çµæœãŒå¾—ã‚‰ã‚Œã‚‹ã‹ã®æ¤œè¨¼ã‚’ã™ã‚‹å¿…è¦ãŒã‚ã‚‹ï¼
 \end{itemize}
 \end{frame}
 
