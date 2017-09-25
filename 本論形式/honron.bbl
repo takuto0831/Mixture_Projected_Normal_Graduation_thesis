@@ -1,0 +1,33 @@
+\begin{thebibliography}{1}
+
+\bibitem{MovieLens}
+{MovieLens}.
+\newblock {\url{http://movielens.org/}}.
+
+\bibitem{Bishop2}
+C.M. Bishop.
+\newblock パターン認識と機械学習　下.
+\newblock シュプリンガー・ジャパン, 2007.
+
+\bibitem{Bishop1}
+C.M. Bishop.
+\newblock パターン認識と機械学習　上.
+\newblock シュプリンガー・ジャパン, 2007.
+
+\bibitem{Koren}
+Y.~Koren, R.~Bell, and C.~Volinsky.
+\newblock Matrix factorization techniques for recommender systems.
+\newblock {\em Computer}, Vol.~42, No.~8, 2009.
+
+\bibitem{Meyer}
+Patrick~Emmanuel Meyer.
+\newblock {\em Information-Theoretic Variable Selection and Network Inference
+  from Microarray Data}.
+\newblock PhD thesis, Universite libre de Bruxelles.
+
+\bibitem{Friedman}
+N.Friedman, D.Geniger, and M.Goldszmidt.
+\newblock Bayesian network classifiers.
+\newblock {\em Machine Learning}, Vol.~29, pp. 131--163, 1997.
+
+\end{thebibliography}
