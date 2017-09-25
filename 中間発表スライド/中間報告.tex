@@ -152,6 +152,51 @@
 ベイジアンネットワークセミナーについて簡単に説明する.
 \end{frame}
 
+\begin{frame}{ベイジアンネットワークの問題点(1/2)}
+\begin{figure}[H]
+\begin{tabular}{c}
+\begin{minipage}{0.33\hsize}
+\begin{center}
+\includegraphics[clip, width = 3.5cm]{data/BN1.png}
+\end{center}
+\end{minipage}
+\begin{minipage}{0.33\hsize}
+\begin{center}
+\includegraphics[clip, width = 3.5cm]{data/BN2.png}
+\end{center}
+\end{minipage}
+\begin{minipage}{0.33\hsize}
+\begin{center}
+\includegraphics[clip, width = 3.5cm]{data/BN3.png}
+\end{center}
+\end{minipage}
+\end{tabular}
+\vspace{-0.5zh}
+\caption{ベイジアンネットワークの構造}
+\label{fig:BN}
+\end{figure}
+
+\begin{eqnarray}
+P(X) P(Y|X) P(Z|X) = P(Y) P(X|Y) P(Z|X) = P(Z) P(X|Z) P(Y|X) \nonumber 
+\end{eqnarray} 
+\begin{eqnarray}
+\vspace{-1zh}
+= \frac{P(Y, X) P(Z, X)}{P(X)} \nonumber
+\end{eqnarray} 
+\end{frame}
+
+
+\begin{frame}{ベイジアンネットワークの問題点(2/2)}
+上記のように構造が異なる場合でも, 定式化を行うと得られる確率値は等しくなる. 
+\end{frame}
+
+\section{因果構造について}
+\begin{frame}{因果構造について}
+
+\end{frame}
+
+
+
 \section{まとめと今後の課題}
 \begin{frame}{まとめと今後の課題}
 %結果のまとめ

@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2016.4.7)  25 SEP 2017 15:12
+This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2016.4.7)  25 SEP 2017 19:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1006,7 +1006,44 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 
 ] [3
 
-] [4
+]
+LaTeX Font Info:    Try loading font information for U+msa on input line 186.
+
+(c:/w32tex/share/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 186.
+
+(c:/w32tex/share/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 186.
+
+(c:/w32tex/share/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
+File: data/BN1.png Graphic file (type bmp)
+ <data/BN1.png>
+File: data/BN2.png Graphic file (type bmp)
+
+<data/BN2.png>
+File: data/BN3.png Graphic file (type bmp)
+ <data/BN3.png>
+Overfull \hbox (14.66689pt too wide) in paragraph at lines 186--186
+ [] 
+ []
+
+
+Overfull \vbox (5.53629pt too high) detected at line 186
+ []
+
+[4
+
+] [5
+
+] [6
+
+] [7
 
 ]
 \tf@nav=\write7
@@ -1018,22 +1055,22 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 \tf@snm=\write9
 \openout9 = `中間報告.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 179.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 179.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 224.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 224.
  (./中間報告.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 179.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 179.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 224.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 224.
 Package rerunfilecheck Info: File `中間報告.out' has not changed.
-(rerunfilecheck)             Checksum: FCEF888ABA9D8C4CB163805B614CC89F;155.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 179.
+(rerunfilecheck)             Checksum: 7D1DCC9D1DC96834C342BF3EE747CFFC;214.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 224.
  ) 
 Here is how much of TeX's memory you used:
- 17217 strings out of 493705
- 327194 string characters out of 6152319
- 408267 words of memory out of 5000000
- 20328 multiletter control sequences out of 15000+600000
- 31977 words of font info for 59 fonts, out of 8000000 for 9000
+ 17348 strings out of 493705
+ 329303 string characters out of 6152319
+ 409431 words of memory out of 5000000
+ 20429 multiletter control sequences out of 15000+600000
+ 46393 words of font info for 82 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  48i,11n,51p,390b,524s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on 中間報告.dvi (4 pages, 14780 bytes).
+Output written on 中間報告.dvi (7 pages, 21556 bytes).
