@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2016.4.7)  27 SEP 2017 17:03
+This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2016.4.7)  28 SEP 2017 02:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -742,7 +742,11 @@ LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\\' on input line 136.
 
-(./中間報告.aux)
+(./中間報告.aux
+
+LaTeX Warning: Label `TAN' multiply defined.
+
+)
 \openout1 = `中間報告.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 140.
@@ -763,11 +767,10 @@ LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 140.
 LaTeX Font Info:    ... okay on input line 140.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 140.
 LaTeX Font Info:    ... okay on input line 140.
- (I search kanjifont definition file: . . )
-(I search font definition file: . . . . . . . . )
+ (I search kanjifont definition file: . . ) (I search font definition file: .
+. . . . . . . )
 LaTeX Font Info:    Try loading font information for T1+phv on input line 140.
-
-(c:/w32tex/share/texmf-dist/tex/latex/psnfss/t1phv.fd
+ (c:/w32tex/share/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 *geometry* driver: auto-detecting
@@ -935,17 +938,24 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 ] [4
 
 ]
-LaTeX Font Info:    Try loading font information for U+msa on input line 204.
+File: data/forest1.png Graphic file (type bmp)
+ <data/forest1.png>
+Overfull \vbox (12.34811pt too high) detected at line 202
+ []
 
-(c:/w32tex/share/texmf-dist/tex/latex/amsfonts/umsa.fd
+[5
+
+]
+LaTeX Font Info:    Try loading font information for U+msa on input line 231.
+ (c:/w32tex/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 204.
+LaTeX Font Info:    Try loading font information for U+msb on input line 231.
 
 (c:/w32tex/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 204.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 231.
 
 (c:/w32tex/share/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
@@ -957,23 +967,25 @@ File: data/BN2.png Graphic file (type bmp)
 <data/BN2.png>
 File: data/BN3.png Graphic file (type bmp)
  <data/BN3.png>
-Overfull \hbox (14.66689pt too wide) in paragraph at lines 204--204
+Overfull \hbox (14.66689pt too wide) in paragraph at lines 231--231
  [] 
  []
 
-[5
-
-] [6
+[6
 
 ] [7
 
+] [8
+
 ]
 File: data/sample2.png Graphic file (type bmp)
- <data/sample2.png> [8
-
-] [9
+ <data/sample2.png> [9
 
 ] [10
+
+] [11
+
+] [12
 
 ]
 \tf@nav=\write7
@@ -985,21 +997,25 @@ File: data/sample2.png Graphic file (type bmp)
 \tf@snm=\write9
 \openout9 = `中間報告.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 282.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 282.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 300.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 300.
  (./中間報告.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 282.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 282.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 300.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 300.
 Package rerunfilecheck Info: File `中間報告.out' has not changed.
-(rerunfilecheck)             Checksum: EB3BD22B6C72845FFA3D1219A8790BF8;261.
+(rerunfilecheck)             Checksum: B54E01CEF403E3DAE0F87A4D4848F0CD;258.
+
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 17624 strings out of 493705
- 332407 string characters out of 6152319
- 415283 words of memory out of 5000000
- 20710 multiletter control sequences out of 15000+600000
+ 17636 strings out of 493705
+ 332645 string characters out of 6152319
+ 415365 words of memory out of 5000000
+ 20721 multiletter control sequences out of 15000+600000
  46393 words of font info for 82 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  48i,11n,54p,777b,527s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on 中間報告.dvi (10 pages, 29476 bytes).
+Output written on 中間報告.dvi (12 pages, 34200 bytes).
