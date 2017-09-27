@@ -147,12 +147,37 @@
 \tableofcontents
 \end{frame}
 
+\section{はじめに}
+\begin{frame}{はじめに}
+
+この夏に取り組んだことを概観する.
+
+\begin{itemize}
+
+\item paiza(アルゴリズムのプログラミングテスト)
+
+python のコーディングスキルとアルゴリズムを定式化する能力を向上する目的.
+
+\item kaggle(分析コンペ)
+
+ベイジアンネットワークを使って分析予測をしたいと思ったのですが, 映画のレイティングだとあまりいい効果が得られないので何かいいデータセットがないか探している.
+
+\item データ分析コンペティション
+
+某美容院のPOSデータを用いて分析する. あわよくばこれを卒論にしようと考えている. (運営団体からの許可はあります.)
+
+\end{itemize}
+\end{frame}
+
 \section{ベイジアンネットワーク セミナーについて}
 \begin{frame}{ベイジアンネットワーク セミナーについて}
 ベイジアンネットワークセミナーについて簡単に説明する.
 \end{frame}
 
 \begin{frame}{ベイジアンネットワークの問題点(1/2)}
+
+以下3つの構造から, 条件付確率を計算すると同様の結果が得られる. つまり, ベイジアンネットワークの方向に本質的意味がないという問題点.
+
 \begin{figure}[H]
 \begin{tabular}{c}
 \begin{minipage}{0.33\hsize}
@@ -176,18 +201,51 @@
 \label{fig:BN}
 \end{figure}
 
-\begin{eqnarray}
-P(X) P(Y|X) P(Z|X) = P(Y) P(X|Y) P(Z|X) = P(Z) P(X|Z) P(Y|X) \nonumber 
-\end{eqnarray} 
-\begin{eqnarray}
-\vspace{-1zh}
-= \frac{P(Y, X) P(Z, X)}{P(X)} \nonumber
-\end{eqnarray} 
 \end{frame}
 
 
 \begin{frame}{ベイジアンネットワークの問題点(2/2)}
-上記のように構造が異なる場合でも, 定式化を行うと得られる確率値は等しくなる. 
+
+前項で示した, ベイジアンネットワークの3つ構造をベイズの定理から定式化すると得られる確率値は等しくなる. 
+
+\begin{eqnarray}
+P(X) P(Y|X) P(Z|X) = P(Y) P(X|Y) P(Z|X) = P(Z) P(X|Z) P(Y|X) \nonumber 
+\end{eqnarray} 
+\vspace{-1.5zh}
+\begin{eqnarray}
+= \frac{P(Y, X) P(Z, X)}{P(X)} \nonumber
+\end{eqnarray} 
+
+
+\end{frame}
+
+\begin{frame}{条件付相互情報量}
+
+ベイジアンネットワークモデルの構造では条件付相互情報量を用いて, 関係性のあるノードを決定していたので, 因果関係に関する確認は行われていない. 
+
+\begin{eqnarray}
+\label{CMI}
+I(X, Y | Z)  &=&  KL(p(x, y| z) | p(x|z) q(x|z)) \nonumber \\
+               &=& - \int \int \int p(x, y, z) \log \frac{p(x, y|z)}{p(x|z) q(x|z)} dx dy dz \nonumber \\
+               &=& - \int \int \int p(x, y, z) \log p(x, y, z) dx dy dz  \nonumber \\
+               & & \hspace{0.5cm} + \int \int \int p(x, y, z) \log p(x| z) dx dy dz  \nonumber \\
+               &=& H(X| Z) - H(X| Y, Z) \nonumber \\
+               &=& H(X, Z) + H(Y, Z) - H(X, Y, Z) - H(Z)
+\end{eqnarray}
+\end{frame}
+
+\begin{frame}{ベイジアンネットワークによる予測}
+
+
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=80mm]{data/sample2.png}
+\caption{Tree Augmented Naive Bayes}
+\label{TAN}
+\end{center}
+\end{figure}
+
 \end{frame}
 
 \section{因果構造について}

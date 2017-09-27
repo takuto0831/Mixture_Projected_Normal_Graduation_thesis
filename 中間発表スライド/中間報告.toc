@@ -1,4 +1,5 @@
 \select@language {japanese}
-\beamer@sectionintoc {1}{ベイジアンネットワーク セミナーについて}{3}{0}{1}
-\beamer@sectionintoc {2}{因果構造について}{6}{0}{2}
-\beamer@sectionintoc {3}{まとめと今後の課題}{7}{0}{3}
+\beamer@sectionintoc {1}{はじめに}{3}{0}{1}
+\beamer@sectionintoc {2}{ベイジアンネットワーク セミナーについて}{4}{0}{2}
+\beamer@sectionintoc {3}{因果構造について}{9}{0}{3}
+\beamer@sectionintoc {4}{まとめと今後の課題}{10}{0}{4}

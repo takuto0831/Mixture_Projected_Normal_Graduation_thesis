@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2016.4.7)  20 SEP 2017 14:55
+This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2016.4.7)  27 SEP 2017 16:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -201,7 +201,7 @@ File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
-(c:/w32tex/share/texmf-dist/tex/latex/listings/jlisting.sty
+(c:/w32tex/share/texmf-local/tex/latex/jlisting/jlisting/jlisting.sty
 Package: jlisting 2006/02/20 0.2 (Thor)
 \lst@nextchar=\count113
 \lst@inputfile=\read1
@@ -247,27 +247,22 @@ LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <14.4> not available
 (Font)              Font shape `JT1/gt/m/n' tried instead on input line 48.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <14.4> not available
 (Font)              Font shape `JY1/gt/m/n' tried instead on input line 48.
- (./honron.toc
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 1.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 1.
-)
+
+No file honron.toc.
 \tf@toc=\write4
 \openout4 = `honron.toc'.
-
 
 (./honron.lof)
 \tf@lof=\write5
 \openout5 = `honron.lof'.
 
- (./honron.lot [1
-
-])
+ (./honron.lot)
 \tf@lot=\write6
 \openout6 = `honron.lot'.
 
- [2]
+ [1
+
+]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <12> not available
 (Font)              Font shape `JT1/gt/m/n' tried instead on input line 76.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
@@ -275,6 +270,10 @@ LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
  [1
 
 ]
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 114.
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 114.
 File: data/sample1.png Graphic file (type bmp)
  <data/sample1.png> [2]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 133.
@@ -300,17 +299,14 @@ LaTeX Font Warning: Font shape `JY1/gt/m/it' undefined
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 3176 strings out of 493705
- 41861 string characters out of 6152319
- 112698 words of memory out of 5000000
+ 3175 strings out of 493705
+ 41915 string characters out of 6152319
+ 112697 words of memory out of 5000000
  6651 multiletter control sequences out of 15000+600000
  23380 words of font info for 91 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  27i,11n,32p,669b,314s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on honron.dvi (12 pages, 37572 bytes).
+Output written on honron.dvi (11 pages, 33832 bytes).
