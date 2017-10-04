@@ -110,6 +110,7 @@
 \usepackage{hyperref}
 \usepackage{algorithm,algorithmic}
 \usepackage{ascmac}
+
 %\usepackage{txfonts}
 \usepackage{color}
 %\usepackage{algpseudocode,algorithm}
@@ -117,6 +118,27 @@
 %\usetikzlibrary{arrows}
 %\tikzstyle{block}=[fill=blue,draw opacity=0.7,line width=1.4cm]
 
+\usepackage{listings,jlisting}
+
+\lstset{%
+  language={R},
+  basicstyle={\small},%
+  identifierstyle={\small},%
+  commentstyle={\small\itshape},%
+  keywordstyle={\small\bfseries},%
+  ndkeywordstyle={\small},%
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},%
+  numbers=left,%
+  xrightmargin=0zw,%
+  xleftmargin=3zw,%
+  numberstyle={\scriptsize},%
+  stepnumber=1,
+  numbersep=1zw,%
+  lineskip=-0.5ex%
+}
 %  \makeatletter
 %    \renewcommand{\thealgorithm}{%
 %    \thesection.\arabic{algorithm}}
@@ -150,22 +172,75 @@
 \section{背景}
 \begin{frame}{背景}
 
+ベイジアンネットワークについて調べている中で, 因果推論というテーマに興味を持ちました.
+機械学習や人工知能などかっこいい話はたくさんあるけれど, まず着目する事象の関係性を考えることが重要に思いました.
+
 \end{frame}
 
 \section{手法}
 \begin{frame}{手法}
 
+LiNGAM(Linear non-Gaussian Acyclic Models)と呼ばれる因果的構造モデル.
+
+\end{frame}
+
+\section{実験}
+\begin{frame}[containsverbatim]{実験(1/2)}
+
+$eps1, eps2$は外生変数と呼ばれ, ランダムに生成する. 外生変数をもとに$x1,x2$を順次決定する. この時$x2$を内生変数と呼ぶ.
+
+\begin{lstlisting}[caption = LiNGAMの実行例1]
+set.seed(4414)
+n <- 500
+# 外生変数
+eps1 <- sign((rnorm(n))) * sqrt(abs(rnorm(n))) 
+eps2 <- runif(n) - 0.5
+# x1は内生変数
+x2 <- 3 + eps2
+x1 <- 0.9 * x2 + 7 + eps1
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[containsverbatim]{実験(2/2)}
+
+$eps1, eps2, eps3, eps4$は外生変数と呼ばれ, ランダムに生成する. 外生変数をもとに$x2,x1,x3,x4$を順次決定する. この時$x1,x2,x3$を内生変数と呼ぶ.
+
+\begin{lstlisting}[caption = LiNGAMの実行例2]
+set.seed(4414)
+n <- 500 
+eps1 <- sign(rnorm(n)) * sqrt(abs(rnorm(n))) 
+eps2 <- runif(n) - 0.5 
+eps3 <- sign(rnorm(n)) * abs(rnorm(n))^(1/3) 
+eps4 <- rnorm(n)^2
+
+x2 <- eps2 
+x1 <- 0.9*x2 + eps1 
+x3 <- 0.8*x2 + eps3 
+x4 <- -x1 -0.9*x3 + eps4
+\end{lstlisting}
+
 \end{frame}
 
 \section{結果}
 \begin{frame}{結果}
-
+実験1では$x2$が$x1$の関数であることを特定し, 実験2では$x1,x2,x3,x4$の因果関係を正しく判断することができた.
 \end{frame}
 
 \section{考察}
 \begin{frame}{考察}
+実験１において, 相関係数を調べると$0.245$となる.
+相関はないのに, 因果関係を見抜いている？？
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[clip,width=35mm]{data/sam1.png}
+\caption{x1,x2の散布図, 回帰直線}
+\end{center}
+\end{figure}
 
 \end{frame}
+
 
 \section{結論}
 \begin{frame}{結論}
