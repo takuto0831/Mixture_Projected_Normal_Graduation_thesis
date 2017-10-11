@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2016.4.7)  11 OCT 2017 16:23
+This is e-pTeX, Version 3.14159265-p3.7-160201-2.6 (utf8.sjis) (TeX Live 2016/W32TeX) (preloaded format=platex 2016.4.7)  11 OCT 2017 23:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -201,7 +201,7 @@ File: listings.cfg 2015/06/04 1.6 listings configuration
 ))
 Package: listings 2015/06/04 1.6 (Carsten Heinz)
 
-(c:/w32tex/share/texmf-dist/tex/latex/listings/jlisting.sty
+(c:/w32tex/share/texmf-local/tex/latex/jlisting/jlisting/jlisting.sty
 Package: jlisting 2006/02/20 0.2 (Thor)
 \lst@nextchar=\count113
 \lst@inputfile=\read1
@@ -302,8 +302,8 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 3176 strings out of 493705
- 41861 string characters out of 6152319
+ 3177 strings out of 493705
+ 41937 string characters out of 6152319
  112697 words of memory out of 5000000
  6651 multiletter control sequences out of 15000+600000
  23380 words of font info for 91 fonts, out of 8000000 for 9000
