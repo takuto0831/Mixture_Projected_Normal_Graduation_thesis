@@ -3,7 +3,7 @@
 \contentsline {subsection}{\numberline {2.1}ベイジアンネットワーク}{1}
 \contentsline {subsubsection}{\numberline {2.1.1}Naive Bayes}{2}
 \contentsline {subsubsection}{\numberline {2.1.2}Tree Augmented Naive Bayes (TAN)}{3}
-\contentsline {subsection}{\numberline {2.2}MDL基準}{5}
+\contentsline {subsection}{\numberline {2.2}統計的因果推論}{5}
 \contentsline {section}{\numberline {3}関連手法}{5}
 \contentsline {subsection}{\numberline {3.1}Matrix Factorization}{5}
 \contentsline {section}{\numberline {4}評価実験}{6}
