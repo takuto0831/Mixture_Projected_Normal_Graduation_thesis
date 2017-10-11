@@ -1,0 +1,125 @@
+\documentclass[a4j,11pt]{jarticle}
+\usepackage[dviout]{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{ascmac}
+%\usepackage{epsbox}
+\usepackage{float}
+\usepackage{graphics}
+\usepackage{here}
+\usepackage{lscape}
+\usepackage{latexsym}
+\usepackage{pifont}
+\usepackage{wrapfig}
+\usepackage{type1cm}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{txfonts}
+\usepackage{bm}
+\usepackage[dviout]{graphicx}
+\usepackage{comment}
+
+\bibliographystyle{apalike}
+%\setlength{\voffset}{-25.4mm}
+\setlength{\topmargin}{-17.5mm}   %トップとヘッダの間隔
+%\setlength{\headheight}{20mm}   %ヘッダの高さ
+%\setlength{\headsep}{0mm}   %ヘッダとテキストの間隔
+\setlength{\textwidth}{45zw}   %テキストの幅
+\setlength{\hoffset}{-10mm}
+\setlength{\textheight}{45\baselineskip}   %テキストの高さ
+%\addtolength{\textheight}{\topskip}
+%\setlength{\footskip}{0mm}
+%\setlength{\oddsidemargin}{21.5mm}   %サイドとテキストの間隔（奇数ページ）
+%\setlength{\evensidemargin}{21.5mm}   %サイドとテキストの間隔（偶数ページ）
+\pagestyle{empty}   %ページ番号なし
+\newcommand{\g}[1]{\boldsymbol{#1}}
+\newcommand{\lw}[1]{\smash{\lower2.0ex\hbox{#1}}}
+\renewcommand{\baselinestretch}{1.0}
+
+\makeatletter
+\def\theequation{\arabic{equation}}   %数式番号を(章.式)形式
+\@addtoreset{equation}{section}
+%\def\thefigure{\thesection.\arabic{figure}}   %図番号を(章.図)形式
+%\@addtoreset{figure}{section}
+%\def\thetable{\thesection.\arabic{table}}   %表番号を(章.表)形式
+%\@addtoreset{table}{section}
+\def\tr{\mathop{\operator@font tr}\nolimits}
+\def\grad{\mathop{\operator@font grad}\nolimits}
+\def\St{\mathop{\operator@font St}\nolimits}
+\def\Hess{\mathop{\operator@font Hess}\nolimits}
+\def\D{\mathop{\operator@font D}\nolimits}
+\def\sym{\mathop{\operator@font sym}\nolimits}
+\def\s.t.{\mathop{\operator@font s.t.}\nolimits}
+\def\diag{\mathop{\operator@font diag}\nolimits}
+\def\section{\@startsection{section}{1}{\z@}
+   {0.8\Cvs \@plus.5\Cdp \@minus.2\Cdp}
+   {0.2\Cvs \@plus.3\Cdp}
+   {\normalfont \Large \bfseries}}
+\makeatother
+\makeatletter
+\def\subsection{\@startsection{subsection}{1}{\z@}
+   {0.8\Cvs \@plus.5\Cdp \@minus.2\Cdp}
+   {0.2\Cvs \@plus.3\Cdp}
+   {\normalfont \normalsize \bfseries}}
+\makeatother
+\makeatletter
+\newcommand{\figcaption}[1]{\def\@captype{figure}\caption{#1}}
+\newcommand{\tblcaption}[1]{\def\@captype{table}\caption{#1}}
+\makeatother
+\begin{document}
+\begin{center}
+{\Large \textbf{ベイジアンネットワークによる予測モデル}}
+\end{center}
+\begin{flushright}
+小坪 琢人（塩濱 敬之准教授，佐藤 寛之助教）
+\end{flushright}
+\vspace{-3zw}
+
+%%%%%これ以下, 本文%%%%%
+
+\section{はじめに}
+\vspace{-0.6zh}
+現在, 様々な分野で機械学習やディープラーニングが用いられている. その中で自動化というものが大きなテーマであり, 「今後自動化される仕事」のようなニュースも増えている. しかし, マシンの進化により失われる仕事があるのなら, 生まれる新しい仕事も当然存在する. これから生まれる仕事, 必要になる仕事を考えるためには, まず機械学習やディープラーニングでどのようなことができるのかを知る必要がある. 
+
+自動化の問題点としては, 分析やシュミレーションの実態が見えにくくなるという点である. 機械がある種のブラックボックスとなり, 都合よく利用されてしまう可能性がある. 人間が生活していくうえで, 重要視されるのは効率性よりも人間らしい判断である. その中で機械による効率的な自動化は, 意思決定に不信感をもたらす危険性を持っている.
+
+それらを解決する方法として, 可視化というものが存在する. グラフやプロットにより数値的根拠を明らかにすることで, ブラックボックス化を防ぐことができる. 一般に可視化は得られた結果の解釈の手助けとして用いられているが, モデル自体が視覚的に解釈できるものも存在する. 例としては決定木やグラフィカルモデルなどである. 本論文ではこのグラフィカルモデルについて取り上げる. 
+
+%%% グラフィカルモデルの本読んでもう少し書くよ
+%%% 因果関係のことどこにいれる？？
+
+グラフィカルモデルは以下のような特徴を持つ.~\cite{Bishop1}~\cite{Bishop2}
+
+\begin{enumerate}
+
+\item 確率モデルの構造を視覚化する簡単な方法を提供し, 新しいモデルの設計方針を決めるのに役立つ.
+
+\item グラフの構造を調べることにより, 条件付独立性などのモデルの性質に関する知見が得られる.
+
+\item 精巧なモデルにおいて推論や学習を実行するためには複雑な計算が必要となるが, これを数学的な表現で暗に伴うグラフ上の操作として表現することができる.
+
+\end{enumerate}
+
+グラフはリンク(link)によって接続されたノード(node)の集合からなる. 確率的グラフィカルモデルでは, 各ノードが確率変数を, リンクがこれらの変数間の確率的関係を表現する. 本論では有向グラフィカルとも呼ばれる, ベイジアンネットワーク(Bayesian network)を用いた分類モデルについて議論する.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{-1.6zh}
+\section{最適化理論}
+\vspace{-0.5zh}
+\subsection{多様体上の最適化}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+\addcontentsline{toc}{section}{参考文献} %目次に参考文献を入れる
+
+%必要になる
+%\newpage
+%\section{付録}
+
+%参考文献を引用する際に必要なコマンド
+\bibliographystyle{jplain}
+\bibliography{bunken}
+
+\end{document}
