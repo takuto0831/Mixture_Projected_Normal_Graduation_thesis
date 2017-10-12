@@ -18,6 +18,8 @@
 \usepackage{bm}
 \usepackage[dviout]{graphicx}
 \usepackage{comment}
+\usepackage{url}
+\usepackage{natbib}
 
 %\bibliographystyle{apalike} %いらない
 %\setlength{\voffset}{-25.4mm}
@@ -67,6 +69,8 @@
 \newcommand{\tblcaption}[1]{\def\@captype{table}\caption{#1}}
 \makeatother
 \begin{document}
+
+\bibliographystyle{jecon}
 \begin{center}
 {\Large \textbf{ベイジアンネットワークによる予測モデル}}
 \end{center}
@@ -88,7 +92,7 @@
 %%% グラフィカルモデルの本読んでもう少し書くよ
 %%% 因果関係のことどこにいれる？？
 
-グラフィカルモデルは以下のような特徴を持つ.~\cite{Bishop1}~\cite{Bishop2}
+グラフィカルモデルは以下のような特徴を持つ.\citet{Bishop2}
 
 \begin{enumerate}
 
@@ -103,12 +107,69 @@
 グラフはリンク(link)によって接続されたノード(node)の集合からなる. 確率的グラフィカルモデルでは, 各ノードが確率変数を, リンクがこれらの変数間の確率的関係を表現する. 本論では有向グラフィカルとも呼ばれる, ベイジアンネットワーク(Bayesian network)を用いた分類モデルについて議論する.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\vspace{-1.6zh}
-\section{最適化理論}
-\vspace{-0.5zh}
-\subsection{多様体上の最適化}
 
+\section{理論}
 
+\subsection{ベイジアンネットワーク}
+
+ベイジアンネットワークは, 確率変数間の条件付依存関係を表した非循環型有向グラフ(DAG: Directed Acyclic Graph)で, 各種推論などに用いられる. 各ノードは確率変数を表し, 有向辺は変数間の直接の依存関係を表す. 一般には各変数は離散値を取るが, 閾値を定めて離散値に変換すれば連続値にも適用可能である. ベイジアンネットワークでは, リンクの先にあるノードを子ノード$(X_j)$, リンクの元にあるノードを親ノード$(X_i)$と呼ぶ. 親ノードが複数あるとき子ノード$X_j$の親ノードの集合を$Pa(X_j)$と書くことにする. $X_j$と$Pa(X_j)$の間の依存関係は次の条件付確率によって表される. ただし$Pa(X_j)$が空集合の時, $X_j$はベイジアンネットワークの始点であるので, 事前確率分布($P(X_j))$となる.
+
+\begin{eqnarray}
+\label{eq1}
+P(X_j | Pa(X_j)) = \frac{P(X_j, Pa(X_j))}{P(Pa(X_j))} 
+\end{eqnarray}
+
+さらに$n$個の確率変数$X_1, \dots, X_n$のそれぞれを子ノードとして同様に考えると, 全ての確率変数の同時確率分布は式(\ref{eq2})のように表せる.
+
+\begin{eqnarray}
+\label{eq2}
+P(X_1, \dots, X_n) = \prod_{j=1}^n P(X_j | Pa(X_j))
+\end{eqnarray}
+
+上記の式(\ref{eq1})に基づいて, 各ノードについて条件付確率を求めた表を条件付確率表(CPT)といい, 各行の和は必ず$1$になる. 任意の子ノードはそのノードの親ノードのいずれかに起因するので総和は$1$となる (親ノード集合に含まれていないノードを条件とした条件付確率は$0$となる). 条件付確率表の例を表(\ref{cpt})に示す. 
+
+\begin{table}[H]
+\begin{center}
+\caption{条件付確率表（CPT）}   %キャプション
+\label{cpt}   %ラベル
+\begin{tabular}{|c||c|c|c|}   %{}で文字の揃え方を指定
+\hline
+ & $Pa(X_{j})=x_{1}$ & \dots & $Pa(X_{j})=x_{m}$
+\\ \hline
+$X_j=y_1$ & $p(y_1|Pa(X_j)=x_1)$ & \dots & $p(y_1|Pa(X_j)=x_m)$
+\\ \hline
+$\vdots$ & $\vdots$ & $\ddots$ & $\vdots$
+\\ \hline
+$X_j=y_n$ & $ p(y_n|Pa(X_j)=x_1)$ & \dots & $p(y_n|Pa(X_j)=x_m)$
+\\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\section{数値実験}
+
+本研究では, GroupLensプロジェクトによる公開データセット MovieLens\citet{MovieLens} の一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個のレーティングデータ, 簡単なユーザ情報, コンテンツ情報から構成されている. レーティングデータは, 1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個のレーティングを持っている. ユーザ情報, コンテンツ情報について表(\ref{MovieLens})にまとめる. 
+
+\begin{table}[H]
+\begin{center}
+\caption{ユーザ情報およびコンテンツ情報}   %キャプション
+\label{MovieLens}   %ラベル
+\begin{tabular}{c l}
+\hline
+映画ジャンル & unknown, Action, Adventure, Animation, Children's, Comedy, Crime, \\
+                 & Documentary, Drama, Fantasy, Film-Noir, Horror, Musical, Mystery, \\
+                 & Romance, Sci-Fi, Thriller, War, Western \\
+職業          & administrator, artist, doctor, educator, engineer, entertainment, executive, \\
+                & healthcare, homemaker, lawyer, librarian, marketing, none, other, programmer, \\
+                & retired, salesman, scientist, student, technician, writer \\
+年齢 & 5歳ごとに分割 or 10歳ごとに分割 \\
+性別 & male, female\\ 
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\section{まとめ}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newpage

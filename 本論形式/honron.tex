@@ -13,6 +13,8 @@
 \usepackage{comment}
 \usepackage{listings,jlisting}
 \usepackage{url}
+\usepackage{natbib}
+%\usepackage[options]{natbib}
 
 \newtheorem{theo}{定理}[section]
 \newtheorem{defi}{定義}[section]
@@ -42,6 +44,8 @@
 \setlength{\oddsidemargin}{0mm}   %余白
 
 \begin{document}
+\bibliographystyle{jecon}
+
 \maketitle   %タイトルを付ける
 \setlength{\baselineskip}{20pt}   %行間幅
 \pagenumbering{roman}   %目次ページ番号のスタイル
@@ -65,7 +69,7 @@
 %%% グラフィカルモデルの本読んでもう少し書くよ
 %%% 因果関係のことどこにいれる？？
 
-グラフィカルモデルは以下のような特徴を持つ.~\cite{Bishop1}~\cite{Bishop2}
+グラフィカルモデルは以下のような特徴を持つ.\citep{Bishop2}
 
 \begin{enumerate}
 
@@ -137,7 +141,7 @@ Naive Bayes 型のベイジアンネットワークは, 親ノード以外のノ
 
 \subsubsection{Tree Augmented Naive Bayes (TAN)}
 
-TANは, 親ノード以外のノード間が条件付独立であるという Naive Bayes の制約を少し緩めたもので, 子ノード間にも以下に示す条件の下でリンクを与えることができる.~\cite{Friedman}
+TANは, 親ノード以外のノード間が条件付独立であるという Naive Bayes の制約を少し緩めたもので, 子ノード間にも以下に示す条件の下でリンクを与えることができる.\citep{Friedman}
 
 \begin{itemize}
 \item 木構造であること
@@ -177,7 +181,7 @@ H(X| Y) &=& - \int_x \int_y p(x, y) \log p(x| y) dx dy \nonumber \\
 \end{eqnarray}
 
 
-次に KL情報量(相対エントロピー)~\cite{Meyer}について説明する. KL情報量は式(\ref{KL}) に示したように, 確率分布の近似に用いられる. KL情報量が小さいほど二つの分布が近似していることを表し, $p(x) = q(x)$ となるときKL情報量は$0$となる.
+次に KL情報量(相対エントロピー)\citep{Meyer}について説明する. KL情報量は式(\ref{KL}) に示したように, 確率分布の近似に用いられる. KL情報量が小さいほど二つの分布が近似していることを表し, $p(x) = q(x)$ となるときKL情報量は$0$となる.
 
 \begin{eqnarray}
 \label{KL}
@@ -226,7 +230,7 @@ TAN 型のベイジアンネットワークでは式(\ref{CMIentropy})に示し�
 
 \subsection{統計的因果推論}
 
-
+統計的因果推論は, 因果関係をデータから推測する方法論である.\citep{清水昌平} 
 
 %%%%%%%% ここ消す%%%%%%%%%%%%%%%
 
@@ -234,7 +238,7 @@ TAN 型のベイジアンネットワークでは式(\ref{CMIentropy})に示し�
 
 \subsection{Matrix Factorization}
 
-この手法は協調フィルタリングにおいて次元削減を実現手法である. 協調フィルタリングとはユーザーのレビューをもとに, 同様の評価パターンを持つユーザー同士のデータをもとにまだ評価していない（本質的にはまだ知らない）アイテムに対しても同様の評価をするだろうと推定するものである. Matrix Factorization の手法ではより少ない次元で特徴を抽出し, 評価の推定を行う.~\cite{Koren}
+この手法は協調フィルタリングにおいて次元削減を実現手法である. 協調フィルタリングとはユーザーのレビューをもとに, 同様の評価パターンを持つユーザー同士のデータをもとにまだ評価していない（本質的にはまだ知らない）アイテムに対しても同様の評価をするだろうと推定するものである. Matrix Factorization の手法ではより少ない次元で特徴を抽出し, 評価の推定を行う.\citep{Koren}
 
 $m$人のユーザーと$n$個のアイテムを考える. ユーザの評価値を表す$m \times n$の行列$R$に対して, ユーザの特徴を表す$m \times k$の行列$P$と, アイテムの特徴を表す$n \times k$の行列$Q$を考えて以下のように近似できる.
 
@@ -266,7 +270,7 @@ q'_{i, k} &=& q_{k, i} + 2 * \alpha e_{u, v} p_{u, k}
 
 \subsection{解析データ}
 
-本研究では, GroupLensプロジェクトによる公開データセット MovieLens~\cite{MovieLens} の一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個のレーティングデータ, 簡単なユーザ情報, コンテンツ情報から構成されている. レーティングデータは, 1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個のレーティングを持っている. ユーザ情報, コンテンツ情報について表(\ref{MovieLens})にまとめる. またデータについて一部を示す.
+本研究では, GroupLensプロジェクトによる公開データセット MovieLens の一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個のレーティングデータ, 簡単なユーザ情報, コンテンツ情報から構成されている. レーティングデータは, 1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個のレーティングを持っている. ユーザ情報, コンテンツ情報について表(\ref{MovieLens})にまとめる. またデータについて一部を示す.
 
 \begin{table}[H]
 \begin{center}

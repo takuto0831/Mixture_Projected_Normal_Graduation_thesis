@@ -1,33 +1,45 @@
-\begin{thebibliography}{1}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  This bbl file is created by jecon.bst ver.5.3.1
+%  The latest jecon.bst is available at
+%  <http://shirotakeda.org/ja/tex-ja/jecon-ja.html>
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\bibitem{MovieLens}
-{MovieLens}.
-\newblock {\url{http://movielens.org/}}.
+%%% Definition of \bysame
+\ifx\undefined\bysame
+\newcommand{\bysame}{\hskip.3em \leavevmode\rule[.5ex]{2.5em}{.3pt}\hskip0.5em}
+\fi
 
-\bibitem{Bishop2}
-C.M. Bishop.
-\newblock パターン認識と機械学習　下.
-\newblock シュプリンガー・ジャパン, 2007.
+%%% Definition of \bysamejp
+\ifx\undefined\bysamejp
+\newcommand{\bysamejp}{\hskip.2em
+  \leavevmode\rule[.7ex]{2.5em}{.3pt}\hskip0.3em}
+\fi
 
-\bibitem{Bishop1}
-C.M. Bishop.
-\newblock パターン認識と機械学習　上.
-\newblock シュプリンガー・ジャパン, 2007.
 
-\bibitem{Koren}
-Y.~Koren, R.~Bell, and C.~Volinsky.
-\newblock Matrix factorization techniques for recommender systems.
-\newblock {\em Computer}, Vol.~42, No.~8, 2009.
+\begin{thebibliography}{xxx}
 
-\bibitem{Meyer}
-Patrick~Emmanuel Meyer.
-\newblock {\em Information-Theoretic Variable Selection and Network Inference
-  from Microarray Data}.
-\newblock PhD thesis, Universite libre de Bruxelles, 2008.
 
-\bibitem{Friedman}
-N.Friedman, D.Geniger, and M.Goldszmidt.
-\newblock Bayesian network classifiers.
-\newblock {\em Machine Learning}, Vol.~29, pp. 131--163, 1997.
+\harvarditem[Bishop]{Bishop}{2007}{Bishop2}
+Bishop, C.M. (2007) 『パターン認識と機械学習　下』，シュプリンガー・ジャパン．
+
+\harvarditem[Koren et~al.]{Koren, Bell and Volinsky}{2009}{Koren}
+Koren, Y., R.~Bell, and C.~Volinsky (2009) ``Matrix Factorization Techniques
+  for Recommender Systems,'' \textit{ Computer}, Vol. 42, No. 8.
+
+\harvarditem[Meyer]{Meyer}{2008}{Meyer}
+Meyer, Patrick~Emmanuel (2008) ``Information-Theoretic Variable Selection and
+  Network Inference from Microarray Data,'' Ph.D. dissertation, Universite
+  libre de Bruxelles.
+
+\harvarditem[N.Friedman et~al.]{N.Friedman, D.Geniger and
+  M.Goldszmidt}{1997}{Friedman}
+N.Friedman, D.Geniger, and M.Goldszmidt (1997) ``Bayesian Network
+  Classifiers,'' \textit{ Machine Learning}, Vol. 29, pp. 131--163.
+
+\harvarditem[清水]{清水}{2017}{清水昌平}
+清水昌平 (2017) 『統計的因果探索』，講談社．
 
 \end{thebibliography}
+
