@@ -1,0 +1,91 @@
+\documentclass[a4paper]{jarticle}
+\setlength{\textwidth}{170mm}
+\setlength{\textheight}{260mm}
+\setlength{\oddsidemargin}{-5mm}
+\setlength{\topmargin}{-25mm}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{here}
+\usepackage{theorem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{ascmac}
+\usepackage{bm}
+\usepackage{comment}
+\usepackage{listings,jlisting}
+\usepackage{url}
+
+\newtheorem{theo}{定理}[section]
+\newtheorem{defi}{定義}[section]
+\newtheorem{lemm}{命題}[section]
+
+\title{勾配に基づくブースティングによる統計的関係性の学習 \\ 依存関係のあるネットワークについて}    %タイトル
+\author{Striaam Natarajan}   %著者
+\date{2011/5/10}   %日付
+
+\makeatletter
+\def\theequation{\thesection.\arabic{equation}}   %数式番号を(章.式)形式
+\@addtoreset{equation}{section}
+\def\thefigure{\thesection.\arabic{figure}}   %図番号を(章.図)形式
+\@addtoreset{figure}{section}
+\def\thetable{\thesection.\arabic{table}}   %表番号を(章.表)形式
+\@addtoreset{table}{section}
+\def\tr{\mathop{\operator@font tr}\nolimits}
+\def\grad{\mathop{\operator@font grad}\nolimits}
+\def\St{\mathop{\operator@font St}\nolimits}
+\def\Hess{\mathop{\operator@font Hess}\nolimits}
+\def\D{\mathop{\operator@font D}\nolimits}
+\def\sym{\mathop{\operator@font sym}\nolimits}
+\makeatother
+
+\setlength\textheight{230mm}   %テキスト高さ
+\setlength\textwidth{160mm}   %テキスト幅
+\setlength{\oddsidemargin}{0mm}   %余白
+
+\begin{document}
+\maketitle   %タイトルを付ける
+
+\setlength{\baselineskip}{20pt}   %行間幅
+\pagenumbering{roman}   %目次ページ番号のスタイル
+\tableofcontents   %目次を付ける
+\listoffigures   %図目次を付ける
+\listoftables   %表目次を付ける
+\clearpage   %目次と本文を分ける
+\pagenumbering{arabic}   %本文ページ番号のスタイル
+
+%%%%%これ以下, 本文%%%%%
+
+\section{要約}
+
+従属ネットワークはおおよそ, 条件付き分布の産物として, 複数の確率変数による結合確率分布になる. 依存関係のあるネットワーク (RDNs :Relational Dependency Networks) は従属ネットワークの関係性について拡張したグラフィカルモデルである. しかし, この高度な表現性はより複雑なモデル選択の問題, すなわち無数の依存関係から抽出する問題の代価により確立されている. RDNsに対する現在の学習手法は確率変数毎に木を作り, 学習している一方で, 私たちは問題の関係性の概算における一連の流れに勾配に基づくブースティングを用いることを提案する. そうすることにより, いくつかの繰り返しで高度に複雑な特徴を容易に得られる. また, 素晴らしいモデルを素早く推定することができる. 私たちのいくつかの事なるデータセットによる実験的結果は, このブースティング手法が他の優れた統計的関係性の学習手法と比べて, 効率的であることを示している.
+
+\section{はじめに}
+
+ベイジアンネットワークやマルコフネットワークは, 確率的モデルを表現, 推測するフレームワークとして, もっとも評価が高く, 効率的で, 素晴らしいフレームワークの一つである. それらは実世界で診断, 予測, 品質管理などの多くの問題に適用されている. 最近では, データの構造や関係性の役割がより重要になっている. ひとつのオブジェクトに関する情報は他のオブジェクトを結論へと導く, アルゴリズムの学習を手助けする. 従って, 確率的関係性の学習 (SRL: Statistical Relational Learning) では, 伝統的な統計学習とは異なり, 原則的に状態の記号的表現を用いて, 明示的な状態の列挙を避けようとする. これらのモデルは有向グラフから非有向グラフ, サンプリングに基づく手法にも及んでいる. 
+これらのモデルの利点としては, 確率的依存関係を簡潔に表している. 
+
+しかしながら, 典型としてより多くのモデル選択の代価として, これらのアプローチを用いることで簡潔さや解釈しやすさまでも得られている.  
+
+
+\section{実験}
+
+\subsection{Movie lens dataset}
+
+
+
+\section{謝辞}
+%%%%%%%%書きましょう
+
+
+
+\newpage
+\addcontentsline{toc}{section}{参考文献} %目次に参考文献を入れる
+
+%必要になる
+%\newpage
+%\section{付録}
+
+%参考文献を引用する際に必要なコマンド
+\bibliographystyle{jplain}
+\bibliography{bunken}
+
+\end{document}
