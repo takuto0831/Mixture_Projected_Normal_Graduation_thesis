@@ -1,0 +1,71 @@
+\documentclass[a4paper]{jarticle}
+\setlength{\textwidth}{170mm}
+\setlength{\textheight}{260mm}
+\setlength{\oddsidemargin}{-5mm}
+\setlength{\topmargin}{-25mm}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{here}
+\usepackage{theorem}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{ascmac}
+\usepackage{bm}
+\usepackage{comment}
+\usepackage{listings,jlisting}
+\usepackage{url}
+
+\newtheorem{theo}{定理}[section]
+\newtheorem{defi}{定義}[section]
+\newtheorem{lemm}{命題}[section]
+
+\title{Linear Non Gaussian Acyclic Model について}    %タイトル
+\author{小坪琢人}   %著者
+\date{2017/10/23}   %日付
+
+\makeatletter
+\def\theequation{\thesection.\arabic{equation}}   %数式番号を(章.式)形式
+\@addtoreset{equation}{section}
+\def\thefigure{\thesection.\arabic{figure}}   %図番号を(章.図)形式
+\@addtoreset{figure}{section}
+\def\thetable{\thesection.\arabic{table}}   %表番号を(章.表)形式
+\@addtoreset{table}{section}
+\def\tr{\mathop{\operator@font tr}\nolimits}
+\def\grad{\mathop{\operator@font grad}\nolimits}
+\def\St{\mathop{\operator@font St}\nolimits}
+\def\Hess{\mathop{\operator@font Hess}\nolimits}
+\def\D{\mathop{\operator@font D}\nolimits}
+\def\sym{\mathop{\operator@font sym}\nolimits}
+\makeatother
+
+\setlength\textheight{230mm}   %テキスト高さ
+\setlength\textwidth{160mm}   %テキスト幅
+\setlength{\oddsidemargin}{0mm}   %余白
+
+\begin{document}
+\maketitle   %タイトルを付ける
+
+\setlength{\baselineskip}{20pt}   %行間幅
+\pagenumbering{roman}   %目次ページ番号のスタイル
+\tableofcontents   %目次を付ける
+\listoffigures   %図目次を付ける
+\listoftables   %表目次を付ける
+\clearpage   %目次と本文を分ける
+\pagenumbering{arabic}   %本文ページ番号のスタイル
+
+%%%%%これ以下, 本文%%%%%
+
+
+
+
+\newpage
+\addcontentsline{toc}{section}{参考文献} %目次に参考文献を入れる
+
+%必要になる
+%\newpage
+%\section{付録}
+
+%参考文献を引用する際に必要なコマンド
+\bibliographystyle{jplain}
+\bibliography{bunken}
+
+\end{document}
