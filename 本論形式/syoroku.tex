@@ -19,7 +19,7 @@
 \usepackage[dviout]{graphicx}
 \usepackage{comment}
 \usepackage{url}
-\usepackage{natbib}
+\usepackage[square]{natbib}
 
 %\bibliographystyle{apalike} %いらない
 %\setlength{\voffset}{-25.4mm}
@@ -69,13 +69,13 @@
 \newcommand{\tblcaption}[1]{\def\@captype{table}\caption{#1}}
 \makeatother
 \begin{document}
-
 \bibliographystyle{jecon}
+
 \begin{center}
 {\Large \textbf{ベイジアンネットワークによる予測モデル}}
 \end{center}
 \begin{flushright}
-小坪 琢人（塩濱 敬之准教授，佐藤 寛之助教）
+小坪 琢人（塩濱 敬之准教授）
 \end{flushright}
 \vspace{-3zw}
 
@@ -83,16 +83,17 @@
 
 \section{はじめに}
 \vspace{-0.6zh}
-現在, 様々な分野で機械学習やディープラーニングが用いられている. その中で自動化というものが大きなテーマであり, 「今後自動化される仕事」のようなニュースも増えている. しかし, マシンの進化により失われる仕事があるのなら, 生まれる新しい仕事も当然存在する. これから生まれる仕事, 必要になる仕事を考えるためには, まず機械学習やディープラーニングでどのようなことができるのかを知る必要がある. 
 
-自動化の問題点としては, 分析やシュミレーションの実態が見えにくくなるという点である. 機械がある種のブラックボックスとなり, 都合よく利用されてしまう可能性がある. 人間が生活していくうえで, 重要視されるのは効率性よりも人間らしい判断である. その中で機械による効率的な自動化は, 意思決定に不信感をもたらす危険性を持っている.
+コンピュータ, ソフトウェア, インターネット技術などの情報技術は目覚しく発達し, 人間の生活はインターネットに大きく依存している形である. またインターネット通販サイトAmazon.comに見られる, その人にとってのお薦め商品を自動的に選ぶリコメンデーション機能や, Googleで用いられている重要なページを上位にランク付けする PageRank などは人間の意思決定にも大きく影響している. こうした機能は本人さえも気付いていない趣向性を明らかにすることもあるが, ユーザーの選択肢が狭める可能性がある.
+
+Amazon.com リコメンドを例にとって説明すると, 各ユーザーの購入した商品を記録し, 同様の商品購入パターンを持つ他のユーザーとグループ化する. そのグループ内であるユーザはまだ購入していないが, 他のユーザーが購入しているものを, リコメンドするという仕組みである. この手法は協調フィルタリングと呼ばれている. Amazon のように多くのユーザーを抱える企業では, 様々な特徴をもつユーザーも観測できるので, 精度の高いリコメンドを行うことが出来る.
 
 それらを解決する方法として, 可視化というものが存在する. グラフやプロットにより数値的根拠を明らかにすることで, ブラックボックス化を防ぐことができる. 一般に可視化は得られた結果の解釈の手助けとして用いられているが, モデル自体が視覚的に解釈できるものも存在する. 例としては決定木やグラフィカルモデルなどである. 本論文ではこのグラフィカルモデルについて取り上げる. 
 
 %%% グラフィカルモデルの本読んでもう少し書くよ
 %%% 因果関係のことどこにいれる？？
 
-グラフィカルモデルは以下のような特徴を持つ.\citet{Bishop2}
+グラフィカルモデルは以下のような特徴を持つ.\citep{Bishop2}
 
 \begin{enumerate}
 
@@ -108,7 +109,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{理論}
+\section{ネットワークモデリング}
 
 \subsection{ベイジアンネットワーク}
 
@@ -146,33 +147,14 @@ $X_j=y_n$ & $ p(y_n|Pa(X_j)=x_1)$ & \dots & $p(y_n|Pa(X_j)=x_m)$
 \end{center}
 \end{table}
 
-\section{数値実験}
+\section{mod's hair について}
 
-本研究では, GroupLensプロジェクトによる公開データセット MovieLens\citet{MovieLens} の一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個のレーティングデータ, 簡単なユーザ情報, コンテンツ情報から構成されている. レーティングデータは, 1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個のレーティングを持っている. ユーザ情報, コンテンツ情報について表(\ref{MovieLens})にまとめる. 
-
-\begin{table}[H]
-\begin{center}
-\caption{ユーザ情報およびコンテンツ情報}   %キャプション
-\label{MovieLens}   %ラベル
-\begin{tabular}{c l}
-\hline
-映画ジャンル & unknown, Action, Adventure, Animation, Children's, Comedy, Crime, \\
-                 & Documentary, Drama, Fantasy, Film-Noir, Horror, Musical, Mystery, \\
-                 & Romance, Sci-Fi, Thriller, War, Western \\
-職業          & administrator, artist, doctor, educator, engineer, entertainment, executive, \\
-                & healthcare, homemaker, lawyer, librarian, marketing, none, other, programmer, \\
-                & retired, salesman, scientist, student, technician, writer \\
-年齢 & 5歳ごとに分割 or 10歳ごとに分割 \\
-性別 & male, female\\ 
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+次回提出時に追記します.
 
 \section{まとめ}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newpage
+%\newpage
 \addcontentsline{toc}{section}{参考文献} %目次に参考文献を入れる
 
 %必要になる
