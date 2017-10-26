@@ -86,6 +86,7 @@ Amazon.com リコメンドを例にとって説明すると, 各ユーザーの�
 
 本研究ではベイジアンネットワークの構造学習における問題点を改良し, 確率変数間の因果関係を正しく推論した上で, ベイジアンネットワークを構築する.
 
+%%%%%%%%%%%%%%%%%%%%% 用いるモデルの説明 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{ネットワークモデリング}
 
 \subsection{ベイジアンネットワーク}
@@ -233,79 +234,38 @@ TAN 型のベイジアンネットワークでは式(\ref{CMIentropy})に示し�
 
 統計的因果推論は, 因果関係をデータから推測する方法論である.\citep{清水昌平} 
 
-%%%%%%%% ここ消す%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% ここまでモデル説明 %%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{関連手法}
-
-\subsection{Matrix Factorization}
-
-この手法は協調フィルタリングにおいて次元削減を実現手法である. 協調フィルタリングとはユーザーのレビューをもとに, 同様の評価パターンを持つユーザー同士のデータをもとにまだ評価していない（本質的にはまだ知らない）アイテムに対しても同様の評価をするだろうと推定するものである. Matrix Factorization の手法ではより少ない次元で特徴を抽出し, 評価の推定を行う.\citep{Koren}
-
-$m$人のユーザーと$n$個のアイテムを考える. ユーザの評価値を表す$m \times n$の行列$R$に対して, ユーザの特徴を表す$m \times k$の行列$P$と, アイテムの特徴を表す$n \times k$の行列$Q$を考えて以下のように近似できる.
-
-\begin{eqnarray}
-R \approx P  Q^T
-\end{eqnarray}
-
-ここでユーザ$u$が評価したアイテム$i$の評価値を$\vec{p_u}^T \vec{q_i}$として表現する. この各ユーザ, 各アイテムに対する$\vec{p_u}, \vec{q_i}$を既知の評価値から学習する手法が Matrix Factorization である. 以下の式を満たす$P, Q$を訓練データから導く.
-
-\begin{eqnarray}
-\label{MatrixFactorization}
-\mbox{min}_{p,q} = \sum_{(u, i) \in R} (r_{u, i} - \vec{p_u}^T \vec{q_i})^2 + (||\vec{p_u}||^2_F + ||\vec{q_i}||^2_F)
-\end{eqnarray}
-
-式(\ref{MatrixFactorization})を最適化する更新式を以下に示す.
-
-\begin{eqnarray}
-\label{MatrixFactorization2}
-e_{u, i} &=& r_{u, i} - \vec{p_u}^T \vec{q_i} \\
-p'_{u, k} &=& p_{u, k} + 2 * \alpha e_{u, v} q_{k, i} \\
-q'_{i, k} &=& q_{k, i} + 2 * \alpha e_{u, v} p_{u, k}
-\end{eqnarray}
-
-具体的な方法は行列$P,Q$を適当な乱数を発生させて, それを初期状態として式(\ref{MatrixFactorization2})を用いて, 更新していく確率的勾配降下を用いた最適化手法である. 実際の評価値と近似式より計算される推定値の誤差を最も小さくすることで, 実際の評価がない部分についても推定を行うことができる.
-
-\section{評価実験}
-
-本章では2章で提案したベイジアンネットワークモデルのレーティング予測性能を, 3章で示した協調フィルタリング法による結果と比較する.
+\section{データ解析}
 
 \subsection{解析データ}
 
-本研究では, GroupLensプロジェクトによる公開データセット MovieLens の一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個のレーティングデータ, 簡単なユーザ情報, コンテンツ情報から構成されている. レーティングデータは, 1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個のレーティングを持っている. ユーザ情報, コンテンツ情報について表(\ref{MovieLens})にまとめる. またデータについて一部を示す.
+本研究では, ある美容院の顧客データ, 会計履歴データ, 会計明細データを用いて顧客のクラスタリングを行う. 
 
 \begin{table}[H]
 \begin{center}
-\caption{ユーザ情報およびコンテンツ情報}   %キャプション
-\label{MovieLens}   %ラベル
+\caption{解析データ}   %キャプション
+\label{hairdata}   %ラベル
 \begin{tabular}{c l}
 \hline
-映画ジャンル & unknown, Action, Adventure, Animation, Children's, Comedy, Crime, \\
-                 & Documentary, Drama, Fantasy, Film-Noir, Horror, Musical, Mystery, \\
-                 & Romance, Sci-Fi, Thriller, War, Western \\
-職業          & administrator, artist, doctor, educator, engineer, entertainment, executive, \\
-                & healthcare, homemaker, lawyer, librarian, marketing, none, other, programmer, \\
-                & retired, salesman, scientist, student, technician, writer \\
-年齢 & 5歳ごとに分割 or 10歳ごとに分割 \\
-性別 & male, female\\ 
+店舗マスタ & 店舗ID, 店舗名, 緯度, 経度, 階数 \\
+
+担当者マスタ　& 担当者ID, 担当者所属店舗 \\
+
+商品マスタ & 会計明細販売商品ID, 商品種別,  第1カテゴリID, 第1カテゴリ, 第2カテゴリID, \\
+               &  第2カテゴリ, 商品名, 商品略称, 本部設定税抜価格, 本部設定税込価格, 施術分数, \\
+               & 販売開始日, 販売終了日, 予約カテゴリー, 予約商品名\\
+顧客マスタ & 顧客ID, 初回来店年, 初回来店店舗ID, 初回来店店舗ID, 郵便番号, \\
+              & DM送信可否, 性別, 誕生年代, 備考 \\
+会計履歴 & 会計ID, 販売店舗ID, 会計日, 会計時刻, 顧客ID, 会計税込売上, 会計消費税,取引種別, \\
+             &  POS入力担当者ID, 会計主担当者ID, 会計指名区分, DV商品券金額, DV商品券枚数,  現金, \\
+             & クレジット, 電子マネー, 売掛金, 他社商品券金額, 他社商品券枚数, 商品券利用枚数, 利用商品券ID, \\
+            & ポイント利用額, ポイント利用区分, ポイント付与額, ポイント残高, 累積来店回数, 曜日 \\
 \hline
 \end{tabular}
 \end{center}
 \end{table}
 
-\begin{table}[H]
-\begin{center}
-\caption{MovieLens データセット}   %キャプション
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-user-No	&	age	&	gender	&	occupation	&	item-No	& rating \\ \hline \hline
-1	&	24	&	M	&	technician	&  1  & 5 \\	\hline
-159	&    23	&     F	&      student	      &  274 & 3 \\	\hline
-535	&	45	&	F	&	educator	&	511	& 3 \\ \hline
-655	&	50	&	F	&	healthcare	& 393 & 2 \\	\hline
-943	&	22	&	M	&	student	&	1330 & 3 \\  \hline
-\end{tabular}
-\end{center}
-\end{table}
 \subsection{評価基準}
 
 性能評価の基準として, 予測されたレーティング$\hat{r}_{i, u}$と真のレーティング$r_{i, u}$との平均二乗誤差(Mean Squared Error: MSE):

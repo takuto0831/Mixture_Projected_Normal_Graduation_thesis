@@ -4,13 +4,11 @@
 \contentsline {subsubsection}{\numberline {2.1.1}Naive Bayes}{3}
 \contentsline {subsubsection}{\numberline {2.1.2}Tree Augmented Naive Bayes (TAN)}{3}
 \contentsline {subsection}{\numberline {2.2}統計的因果推論}{6}
-\contentsline {section}{\numberline {3}関連手法}{6}
-\contentsline {subsection}{\numberline {3.1}Matrix Factorization}{6}
-\contentsline {section}{\numberline {4}評価実験}{7}
-\contentsline {subsection}{\numberline {4.1}解析データ}{7}
-\contentsline {subsection}{\numberline {4.2}評価基準}{8}
-\contentsline {subsection}{\numberline {4.3}実験結果}{8}
-\contentsline {subsubsection}{\numberline {4.3.1}性能評価}{9}
-\contentsline {section}{\numberline {5}まとめと今後の課題}{9}
-\contentsline {section}{\numberline {6}謝辞}{9}
-\contentsline {section}{参考文献}{10}
+\contentsline {section}{\numberline {3}データ解析}{6}
+\contentsline {subsection}{\numberline {3.1}解析データ}{6}
+\contentsline {subsection}{\numberline {3.2}評価基準}{6}
+\contentsline {subsection}{\numberline {3.3}実験結果}{7}
+\contentsline {subsubsection}{\numberline {3.3.1}性能評価}{7}
+\contentsline {section}{\numberline {4}まとめと今後の課題}{8}
+\contentsline {section}{\numberline {5}謝辞}{8}
+\contentsline {section}{参考文献}{9}
