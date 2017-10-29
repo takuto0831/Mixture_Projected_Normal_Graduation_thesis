@@ -36,3 +36,5 @@ g <- ggplot(train3,aes(X,Y)) + geom_point(colour = "blue") + geom_smooth(method 
 g <- g + annotate("text",label="x=0.9z+eps1",x=2.5,y=-3,fontface="italic")  
 g <- g + annotate("text",label="y=0.9z+eps2",x=2.5,y=-3.4,fontface="italic")
 ggsave("matomebox/data/gap_sample3.png", g)
+
+
