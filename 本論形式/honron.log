@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.2-170924-2.6 (utf8.sjis) (TeX Live 2017/W32TeX) (preloaded format=platex 2017.12.1)  6 DEC 2017 13:30
+This is e-pTeX, Version 3.14159265-p3.7.2-170924-2.6 (utf8.sjis) (TeX Live 2017/W32TeX) (preloaded format=platex 2017.12.1)  6 DEC 2017 16:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -9,8 +9,8 @@ Babel <3.15> and hyphenation patterns for 84 language(s) loaded.
 (c:/w32tex/share/texmf-dist/tex/platex/base/jarticle.cls
 Document Class: jarticle 2017/09/19 v1.7g Standard pLaTeX class
 \c@@paper=\count82
-(c:/w32tex/share/texmf-dist/tex/platex/base/jsize10.clo
-File: jsize10.clo 2017/09/19 v1.7g Standard pLaTeX file (size option)
+(c:/w32tex/share/texmf-dist/tex/platex/base/jsize11.clo
+File: jsize11.clo 2017/09/19 v1.7g Standard pLaTeX file (size option)
 )
 \c@part=\count83
 \c@section=\count84
@@ -246,9 +246,9 @@ LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <14.4> not available
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <14.4> not available
 (Font)              Font shape `JY1/gt/m/n' tried instead on input line 52.
  (./honron.toc
-LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10> not available
+LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <10.95> not available
 (Font)              Font shape `JT1/gt/m/n' tried instead on input line 1.
-LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
+LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10.95> not available
 (Font)              Font shape `JY1/gt/m/n' tried instead on input line 1.
 )
 \tf@toc=\write4
@@ -265,64 +265,53 @@ LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10> not available
 \tf@lot=\write6
 \openout6 = `honron.lot'.
 
- [2]
+ [2] [1
 
-Package natbib Warning: Citation `Bishop2' on page 1 undefined on input line 74
-.
-
-
-Package natbib Warning: Citation `SKM' on page 1 undefined on input line 76.
-
+]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <12> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 94.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 93.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 94.
-[1
-
-] [2]
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 93.
+ [2]
 File: data/sample1.png Graphic file (type bmp)
 <data/sample1.png>
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 150.
 
-
-Package natbib Warning: Citation `Friedman' on page 3 undefined on input line 1
-48.
-
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 151.
 
 (c:/w32tex/share/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 151.
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 150.
+ [3]
 File: data/sample2.png Graphic file (type bmp)
 <data/sample2.png>
- [3]
-
-Package natbib Warning: Citation `Meyer' on page 4 undefined on input line 188.
-
-
-[4] [5]
-
-Package natbib Warning: Citation `清水昌平' on page 6 undefined on input line 2
-37.
-
-
-Overfull \hbox (21.95337pt too wide) in paragraph at lines 252--275
+ [4] [5]
+Overfull \hbox (65.00656pt too wide) in paragraph at lines 251--274
  [][][] 
  []
 
-[6] [7] [8] (./honron.bbl)
+[6] [7] [8] (./honron.bbl
 
-Package natbib Warning: There were undefined citations.
+LaTeX Font Warning: Font shape `JT1/mc/m/it' undefined
+(Font)              using `JT1/mc/m/n' instead on input line 35.
 
-(./honron.aux) ) 
+
+LaTeX Font Warning: Font shape `JY1/mc/m/it' undefined
+(Font)              using `JY1/mc/m/n' instead on input line 35.
+
+) [9] (./honron.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3348 strings out of 493628
- 43243 string characters out of 6150204
- 116984 words of memory out of 5000000
- 6875 multiletter control sequences out of 15000+600000
- 22866 words of font info for 89 fonts, out of 8000000 for 9000
+ 3351 strings out of 493628
+ 43435 string characters out of 6150204
+ 117150 words of memory out of 5000000
+ 6885 multiletter control sequences out of 15000+600000
+ 22151 words of font info for 86 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  27i,12n,32p,669b,317s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on honron.dvi (10 pages, 34276 bytes).
+Output written on honron.dvi (11 pages, 34944 bytes).
