@@ -1,8 +1,0 @@
-\beamer@endinputifotherversion {3.36pt}
-\select@language {japanese}
-\beamer@sectionintoc {1}{はじめに}{3}{0}{1}
-\beamer@sectionintoc {2}{ベイジアンネットワークについて}{4}{0}{2}
-\beamer@sectionintoc {3}{ベイジアンネットワークセミナー}{6}{0}{3}
-\beamer@sectionintoc {4}{因果構造について}{13}{0}{4}
-\beamer@sectionintoc {5}{今後について}{14}{0}{5}
-\beamer@sectionintoc {6}{参考文献}{15}{0}{6}

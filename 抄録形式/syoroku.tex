@@ -6,7 +6,6 @@
 \usepackage{ascmac}
 %\usepackage{epsbox}
 \usepackage{float}
-%\usepackage{graphics}
 \usepackage{here}
 \usepackage{lscape}
 \usepackage{latexsym}
@@ -21,7 +20,6 @@
 \usepackage{url}
 \usepackage[square]{natbib}
 
-%\bibliographystyle{apalike} %いらない
 %\setlength{\voffset}{-25.4mm}
 \setlength{\topmargin}{-17.5mm}   %トップとヘッダの間隔
 %\setlength{\headheight}{20mm}   %ヘッダの高さ
@@ -68,11 +66,13 @@
 \newcommand{\figcaption}[1]{\def\@captype{figure}\caption{#1}}
 \newcommand{\tblcaption}[1]{\def\@captype{table}\caption{#1}}
 \makeatother
+
 \begin{document}
 \bibliographystyle{jecon}
+%\bibliographystyle{apalike} %いらない
 
 \begin{center}
-{\Large \textbf{ベイジアンネットワークによる予測モデル}}
+{\Large \textbf{混合 Projected Normal 分布によるクラスタリングの性能評価}}
 \end{center}
 \begin{flushright}
 小坪 琢人（塩濱 敬之准教授）
@@ -82,7 +82,7 @@
 %%%%%これ以下, 本文%%%%%
 
 \section{はじめに}
-\vspace{-0.6zh}
+\vspace{-0.5zh}
 
 コンピュータ, ソフトウェア, インターネット技術などの情報技術は目覚しく発達し, 人間の生活はインターネットに大きく依存している形である. またインターネット通販サイトAmazon.comに見られる, その人にとってのお薦め商品を自動的に選ぶリコメンデーション機能や, Googleで用いられている重要なページを上位にランク付けする PageRank などは人間の意思決定にも大きく影響している. こうした機能は本人さえも気付いていない趣向性を明らかにすることもあるが, ユーザーの選択肢が狭める可能性がある.
 

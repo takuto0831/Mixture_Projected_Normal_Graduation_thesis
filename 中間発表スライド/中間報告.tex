@@ -3,7 +3,6 @@
 \AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}} % 栞の文字化けを制御(日本語の場合必須)
 \setbeamertemplate{navigation symbols}{} %ナビゲーションバーを消す
 
-
 %%% 以下3つはハンドアウト印刷用
 %\documentclass[dvipdfm,handout]{beamer}
 %\usepackage{pgfpages}
@@ -123,6 +122,29 @@
 %    \@addtoreset{algorithm}{section}
 %  \makeatother
 
+%\usepackage{listings,jlisting}
+\usepackage{listings}
+
+\lstset{%
+  language={R},
+  basicstyle={\small},%
+  identifierstyle={\small},%
+  commentstyle={\small\itshape},%
+  keywordstyle={\small\bfseries},%
+  ndkeywordstyle={\small},%
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},%
+  numbers=left,%
+  xrightmargin=0zw,%
+  xleftmargin=3zw,%
+  numberstyle={\scriptsize},%
+  stepnumber=1,
+  numbersep=1zw,%
+  lineskip=-0.5ex%
+}
+
 \newcommand{\bm}[1]{\mbox{\boldmath $#1$}}
 \newcommand{\mapright}[1]{\mathop{\longrightarrow}\limits_{#1}}
 \newcommand{\argmax}{\mathop{\rm argmax}\limits}
@@ -133,7 +155,7 @@
 %%% Title, Author, etc.
 \title[タイトル]{中間報告}
 %\subtitle[サブタイトル]{}
-\author[発表者名]{塩濱研究室\\小坪琢人}
+\author[発表者名]{塩濱研究室\\ 小坪琢人}
 \institute[所属]{東京理科大学\ 工学部経営工学科4年\\学籍番号 4414036}
 \date[日付]{2017年9月28日}
 
@@ -360,23 +382,25 @@ $\Rightarrow$ 変数間の相互関係を用いて, モデルを構築して, �
 \end{frame}
 
 \section{参考文献}
-\begin{frame}{参考文献}
-\begin{description}
-\setlength{\itemsep}{0.3cm}
+
+\begin{frame}[t,allowframebreaks, allowdisplaybreaks]{参考文献}
+
 {\scriptsize
-\item[{[1]}]
+\begin{thebibliography}{99}
+%\setlength{\itemsep}{-.5zw}
+\beamertemplatetextbibitems
+
+\bibitem{Shimizu}
 清水昌平 (2017) 統計的因果探索. 講談社
 
-\item[{[2]}]
+\bibitem{Suzuki}
 鈴木努 (2009) Rで学ぶネットワーク分析. 共立出版
 
-\item[{[3]}]
-C.M. Bishop (2007) パターン認識と機械学習　下. シュプリンガー・ジャパン
+%%\bibitem{Bishop}
+%%C.M. Bishop (2007) パターン認識と機械学習　下. シュプリンガー・ジャパン
 
-\item[{[4]}]
-Patrick Emmanuel Meyer (2008) Information-Theoretic Variable Selection and Network Inference from Microarray Data
-
+\end{thebibliography}
 }
-\end{description}
+
 \end{frame}
 \end{document}
