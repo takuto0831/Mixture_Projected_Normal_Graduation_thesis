@@ -21,7 +21,7 @@
 %\usepackage[square]{natbib}
 
 \usepackage{listings}
-\usepackage{plistings}
+%\usepackage{plistings}
 
 %\setlength{\voffset}{-25.4mm}
 \setlength{\topmargin}{-17.5mm}   %トップとヘッダの間隔
@@ -109,10 +109,11 @@ $k \geq 2$ の場合, 単位ランダムベクトル $U$ が $U = X/||X|| \sim \
 
 Wang and Gelfand (2013) and Wang and Gelfand (2014) によると,$\Sigma \neq I$のもとで$\mathcal{PN}_2(\mu,\Sigma$)のとき, 特別な円形データの場合, $U = (\cos\Theta, \sin\Theta)^T$の密度は以下で示せる.
 
+
 \begin{eqnarray}
 \label{PNC}
-p(\theta|\mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}} \nonumber \\
-\exp(C)\left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} I_{[0,2\pi)} (\theta) \tag{1}
+p(\theta|\mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
+\exp(C)\left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} I_{[0,2\pi)}(\theta)
 \end{eqnarray}
 
 $u^T = (\cos\theta,\sin\theta), A(\theta) = u^T\Sigma^{-1}u, B(\theta) = u^T \Sigma^{-1} \mu, C = -\frac{1}{2} \mu^T \Sigma^{-1} \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot),\phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
