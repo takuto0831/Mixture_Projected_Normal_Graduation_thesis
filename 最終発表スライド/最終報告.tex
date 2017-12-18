@@ -174,6 +174,57 @@
 
 \end{frame}
 
+\section{目的}
+\begin{frame}{目的}
+\cite{GPN}
+\end{frame}
+
+\section{Projected Normal 分布}
+\begin{frame}{Projected Normal 分布}
+
+\begin{eqnarray}
+\label{PNC}
+p(\theta|\mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
+\exp(C)\left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} I_{[0,2\pi)}(\theta)
+\end{eqnarray}
+
+\end{frame}
+
+\section{混合 Projected Normal 分布}
+\begin{frame}{混合 Projected Normal 分布}
+
+\end{frame}
+
+\section{データ解析}
+\begin{frame}{データ解析}
+
+\end{frame}
+
+\section{まとめと今後の課題}
+\begin{frame}{まとめと今後の課題}
+
+\end{frame}
+
+\section{参考文献}
+\begin{frame}[allowframebreaks]{参考文献}
+
+{\scriptsize
+\begin{thebibliography}{99}
+\setlength{\itemsep}{-.5zw}
+\beamertemplatetextbibitems %参考文献に番号を振る
+
+\bibitem{GPN}
+D.Hernandez-Stumpfhauser and F. Jay Breidt and Mark J. van der Woerd. (2017). The General Projected Normal Distribution of Arbitrary Dimension: Modeling and Bayesian Inference. {\it Journal of Bayesian Analysis}, Vol. 12, No. 1, pp. 113-133.
+
+\bibitem{PN}
+Gabriel Nunez-Antonio and Eduardo Gutierrez-Pena. (2005). A Bayesian Analysis of Directional Data using the Projected Normal Distribution. {\it Journal of Applied Statistics}, Vol. 32, No. 10, pp. 995-1001.
+
+\end{thebibliography}
+}
+
+\end{frame}
+\end{document}
+
 %\vspace{-0.5cm}
 %\begin{figure}[H]
 % \begin{center}
@@ -182,33 +233,3 @@
  %\caption{ベイジアンネットワークの例}
  %\label{naive}
 %\end{figure}
-
-\section{因果構造について}
-\begin{frame}{因果構造について}
-
-時系列モデルに対する因果構造という話が非常に面白そう. 
-
-\end{frame}
-
-\section{参考文献}
-\begin{frame}[t,allowframebreaks, allowdisplaybreaks]{参考文献}
-
-{\scriptsize
-\begin{thebibliography}{99}
-%\setlength{\itemsep}{-.5zw}
-\beamertemplatetextbibitems
-
-\bibitem{Shimizu}
-清水昌平 (2017) 統計的因果探索. 講談社
-
-\bibitem{Suzuki}
-鈴木努 (2009) Rで学ぶネットワーク分析. 共立出版
-
-%%\bibitem{Bishop}
-%%C.M. Bishop (2007) パターン認識と機械学習　下. シュプリンガー・ジャパン
-
-\end{thebibliography}
-}
-
-\end{frame}
-\end{document}
