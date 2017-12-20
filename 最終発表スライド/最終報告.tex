@@ -176,11 +176,19 @@
 
 \item Projected Normal 分布は方向データを確率変数とする, 確率分布である.
 
-\item 円形, 球形だけでなく, 任意次元の超球面に拡張することができる.
+\item 円形, 球形に加え, 任意次元の超球面に拡張することができる.  \cite{GPN}
 
 \end{itemize}
 
-%%% ここに projected normal 分布の図例 
+\vspace{-0.3cm}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[clip,height= 35mm]{data/PN_sample1.png}
+\end{center}
+\caption{Projected Normal 分布の例}
+\label{pnsample1}
+\end{figure}
+
 \end{frame}
 
 \begin{frame}{背景}
@@ -193,33 +201,150 @@
 
 \end{itemize}
 
-%%% ここに projected normal 分布の2峰性の図例 + von Mises Fisher 図例 
+\begin{figure}[h]
+ \begin{tabular}{c}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 35mm]{data/PN_sample2.png}
+  \end{center}
+  \caption{二峰性を持つ PN 分布の例}
+  \label{pnsample2}
+ \end{minipage}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 35mm]{data/vonMises_sample.png}
+  \end{center}
+  \caption{Von Mises 分布の例}
+  \label{vmsample1}
+ \end{minipage}
+\end{tabular}
+\end{figure}
 
 \end{frame}
 
 \section{目的}
 \begin{frame}{目的}
-\cite{GPN}
+\begin{block}{目的}
+\begin{itemize}
+\item%%%%%%%%%%%%%%%%% ましなことを書きましょう笑 %%%%%%%%%%%%%%%%%%%%%%%%%%
+複数の最頻値をもつ方向データを, 元データより少ないクラスターで説明することで、、、？
+\end{itemize}
+\end{block}
 \end{frame}
 
 \section{Projected Normal 分布}
 \begin{frame}{Projected Normal 分布}
 
-\begin{eqnarray}
+共分散行列が単位行列でない場合の, 円形の Projected Normal 分布の密度関数は以下の式で表せる. \cite{PN1}
+
+\begin{eqnarray*}
 \label{PNC}
 p(\theta|\mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 \exp(C)\left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} I_{[0,2\pi)}(\theta)
-\end{eqnarray}
+\end{eqnarray*}
+
+$u^T = (\cos\theta,\sin\theta), A(\theta) = u^T\Sigma^{-1}u, B(\theta) = u^T \Sigma^{-1} \mu, C = -\frac{1}{2} \mu^T \Sigma^{-1} \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot),\phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
 
 \end{frame}
 
 \section{混合 Projected Normal 分布}
 \begin{frame}{混合 Projected Normal 分布}
+%%% なんかさみしい。。
+
+Projected Normal 分布の混合分布は以下のように定式化できる. 
+
+\begin{eqnarray*}
+\sum^J_{j=1} w_j \mathcal{PN}_2(\mu_j, \Sigma_j)
+\end{eqnarray*}
+\end{frame}
+
+\section{シュミレーション}
+\begin{frame}{シュミレーション(1/2)}
+
+\begin{itemize}
+\item
+複数のvon Mises 分布に従う乱数を発生させて, 1つのデータにまとめることで混合データを作成する.
+
+\item
+Mixture von Mises 分布 および Mixture Projected Normal 分布による混合分布の推定を行う.
+\end{itemize}
+
+\vspace{-0.3cm}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[clip,height= 35mm]{data/mix_test_data.png}
+\end{center}
+\caption{混合データ(クラスター数:4)}
+\label{mixdata}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}{シュミレーション(2/2)}
+
+\begin{itemize}
+\item
+得られた混合分布は, ともに元の分布の特徴をとらえている元になった.
+
+\item
+Mixture von Mises 分布では元のデータと同じく4つの元となる分布を推定したが, Mixture Projected Normal 分布においては3つの元となる分布により以下の結果が得られた.
+
+\end{itemize}
+
+\vspace{-0.3cm}
+\begin{figure}[h]
+ \begin{tabular}{c}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 35mm]{data/mix_pn.png}
+  \end{center}
+  \caption{Mixture Projected Normal 分布により推定した混合分布}
+  \label{pnmix}
+ \end{minipage}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 35mm]{data/mix_von.png}
+  \end{center}
+  \caption{Mixture von Mises分布により推定した混合分布}
+  \label{vonmix}
+ \end{minipage}
+  \end{tabular}
+\end{figure}
 
 \end{frame}
 
 \section{データ解析}
 \begin{frame}{データ解析}
+
+気象庁が発表している風向データを用いて, データ解析を行う.\cite{amedas}
+
+\vspace{-0.3cm}
+\begin{figure}[h]
+ \begin{tabular}{c}
+ \begin{minipage}{0.33\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 25mm]{data/Tokyo_january.png}
+  \end{center}
+  \caption{東京(44132)の1月の風向データ}
+  \label{pntokyo1}
+ \end{minipage}
+ \begin{minipage}{0.33\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 25mm]{data/Tokyo_May.png}
+  \end{center}
+  \caption{東京(44132)の5月の風向データ}
+  \label{pntokyo5}
+ \end{minipage}
+ \begin{minipage}{0.33\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 25mm]{data/Tokyo_September.png}
+  \end{center}
+  \caption{東京(44132)の9月の風向データ}
+  \label{pntokyo9}
+ \end{minipage}
+  \end{tabular}
+\end{figure}
+
 
 \end{frame}
 
@@ -233,14 +358,24 @@ p(\theta|\mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 
 {\scriptsize
 \begin{thebibliography}{99}
-\setlength{\itemsep}{-.5zw}
+%\setlength{\itemsep}{-.5zw}
 \beamertemplatetextbibitems %参考文献に番号を振る
 
 \bibitem{GPN}
 D.Hernandez-Stumpfhauser and F. Jay Breidt and Mark J. van der Woerd. (2017). The General Projected Normal Distribution of Arbitrary Dimension: Modeling and Bayesian Inference. {\it Journal of Bayesian Analysis}, Vol. 12, No. 1, pp. 113-133.
 
-\bibitem{PN}
+\bibitem{PN1}
+Wang, F. and Gelfand, A. E. (2013). Directional data analysis under the general
+projected normal distribution. {\it Statistical Methodology}, Vol.10, pp. 113-127.
+
+\bibitem{PN2}
 Gabriel Nunez-Antonio and Eduardo Gutierrez-Pena. (2005). A Bayesian Analysis of Directional Data using the Projected Normal Distribution. {\it Journal of Applied Statistics}, Vol. 32, No. 10, pp. 995-1001.
+
+\bibitem{mvonMF}
+Jalil Taghia and Zhanyu Ma and Arne Leijon. (2014). Bayesian Estimation of the von-Mises Fisher Mixture Model with Variational Inference. {\it IEEE}, Vol.36, No. 9, pp. 1701-1715.
+
+\bibitem{amedas}
+気象庁ホームページ(www.jma.go.jp/jma/kishou/info/coment.html) 
 
 \end{thebibliography}
 }
