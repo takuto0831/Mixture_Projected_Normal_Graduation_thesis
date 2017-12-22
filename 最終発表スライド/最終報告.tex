@@ -174,7 +174,7 @@
 
 \begin{itemize}
 
-\item Projected Normal 分布は方向データを確率変数とする, 確率分布である.
+\item Projected Normal 分布は方向データを確率変数とする, 確率分布である. 特に円形の場合分布の形状は対称もしくは二峰性となる.
 
 \item 円形, 球形に加え, 任意次元の超球面に拡張することができる.  \cite{GPN}
 
@@ -259,7 +259,7 @@ Projected Normal 分布の混合分布は以下のように定式化できる.
 \end{frame}
 
 \section{シュミレーション}
-\begin{frame}{シュミレーション(1/2)}
+\begin{frame}{シュミレーション(1/3)}
 
 \begin{itemize}
 \item
@@ -280,7 +280,7 @@ Mixture von Mises 分布 および Mixture Projected Normal 分布による混�
 
 \end{frame}
 
-\begin{frame}{シュミレーション(2/2)}
+\begin{frame}{シュミレーション(2/3)}
 
 \begin{itemize}
 \item
@@ -313,10 +313,69 @@ Mixture von Mises 分布では元のデータと同じく4つの元となる分�
 
 \end{frame}
 
+\begin{frame}{シュミレーション(3/3)}
+
+\begin{itemize}
+
+\item
+混合分布を構成する, 各分布を推定する.
+
+横軸が実際のクラスターで, 縦軸が予測のクラスターにおける分布である.
+
+\end{itemize}
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{cc}
+
+% 1
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\caption{PN 分布によるクラスター推定}
+\begin{tabular}{c|c|c|c}
+\hline
+  & 1 & 2 & 3 \\ \hline \hline
+1 & 38 & 10 & 352 \\
+ 2 & 1 & 192 & 7 \\
+ 3 & 0 & 2  & 298 \\
+ 4 & 93 & 0 & 7 \\
+\hline
+ \end{tabular}
+ \end{center}
+\end{minipage}
+
+% 2
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\caption{VM 分布によるクラスター推定}
+\begin{tabular}{c|c|c|c|c}
+\hline
+ & 1 & 2 & 3 & 4 \\ \hline \hline
+1 & 333 & 10 & 39 & 18 \\
+2 & 7 & 192 & 1 & 0 \\
+3 & 298 & 2  & 0 & 0 \\
+4 & 0 & 1 & 94 & 5 \\
+\hline
+\end{tabular}
+\end{center}
+\end{minipage}
+
+\end{tabular}
+\end{center}
+\end{table}
+
+\end{frame}
+
 \section{データ解析}
 \begin{frame}{データ解析}
 
+\begin{itemize}
+
+\item
 気象庁が発表している風向データを用いて, データ解析を行う.\cite{amedas}
+
+気象庁の風向データは36方位で記録されているので角度データ$(0 \leq \theta \leq 2 \pi)$ に変更して, 各分布の推定を行う.
+\end{itemize}
 
 \vspace{-0.3cm}
 \begin{figure}[h]
@@ -345,11 +404,20 @@ Mixture von Mises 分布では元のデータと同じく4つの元となる分�
   \end{tabular}
 \end{figure}
 
-
 \end{frame}
 
 \section{まとめと今後の課題}
 \begin{frame}{まとめと今後の課題}
+
+\begin{itemize}
+
+\item
+前日と前々日の混合分布で今日の風向の分布を予測.
+
+\item
+少数のデータで分布の予測.
+
+\end{itemize}
 
 \end{frame}
 
