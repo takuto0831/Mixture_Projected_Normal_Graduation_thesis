@@ -76,7 +76,7 @@
 %\bibliographystyle{apalike} %いらない
 
 \begin{center}
-{\Large \textbf{混合 Projected Normal 分布によるクラスタリングの性能評価}}
+{\Large \textbf{混合射影正規分布によるクラスタリングについて}}
 \end{center}
 \begin{flushright}
 小坪 琢人（塩濱 敬之准教授）
@@ -88,18 +88,14 @@
 
 \section{はじめに}
 
-\begin{wrapfigure}[10]{r}[5mm]{70mm}
-\vspace{-0.6cm}
-\centering
-\includegraphics[keepaspectratio,width=70mm]{data/kmeans+skmeans.png}
-\vspace{-1cm}
-\caption{k-meansによるクラスタリング(左), skmeansによるクラスタリング(右)}
-\label{kmeans}
-\end{wrapfigure}
 
-$k$-means法は, 各データと各クラスタの中心のユークリッド距離を最小化することで, 各データをクラスタリングする. しかしデータが単位超球面上に配置されている場合, 同一方向のデータを別々のクラスタに分割することがある. そこで spherical $k$-means (skmeans) 法では各データを正規化し, 各データを単位方向ベクトルとする. このようなベクトルを指向性データ(directional data)と呼ぶ. データの単位方向ベクトルと各クラスタにおける重心ベクトルとのコサイン非類似度を最小化することで, 各データをクラスタリングする. 図\ref{kmeans}に$k$-means法と skmeans法によるクラスタリング分析例を示す. 
 
-上記のノンパラメトリックな手法に対し, パラメトリックな超球面上のクラスタリング手法として, S. Gopal and Y. Yang(2014) による Von Mises Fisher 分布の混合分布を用いた手法がある. 混合ガウスモデルと同様に, データを複数の Von Mises Fisher 分布から再現できると仮定して, 各分布のパラメータをマルコフ連鎖モンテカルロ法(MCMC)により逐次計算する. MCMCを用いることで求める分布のパラメータの平均値, 標準偏差を求めることができる. 本研究では方向データの分布として知られる, Projected Normal 分布の混合分布によるクラスタリングの性能評価を行う. Projected Normal 分布はパラメータによって, 単峰性・二峰性の形状を取ることができるので, 多峰性のデータをクラスタリングする際に混合 Von Mises Fisher 分布によるクラスタリングとどのような差異が現れるか比較する.
+\section{超球面上のクラスタリング}
+
+$k$平均法は, 各データと各クラスタの中心のユークリッド距離を最小化することで, 各データをクラスタリングする. しかし確率変数が円周上や球面上に値をとるようなデータに対して, ユークリッド空間のクラスタリングを前提とした$K$平均法はしばしば誤った分類結果をもたらす. Dhillon and Modha(2001) は, ユークリッド距離に基づく非類似度の尺度を単位球面上に射影したコサイン非類似度の最小化に基づく超球面上の$k$平均法を提案した. このようなベクトルを角度データと呼ぶ. データの単位方向ベクトルと各クラスタにおける重心ベクトルとのコサイン非類似度を最小化することで, 各データをクラスタリングする. 
+
+超球面上の$k$平均法は確率モデルを仮定しないノンパラメトリックな手法であるのに対し,  パラメトリックな超球面上のクラスタリング手法として, Gopal and Yang(2014) による von Mises Fisher 分布の混合分布を用いた手法がある. 混合ガウスモデルと同様に, データが von Mises Fisher 分布の混合分布から発生した際に, 混合モデルのパラメータをマルコフ連鎖モンテカルロ法(MCMC)によりサンプリングする. MCMCを用いることで求める事後分布のパラメータの平均値, 標準偏差を求めることができる. 本研究では方向データの分布として知られる, 射影正規分布の混合分布によるクラスタリングの性能評価を行う. %以下要確認%
+射影正規分布はパラメータによって, 単峰性・二峰性の形状を取ることができるので, 多峰性のデータをクラスタリングする際に混合 von Mises Fisher 分布によるクラスタリングとどのような差異が現れるか比較する.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% senction2 混合分布 %%%%%%%%%%%%%%%%%%%%%
@@ -108,11 +104,11 @@ $k$-means法は, 各データと各クラスタの中心のユークリッド距
 \vspace{-0.5zh}
 \subsection{Projected Normal 分布}
 
-Projected 分布は平面または空間上の放射状の射影によって得られる. より一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の General Projected Normal 分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. General Projected Normal 分布は, パラメータ$\bm \mu, \Sigma$をもち, Presnell. B(1998) らによる, $\Sigma = \mathcal{I}$と定義されていたProjected Normal 分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では対称分布もしくは二峰性分布となる.
+射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, Presnell(1998) らによる, $\Sigma = \mathcal{I}$と定義されていた, 射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では対称分布もしくは二峰性分布となる.
 
-Wang and Gelfand (2013) によると,$\Sigma \neq I$のもとで$\mathcal{PN}_2(\bm \mu,\Sigma$)のとき, 円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度は以下で表す.
+Wang and Gelfand (2013) によると, $\Sigma \neq I$のもとで$\mathcal{PN}_2(\bm \mu,\Sigma$)のとき, 円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度は以下で表す.
 
-\vspace{-0.5zh}
+\vspace{-1zh}
 \begin{eqnarray*}
 \label{PNC}
 p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
@@ -120,13 +116,13 @@ p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 \end{eqnarray*}
 
 \noindent
-$\bm u^T = (\cos\theta,\sin\theta), A(\theta) = \bm u^T\Sigma^{-1}\bm u, B(\theta) = \bm u^T \Sigma^{-1} \bm \mu, C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot),\phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である. 
+ここで, $\bm u^T = (\cos\theta,\sin\theta), A(\theta) = \bm u^T\Sigma^{-1}\bm u, B(\theta) = \bm u^T \Sigma^{-1} \bm \mu, C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot),\phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である. 
 
 \newpage
 \vspace{-0.5zh}
 \subsection{混合 Projected Normal 分布}
 
-$m$個のユニットからなる Projected Normal 分布の混合分布は以下のように定式化できる. 
+$m$個のユニットからなる 射影正規分布の混合分布は以下のように定式化できる. 
 
 \vspace{-2zh}
 \begin{eqnarray*}
@@ -135,7 +131,7 @@ p(\theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_2(\theta;\bm \mu
 
 \vspace{-1zh}
 \noindent
-ただし, $w_j$は各ユニットの重みであり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. ここで両辺の対数を取ると, 
+ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. ここで両辺の対数を取ると, 
 
 \vspace{-2zh}
 \begin{eqnarray}
@@ -156,11 +152,12 @@ p(\theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_2(\theta;\bm \mu
 \vspace{-0.5zh}
 \subsection{マルコフ連鎖モンテカルロ法}
 
-本研究ではMCMCアルゴリズムの一つである, ハミルトニアン$\cdot$モンテカルロ法(HMC)を用いて分布の推定を行う. 実装にはstanというツールを用いる. HMCのアルゴリズムはハミルトン方程式の数学的性質によって正当性が保証されている. 一般の確率分布からのサンプリングについて, ハミルトン方程式を定義するには, 元の問題に存在しない仮想的な運動量を補助変数として導入する必要がある. 
+本研究ではMCMCアルゴリズムの一つである, ハミルトニアン$\cdot$モンテカルロ法(HMC)を用いて分布の推定を行う.　HMCのアルゴリズムはハミルトン方程式の数学的性質によって正当性が保証されている. 一般の確率分布からのサンプリングについて, ハミルトン方程式を定義するには, 元の問題に存在しない仮想的な運動量を補助変数として導入する必要がある. 
 
 HMCは物理学の考えを用いて, メトロポリスアルゴリズムによるランダムウォークな振る舞いを局所的に抑圧する. 従って, 目標の分布までより素早く推移することを可能にする. 対象となる各確率変数 $(\theta_j)$に対して, 速度変数$\phi_j$を付与する. このメトロポリスアルゴリズムでは$\theta, \phi$を共に更新する. $\theta$の分布の推移には$ \phi$が大きく影響する. 
 
 HMCでは, 事後確率$p(\theta|y)$は$p(\phi)$の独立な分布によって増大する. したがって結合分布を以下のように定義する.
+
 \vspace{-1zh}
 \begin{eqnarray*}
 p(\theta, \phi|y) = p(\phi)p(\theta|y)
@@ -223,7 +220,7 @@ Projected Normal 分布におけるパラメータは, $\bm \mu,\Sigma$ であ�
 
 \section{シミュレーション}
 
-人工的データを用いて, 混合 Projected Normal 分布によるクラスタリングの性能評価を行う. 複数の Von Mises 分布に従う乱数を発生させて, 1つのデータにまとめることで混合データを作成する. 
+人工的データを用いて, 混合 Projected Normal 分布によるクラスタリングの性能評価を行う. 複数の von Mises 分布に従う乱数を発生させて, 1つのデータにまとめることで混合データを作成する. 
 
 \subsection{解析データ}
 
@@ -345,14 +342,18 @@ True
 
 関係ないページです！
 
-Presnell. B(1998) \cite{PML}
+Presnell(1998) \cite{PML}
 
 Wang and Gelfand (2013) \cite{PN1}
 
 D. Hemandez(2017) \cite{GPN}
 
+Dhillon and Modha(2001) \cite{SKMcluster}
+
+Gopal and Yang(2014) \cite{Gopal}
+
 \if0
-S. Gopal and Y. Yang(2014) \cite{Gopal}
+%%%%%%%% 図の挿入用 %%%%%%%%%%%%%%
 \vspace{-0.3cm}
 \begin{figure}[H]
 \begin{center}
@@ -362,6 +363,16 @@ S. Gopal and Y. Yang(2014) \cite{Gopal}
 \caption{k-meansによるクラスタリング(左), skmeansによるクラスタリング(右)}
 \label{skmeans}
 \end{figure}
+
+%%%%%%%% 回り込み図の挿入用 %%%%%%%%%%%%%%
+\begin{wrapfigure}[10]{r}[5mm]{70mm}
+\vspace{-0.6cm}
+\centering
+\includegraphics[keepaspectratio,width=70mm]{data/kmeans+skmeans.png}
+\vspace{-1cm}
+\caption{k-meansによるクラスタリング(左), skmeansによるクラスタリング(右)}
+\label{kmeans}
+\end{wrapfigure}
 \fi
 
 \end{document}
