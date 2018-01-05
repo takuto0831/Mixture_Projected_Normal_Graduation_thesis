@@ -5,7 +5,7 @@ library(ggthemes)
 library(circular)
 
 # project normal func
-projected_normal_circular <- function(theta,mu,Sigma){
+ff <- function(theta,mu,Sigma){
   u = matrix(c(cos(theta),sin(theta)),ncol=1)
   A = t(u) %*% solve(Sigma) %*% u
   B = t(u) %*% solve(Sigma) %*% mu
@@ -16,7 +16,9 @@ projected_normal_circular <- function(theta,mu,Sigma){
   return(p)
 }
 
-mu = matrix(c(-0.19,2.09),ncol=1); sigma1 = 1.58; sigma2 = 1.4; rho = -0.84
+# 平均 0  
+mu = matrix(c(0,0),ncol=1); 
+sigma1 = 1.58; sigma2 = 1.4; rho = -0.84
 Sigma = matrix(c(sigma1^2,rho*sigma1*sigma2,
                  rho*sigma1*sigma2,sigma2^2),ncol=2)
 
@@ -28,8 +30,23 @@ data.frame(theta = theta,prob = x) %>%
   ggplot(aes(x = theta, y = prob)) + 
   geom_line() 
 
-# project normal 2峰性
+# 非対称分布 
+mu = matrix(c(-0.19,2.09),ncol=1); 
+sigma1 = 1.58; sigma2 = 1.4; rho = -0.84
+Sigma = matrix(c(sigma1^2,rho*sigma1*sigma2,
+                 rho*sigma1*sigma2,sigma2^2),ncol=2)
 
+# 予測値をプロット
+theta <- seq(0, 2 * pi ,0.1)
+x <- foreach(i=circular(theta), .combine = c) %do% projected_normal_circular(i,mu,Sigma) 
+data.frame(theta = theta,prob = x) %>% 
+  ggplot(aes(x = theta, y = prob)) + 
+  geom_line() 
+
+ff <- function(x) dpnorm(x, mu=mu, sigma=Sigma)
+curve.circular(ff, shrink=1.8)
+
+# project normal 2峰性
 mu = matrix(c(-0.24,0.15),ncol=1); sigma1 = 0.458; sigma2 = 1; rho = 0.15
 Sigma = matrix(c(sigma1^2,rho*sigma1*sigma2,
                  rho*sigma1*sigma2,sigma2^2),ncol=2)
@@ -41,7 +58,25 @@ data.frame(theta = theta,prob = x) %>%
   ggplot(aes(x = theta, y = prob)) + 
   geom_line() 
 
+ff <- function(x) dpnorm(x, mu=mu, sigma=Sigma)
+curve.circular(ff, shrink=1.8)
+
+# project normal 共分散行列 = I
+mu = matrix(c(-1.2,-0.95),ncol=1)
+Sigma = matrix(c(1,0,0,1),ncol=2)
+
+# 予測値をプロット
+theta <- seq(0, 2 * pi ,0.1)
+x <- foreach(i=theta, .combine = c) %do% projected_normal_circular(i,mu,Sigma) 
+
+data.frame(theta = theta,prob = x) %>% 
+  ggplot(aes(x = theta, y = prob)) + 
+  geom_line() 
+
+ff <- function(x) dpnorm(x, mu=mu, sigma=Sigma)
+curve.circular(ff, shrink=1.8)
 # von Mises sample
+
 x <- foreach(i=theta, .combine = c) %do% dvonmises(i, mu=circular(3/4), kappa=5)
 data.frame(theta = theta,prob = x) %>% 
   ggplot(aes(x = theta, y = prob)) + 
