@@ -104,7 +104,7 @@ $k$平均法は, 各データと各クラスタの中心のユークリッド距
 \vspace{-0.5zh}
 \subsection{Projected Normal 分布}
 
-射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, Presnell(1998) らによる, $\Sigma = \mathcal{I}$と定義されていた, 射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では対称分布もしくは二峰性分布となる.
+射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, Presnell(1998) らによる, $\Sigma = \mathcal{I}$と定義されていた, 射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では非対称分布もしくは二峰性分布となる.
 
 Wang and Gelfand (2013) によると, $\Sigma \neq I$のもとで$\mathcal{PN}_2(\bm \mu,\Sigma$)のとき, 円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度は以下で表す.
 
@@ -116,9 +116,61 @@ p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 \end{eqnarray*}
 
 \noindent
-ここで, $\bm u^T = (\cos\theta,\sin\theta), A(\theta) = \bm u^T\Sigma^{-1}\bm u, B(\theta) = \bm u^T \Sigma^{-1} \bm \mu, C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot),\phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である. 
+ここで, $\bm u^T = (\cos\theta,\sin\theta), A(\theta) = \bm u^T\Sigma^{-1}\bm u, B(\theta) = \bm u^T \Sigma^{-1} \bm \mu, C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
 
-\newpage
+射影正規分布において対称分布, 非対称分布, 二峰性分布となる例を図$\ref{sample_pn}$に示す. 各パラメータを以下に示す. 
+
+\vspace{-1zh}
+\begin{eqnarray*}
+\bm \mu_1 = \left( \begin{array}{c} 
+-1.2 \\ -0.95
+\end{array} \right), 
+\Sigma_1 = 
+\left( \begin{array}{cc} 
+1 & 0 \\ 0 & 1 
+\end{array} \right),
+\bm \mu_2 =  \left( \begin{array}{c} 
+-0.19 \\ 2.09
+\end{array} \right), 
+\Sigma_2 = 
+\left( \begin{array}{cc} 
+2.49 & -1.85 \\ -1.85 & 1.96 
+\end{array} \right),
+\bm \mu_3 =  \left( \begin{array}{c} 
+-0.24 \\ 0.15
+\end{array} \right), 
+\Sigma_3 = 
+\left( \begin{array}{cc} 
+0.209 & 0.068\\ 0.068 & 1
+\end{array} \right)
+\end{eqnarray*}
+
+\vspace{-1zh}
+\begin{figure}[h]
+ \begin{tabular}{c}
+\hspace{0.5cm}
+ \begin{minipage}{0.33\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 35mm]{data/sample_symmetry.png}
+  \end{center}
+ \end{minipage}
+\hspace{-1.0cm}
+ \begin{minipage}{0.33\hsize}
+  \begin{center}
+ \includegraphics[clip,height= 35mm]{data/sample_asymmetry.png}
+  \end{center}
+ \end{minipage}
+\hspace{-1.0cm}
+ \begin{minipage}{0.33\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 35mm]{data/sample_bimodal.png}
+  \end{center}
+ \end{minipage}
+  \end{tabular}
+\caption{パラメータ$\bm \mu_1, \Sigma_1$とした場合の対称な射影正規分布(左), パラメータ$\bm \mu_2, \Sigma_2$とした場合の非対称な射影正規分布(中央), パラメータ$\bm \mu_3, \Sigma_3$とした場合の二峰性となる射影正規分布(右)}
+\label{sample_pn}
+\end{figure}
+
 \vspace{-0.5zh}
 \subsection{混合 Projected Normal 分布}
 
@@ -143,6 +195,8 @@ p(\theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_2(\theta;\bm \mu
 
 \vspace{-0.5zh}\noindent
 最後の式変形では, 対数尤度を計算するときに, 定数項は尤度に影響を与えないので消去する.
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%  sectio3 解析手法 %%%%%%%%%%%%%%%%%%%%%%%%
