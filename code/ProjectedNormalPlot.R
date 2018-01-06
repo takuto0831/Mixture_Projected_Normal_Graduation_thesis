@@ -44,10 +44,10 @@ data.frame(theta = theta,prob = x) %>%
   geom_line() 
 
 ff <- function(x) dpnorm(x, mu=mu, sigma=Sigma)
-curve.circular(ff, shrink=1.8)
+curve.circular(ff, shrink=1.6,n=1000)
 
 # project normal 2峰性
-mu = matrix(c(-0.24,0.15),ncol=1); sigma1 = 0.458; sigma2 = 1; rho = 0.15
+mu = matrix(c(-0.24,0.15),ncol=1); sigma1 = 0.458; sigma2 = 1.5; rho = 0.15
 Sigma = matrix(c(sigma1^2,rho*sigma1*sigma2,
                  rho*sigma1*sigma2,sigma2^2),ncol=2)
 # 予測値をプロット
@@ -59,7 +59,7 @@ data.frame(theta = theta,prob = x) %>%
   geom_line() 
 
 ff <- function(x) dpnorm(x, mu=mu, sigma=Sigma)
-curve.circular(ff, shrink=1.8)
+curve.circular(ff, shrink=1.6,n=1000)
 
 # project normal 共分散行列 = I
 mu = matrix(c(-1.2,-0.95),ncol=1)
@@ -74,7 +74,7 @@ data.frame(theta = theta,prob = x) %>%
   geom_line() 
 
 ff <- function(x) dpnorm(x, mu=mu, sigma=Sigma)
-curve.circular(ff, shrink=1.8)
+curve.circular(ff, shrink=1.6,n=1000)
 # von Mises sample
 
 x <- foreach(i=theta, .combine = c) %do% dvonmises(i, mu=circular(3/4), kappa=5)
