@@ -88,11 +88,9 @@
 
 \section{はじめに}
 
+円周上や球面上のデータを扱う統計手法を方向統計学といい, 近年多様体上の統計分析手法として, 注目を集めている. 方向統計学とは風向データ, 渡り鳥の移動方向データなどの角度観測値を含むデータを対称とする統計学である. このようなデータをユークリッド空間上 $(\mathbb{R}^p)$ のベクトルとして扱うと不適当なことがある. 最も分かりやすい例としてはデータが単位ベクトルに正規化されている場合であり, データは単位超球面上 $(\mathbb{S}^{p-1})$ に分布する. データを多様体上の分布として扱うことで, 数学的モデルを作る際に低次元で考えられるなどの利点がある. 円周あるいは超球面上の分布を生成するいくつかの方法が知られている. 代表的なものは, 巻き込み法, 射影法, 条件付法, 投影法である. 本研究では射影法を用いた射影分布によるクラスタリングについて議論する.
 
-
-\section{超球面上のクラスタリング}
-
-$k$平均法は, 各データと各クラスタの中心のユークリッド距離を最小化することで, 各データをクラスタリングする. しかし確率変数が円周上や球面上に値をとるようなデータに対して, ユークリッド空間のクラスタリングを前提とした$K$平均法はしばしば誤った分類結果をもたらす. Dhillon and Modha(2001) は, ユークリッド距離に基づく非類似度の尺度を単位球面上に射影したコサイン非類似度の最小化に基づく超球面上の$k$平均法を提案した. このようなベクトルを角度データと呼ぶ. データの単位方向ベクトルと各クラスタにおける重心ベクトルとのコサイン非類似度を最小化することで, 各データをクラスタリングする. 
+まず代表的なクラスタリング手法として, $k$平均法が挙げられる. $k$平均法は, 各データと各クラスタの中心のユークリッド距離を最小化することで, 各データをクラスタリングする. しかし確率変数が円周上や球面上に値をとるようなデータに対して, ユークリッド空間のクラスタリングを前提とした$K$平均法はしばしば誤った分類結果をもたらす. Dhillon and Modha(2001) は, ユークリッド距離に基づく非類似度の尺度を単位球面上に射影したコサイン非類似度の最小化に基づく超球面上の$k$平均法を提案した. このようなベクトルを角度データと呼ぶ. データの単位方向ベクトルと各クラスタにおける重心ベクトルとのコサイン非類似度を最小化することで, 各データをクラスタリングする. 
 
 超球面上の$k$平均法は確率モデルを仮定しないノンパラメトリックな手法であるのに対し,  パラメトリックな超球面上のクラスタリング手法として, Gopal and Yang(2014) による von Mises Fisher 分布の混合分布を用いた手法がある. 混合ガウスモデルと同様に, データが von Mises Fisher 分布の混合分布から発生した際に, 混合モデルのパラメータをマルコフ連鎖モンテカルロ法(MCMC)によりサンプリングする. MCMCを用いることで求める事後分布のパラメータの平均値, 標準偏差を求めることができる. 本研究では方向データの分布として知られる, 射影正規分布の混合分布によるクラスタリングの性能評価を行う. %以下要確認%
 射影正規分布はパラメータによって, 単峰性・二峰性の形状を取ることができるので, 多峰性のデータをクラスタリングする際に混合 von Mises Fisher 分布によるクラスタリングとどのような差異が現れるか比較する.
@@ -104,7 +102,29 @@ $k$平均法は, 各データと各クラスタの中心のユークリッド距
 \vspace{-0.5zh}
 \subsection{Projected Normal 分布}
 
-射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, Presnell(1998) らによる, $\Sigma = \mathcal{I}$と定義されていた, 射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では非対称分布もしくは二峰性分布となる.
+\begin{wrapfigure}[8]{r}[3mm]{80mm}
+\vspace{-5.0zh}
+%\begin{figure}[h]
+ \begin{tabular}{c}
+
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 35mm]{data/sample_False.png}
+  \end{center}
+ \end{minipage}
+\hspace{-0.4cm}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+ \includegraphics[clip,height= 35mm]{data/sample_True.png}
+  \end{center}
+ \end{minipage}
+\end{tabular}
+\caption{算術平均による平均の定義(左), 円周上における平均方向の定義(右)}
+\label{sample_mu}
+%\end{figure}
+\end{wrapfigure}
+
+射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, Presnell(1998) らによる, $\Sigma = \mathcal{I}$と定義されていた, 射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では非対称分布もしくは二峰性分布となる. ここで平均方向について説明する. 図$\ref{sample_mu}$に示した, $\pi/3$(実線) ラジアンと$5\pi/3$ ラジアン (実線)の平均方向について考える. 算術平均では$(\pi/3 + 5\pi/3)/2 = \pi$ (点線)となるが, 2つの平均方向としては不適切なことが分かる. よってこれらの角度を円周上の点 $(\cos \frac{\pi}{3}, \sin \frac{\pi}{3}) = (\frac{1}{2},\frac{\sqrt{3}}{2}), (\cos \frac{5\pi}{3}, \sin \frac{5\pi}{3}) = (\frac{1}{2},- \frac{\sqrt{3}}{2})$ と表し, 2つのベクトルの平均を取ることで $\frac{1}{2} (\cos 0, \sin 0)$ となり, 平均方向は$0$ラジアン(点線)となる. 
 
 Wang and Gelfand (2013) によると, $\Sigma \neq I$のもとで$\mathcal{PN}_2(\bm \mu,\Sigma$)のとき, 円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度は以下で表す.
 
@@ -141,7 +161,7 @@ p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 \end{array} \right), 
 \Sigma_3 = 
 \left( \begin{array}{cc} 
-0.209 & 0.068\\ 0.068 & 1
+0.209 & 0.068\\ 0.068 & 2.25
 \end{array} \right)
 \end{eqnarray*}
 
@@ -151,25 +171,27 @@ p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 \hspace{0.5cm}
  \begin{minipage}{0.33\hsize}
   \begin{center}
-   \includegraphics[clip,height= 35mm]{data/sample_symmetry.png}
+   \includegraphics[clip,height= 40mm]{data/sample_symmetry.png}
   \end{center}
  \end{minipage}
 \hspace{-1.0cm}
  \begin{minipage}{0.33\hsize}
   \begin{center}
- \includegraphics[clip,height= 35mm]{data/sample_asymmetry.png}
+ \includegraphics[clip,height= 40mm]{data/sample_asymmetry.png}
   \end{center}
  \end{minipage}
 \hspace{-1.0cm}
  \begin{minipage}{0.33\hsize}
   \begin{center}
-   \includegraphics[clip,height= 35mm]{data/sample_bimodal.png}
+   \includegraphics[clip,height= 40mm]{data/sample_bimodal.png}
   \end{center}
  \end{minipage}
   \end{tabular}
 \caption{パラメータ$\bm \mu_1, \Sigma_1$とした場合の対称な射影正規分布(左), パラメータ$\bm \mu_2, \Sigma_2$とした場合の非対称な射影正規分布(中央), パラメータ$\bm \mu_3, \Sigma_3$とした場合の二峰性となる射影正規分布(右)}
 \label{sample_pn}
 \end{figure}
+
+% Wang and Gelfand(2013) によると各パラメータの単一の影響は良く分かっていない. だから各パラメータを細かく説明するのは困難である. しかしこの分布の柔軟な特性は予測などにおいて便利である.
 
 \vspace{-0.5zh}
 \subsection{混合 Projected Normal 分布}
@@ -183,7 +205,22 @@ p(\theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_2(\theta;\bm \mu
 
 \vspace{-1zh}
 \noindent
-ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. ここで両辺の対数を取ると, 
+ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 
+
+混合射影正規分布におけるパラメータは, $w, \bm \mu, \Sigma$であるが, 共分散行列 $\Sigma$は
+
+\vspace{-0.5zh}
+\[
+ \Sigma = \left(
+    \begin{array}{cc}
+      \tau^2 & \rho \tau \\
+      \rho \tau & 1
+    \end{array}
+  \right)
+\]
+
+\noindent
+と定義するので, パラメータベクトルは$\eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \tau_1, \dots, \tau_m, \rho_1, \dots, \rho_m)$となる. Wang and Gelfand (2013)の研究から, 各パラメータの事前分布を $\bm \mu \sim N(\bm 0, 10^5 \bm I_2)$, $\tau \sim \mathrm{half Cauchy}(0,5)$, $\rho \sim U(-1,1)$, $\bm w \sim Dirichlet(2,2, \cdots, 2)$ と設定する. 
 
 \vspace{-2zh}
 \begin{eqnarray}
@@ -192,11 +229,6 @@ p(\theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_2(\theta;\bm \mu
 &=& \sum^m_{j=1} \left[ \log w_j - \log 2\pi - \log A - \frac{1}{2} \log |\Sigma| + C + \log \left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} \right] \nonumber \\
 &\propto& \sum^m_{j=1} \left[ \log w_j - \log A - \frac{1}{2} \log |\Sigma| + C + \log \left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} \right]  
 \end{eqnarray}
-
-\vspace{-0.5zh}\noindent
-最後の式変形では, 対数尤度を計算するときに, 定数項は尤度に影響を与えないので消去する.
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%  sectio3 解析手法 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -267,7 +299,7 @@ Projected Normal 分布におけるパラメータは, $\bm \mu,\Sigma$ であ�
   \right)
 \]
 
-よって推定すべきパラメータは$\bm \mu, \tau, \rho, \bm w$となる. Wang and Gelfand (2013)の研究から, 各パラメータの事前分布を $\bm \mu \sim N(\bm 0, 10^5 \bm I_2)$, $\tau \sim \mathrm{half Cauchy}(0,5)$, $\rho \sim U(-1,1)$, $\bm w \sim Dirichlet(2,2, \cdots, 2)$ と設定する. ここで重みパラメータ$\bm w$は$m$次元の$Dirichlet$分布に従うものとする. MCMCのアルゴリズムに従って, 各パラメータを変化させながら, 式$\ref{logPN}$で定義した対数尤度を最大化するようなパラメータの分布を取得する. パラメータは収束すると, 単峰性の分布となり, その平均値をパラメータの推定値として扱うことが出来る. 
+ここで重みパラメータ$\bm w$は$m$次元の$Dirichlet$分布に従うものとする. MCMCのアルゴリズムに従って, 各パラメータを変化させながら, 式$\ref{logPN}$で定義した対数尤度を最大化するようなパラメータの分布を取得する. パラメータは収束すると, 単峰性の分布となり, その平均値をパラメータの推定値として扱うことが出来る. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%  sectio4 数値実験 %%%%%%%%%%%%%%%%%%%%%%%%
