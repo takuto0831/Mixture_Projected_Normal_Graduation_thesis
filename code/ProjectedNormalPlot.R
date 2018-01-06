@@ -18,7 +18,7 @@ ff <- function(theta,mu,Sigma){
 
 # 平均 0  
 mu = matrix(c(0,0),ncol=1); 
-sigma1 = 1.58; sigma2 = 1.4; rho = -0.84
+sigma1 = 1; sigma2 = 1; rho = 0
 Sigma = matrix(c(sigma1^2,rho*sigma1*sigma2,
                  rho*sigma1*sigma2,sigma2^2),ncol=2)
 
@@ -47,7 +47,8 @@ ff <- function(x) dpnorm(x, mu=mu, sigma=Sigma)
 curve.circular(ff, shrink=1.6,n=1000)
 
 # project normal 2峰性
-mu = matrix(c(-0.24,0.15),ncol=1); sigma1 = 0.458; sigma2 = 1.5; rho = 0.15
+mu = matrix(c(-0.24,0.15),ncol=1); 
+sigma1 = 0.458; sigma2 = 1.5; rho = 0.15
 Sigma = matrix(c(sigma1^2,rho*sigma1*sigma2,
                  rho*sigma1*sigma2,sigma2^2),ncol=2)
 # 予測値をプロット
@@ -82,3 +83,8 @@ data.frame(theta = theta,prob = x) %>%
   ggplot(aes(x = theta, y = prob)) + 
   geom_line() 
 
+## 平均方向の説明
+plot(c(circular(pi/3),circular(5*pi/3)),shrink = 1)
+arrows.circular(c(circular(pi/3),circular(5*pi/3)))
+arrows.circular(circular(0),col=2,cex=10)
+arrows.circular(circular(pi),col=2,cex=10)
