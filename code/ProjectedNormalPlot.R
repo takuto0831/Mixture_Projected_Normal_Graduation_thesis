@@ -86,5 +86,6 @@ data.frame(theta = theta,prob = x) %>%
 ## 平均方向の説明
 plot(c(circular(pi/3),circular(5*pi/3)),shrink = 1)
 arrows.circular(c(circular(pi/3),circular(5*pi/3)))
-arrows.circular(circular(0),col=2,cex=10)
-arrows.circular(circular(pi),col=2,cex=10)
+arrows.circular(circular(0),col=4,cex=50,lty=5)
+arrows.circular(circular(pi),col=4,cex=50,lty=5)
+
