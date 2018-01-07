@@ -1,2 +1,4 @@
-\contentsline {figure}{\numberline {2.1}{\ignorespaces ナイーブベイズの例}}{3}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Tree Augmented Naive Bayes}}{4}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces 算術平均による平均の定義(左), 円周上における平均方向の定義(右)}}{1}
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Text excluding the matrix}}{2}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces 混合データ(クラスター数:4)}}{6}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Mixture Projected Normal 分布により推定した混合分布(左), Mixture von Mises分布により推定した混合分布(右)}}{6}

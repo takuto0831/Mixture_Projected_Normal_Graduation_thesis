@@ -14,13 +14,14 @@
 %\usepackage{listings,jlisting}
 \usepackage{listings}
 \usepackage{url}
+\usepackage{wrapfig}
 \usepackage[square]{natbib}
 
 \newtheorem{theo}{定理}[section]
 \newtheorem{defi}{定義}[section]
 \newtheorem{lemm}{命題}[section]
 
-\title{ベイジアンネットワークモデルについて}   %タイトル
+\title{混合射影正規分布によるクラスタリングについて}   %タイトル
 \author{小坪琢人}   %著者
 \date{\today}   %日付
 
@@ -60,289 +61,297 @@
 \section{はじめに}
 %%% 2-3ページ  %%%%
 
-コンピュータ, ソフトウェア, インターネット技術などの情報技術は目覚しく発達し, 人間の生活はインターネットに大きく依存している形である. またインターネット通販サイトAmazon.comに見られる, その人にとってのお薦め商品を自動的に選ぶリコメンデーション機能や, Googleで用いられている重要なページを上位にランク付けする PageRank などは人間の意思決定にも大きく影響している. こうした機能は本人さえも気付いていない趣向性を明らかにすることもあるが, ユーザーの選択肢が狭める可能性がある.
+\section{はじめに}
 
-Amazon.com リコメンドを例にとって説明すると, 各ユーザーの購入した商品を記録し, 同様の商品購入パターンを持つ他のユーザーとグループ化する. そのグループ内であるユーザはまだ購入していないが, 他のユーザーが購入しているものを, リコメンドするという仕組みである. この手法は協調フィルタリングと呼ばれている. Amazon のように多くのユーザーを抱える企業では, 様々な特徴をもつユーザーも観測できるので, 精度の高いリコメンドを行うことが出来る.
+円周上や球面上のデータを扱う統計手法を方向統計学といい, 近年多様体上の統計分析手法として, 注目を集めている. 方向統計学とは風向データ, 渡り鳥の移動方向データなどの角度観測値を含むデータを対称とする統計学である. 単位超球面上 $(\mathbb{S}^{p-1})$ に分布するようなデータをユークリッド空間上のデータとして扱うと不適当なことがある. データを多様体上の分布として扱うことで, 数学的モデルを作る際に低次元で考えられるなどの利点がある. 円周あるいは超球面上の分布を生成するいくつかの方法が知られている. 代表的なものは, 巻き込み法, 射影法, 条件付法, 投影法である. 本研究では射影法を用いた射影分布によるクラスタリングについて議論する.
 
-コンピュータが自動的に人間に情報を与えてくれるのは便利であるが, 問題点もある. 自動化の問題点としては, 分析やシュミレーションの実態が見えにくくなるという点である. 機械がある種のブラックボックスとなり, 都合よく利用されてしまう可能性がある. 人間が生活していくうえで, 重要視されるのは効率性よりも人間らしい判断である. その中で機械による効率的な自動化は, 意思決定に不信感をもたらす危険性を持っている.
+まず代表的なクラスタリング手法として, $k$平均法が挙げられる. $k$平均法は, 各データと各クラスタの中心のユークリッド距離を最小化することで, 各データをクラスタリングする. しかし確率変数が円周上や球面上に値をとるようなデータに対して, ユークリッド空間のクラスタリングを前提とした$K$平均法はしばしば誤った分類結果をもたらす. Dhillon and Modha (2001) は, ユークリッド距離に基づく非類似度の尺度を単位球面上に射影したコサイン非類似度の最小化に基づく超球面上の$k$平均法を提案した. データの単位方向ベクトルと各クラスタにおける重心ベクトルとのコサイン非類似度を最小化することで, 各データをクラスタリングする. 
 
-それらを解決する方法として, 可視化というものが存在する. グラフやプロットにより数値的根拠を明らかにすることで, ブラックボックス化を防ぐことができる. 一般に可視化は得られた結果の解釈の手助けとして用いられているが, モデル自体が視覚的に解釈できるものも存在する. 例としては決定木やグラフィカルモデルなどである. 本論文ではこのグラフィカルモデルについて取り上げる. 
+超球面上の$k$平均法は確率モデルを仮定しないノンパラメトリックな手法であるのに対し,  パラメトリックな超球面上のクラスタリング手法として, Gopal and Yang (2014) による von Mises Fisher 分布の混合分布を用いた手法がある. 単位超級面上の分布として知られる, von Mises Fisher 分布を用いて, MCMCサンプリングにより高次元データのクラスタリングを行う. MCMCを用いることで求める事後分布のパラメータの平均値, 標準偏差を求めることができる. 本研究では方向データの分布として知られる, 射影正規分布の混合分布によるクラスタリングの性能評価を行う. %以下要確認%
+射影正規分布はパラメータによって, 単峰性・二峰性の形状を取ることができるので, 多峰性のデータをクラスタリングする際に混合 von Mises Fisher 分布によるクラスタリングとどのような差異が現れるか比較する.
 
-%%% グラフィカルモデルの本読んでもう少し書くよ
-%%% 因果関係のことどこにいれる？？
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%% senction2 混合分布 %%%%%%%%%%%%%%%%%%%%%
 
-グラフィカルモデルは以下のような特徴を持つ.\citep{Bishop2}
+\section{混合 Projected Normal 分布}
+\vspace{-0.5zh}
+\subsection{Projected Normal 分布}
+
+\begin{wrapfigure}[8]{r}[3mm]{80mm}
+\vspace{-5.0zh}
+%\begin{figure}[h]
+ \begin{tabular}{c}
+
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 35mm]{data/sample_False.png}
+  \end{center}
+ \end{minipage}
+\hspace{-0.4cm}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+ \includegraphics[clip,height= 35mm]{data/sample_True.png}
+  \end{center}
+ \end{minipage}
+\end{tabular}
+\caption{算術平均による平均の定義(左), 円周上における平均方向の定義(右)}
+\label{sample_mu}
+%\end{figure}
+\end{wrapfigure}
+
+射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, Presnell (1998) らによる, $\Sigma = \mathcal{I}$と定義されていた, 射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では非対称分布もしくは二峰性分布となる. ここで平均方向について説明する. 図$\ref{sample_mu}$に示した, $\pi/3$(実線) ラジアンと$5\pi/3$ ラジアン (実線)の平均方向について考える. 算術平均では$(\pi/3 + 5\pi/3)/2 = \pi$ (点線)となるが, 2つの平均方向としては不適切なことが分かる. よってこれらの角度を円周上の点 $(\cos \frac{\pi}{3}, \sin \frac{\pi}{3}) = (\frac{1}{2},\frac{\sqrt{3}}{2}), (\cos \frac{5\pi}{3}, \sin \frac{5\pi}{3}) = (\frac{1}{2},- \frac{\sqrt{3}}{2})$ と表し, 2つのベクトルの平均を取ることで $\frac{1}{2} (\cos 0, \sin 0)$ となり, 平均方向は$0$ラジアン(点線)となる. 
+
+Wang and Gelfand (2013) によると, $\mathcal{PN}_2(\bm \mu,\Sigma$)の円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度は以下で表す.
+
+\vspace{-1zh}
+\begin{eqnarray*}
+\label{PNC}
+p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
+\exp(C)\left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} I_{[0,2\pi)}(\theta)
+\end{eqnarray*}
+
+\noindent
+ここで, $\bm u^T = (\cos\theta,\sin\theta), A(\theta) = \bm u^T\Sigma^{-1}\bm u, B(\theta) = \bm u^T \Sigma^{-1} \bm \mu, C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
+
+射影正規分布において対称分布, 非対称分布, 二峰性分布となる例を図$\ref{sample_pn}$に示す. 
+
+\vspace{-0.5zh}
+\begin{figure}[h]
+ \begin{tabular}{c}
+\hspace{0.5cm}
+ \begin{minipage}{0.33\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 40mm]{data/sample_symmetry.png}
+  \end{center}
+ \end{minipage}
+\hspace{-1.0cm}
+ \begin{minipage}{0.33\hsize}
+  \begin{center}
+ \includegraphics[clip,height= 40mm]{data/sample_asymmetry.png}
+  \end{center}
+ \end{minipage}
+\hspace{-1.0cm}
+ \begin{minipage}{0.33\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 40mm]{data/sample_bimodal.png}
+  \end{center}
+ \end{minipage}
+  \end{tabular}
+\caption[Text excluding the matrix]{
+$\bm \mu = \begin{pmatrix} -1.2 \\ -0.95 \\ \end{pmatrix}, \Sigma = \begin{pmatrix}  1 & 0 \\ 0 & 1 \\ \end{pmatrix}$
+とした場合の対称な射影正規分布(左), 
+$\bm \mu = \begin{pmatrix} -0.19 \\ 2.09 \\ \end{pmatrix}, \Sigma = \begin{pmatrix} 2.49 & -1.85 \\ -1.85 & 1.96 \\ \end{pmatrix}$ とした場合の非対称な射影正規分布(中央), 
+$\bm \mu = \begin{pmatrix} -0.24 \\ 0.15 \\ \end{pmatrix}, \Sigma = \begin{pmatrix}  0.209 & 0.068\\ 0.068 & 2.25 \\ \end{pmatrix}$ とした場合の二峰性となる射影正規分布(右)}
+\label{sample_pn}
+\end{figure}
+
+% Wang and Gelfand(2013) によると各パラメータの単一の影響は良く分かっていない. だから各パラメータを細かく説明するのは困難である. しかしこの分布の柔軟な特性は予測などにおいて便利である.
+
+\vspace{-2zh}
+\subsection{混合 Projected Normal 分布}
+
+$m$個のユニットからなる 射影正規分布の混合分布は以下のように定式化できる. 
+
+\vspace{-2zh}
+\begin{eqnarray*}
+p(\theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_2(\theta;\bm \mu_j, \Sigma_j) 
+\end{eqnarray*}
+
+\vspace{-1zh}
+\noindent
+ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 混合射影正規分布におけるパラメータは, $w, \bm \mu_j, \Sigma_j$であるが, パラメータに識別可能性を保持するという制約を加えると共分散行列 $\Sigma$は
+
+\vspace{-1zh}
+\[
+ \Sigma_j = \left(
+    \begin{array}{cc}
+      \tau_j^2 & \rho_j \tau_j \\
+      \rho_j \tau_j & 1
+    \end{array}
+  \right)
+\]
+
+\vspace{-0.5zh}
+\noindent
+と定義されるので, パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \tau_1, \dots, \tau_m, \rho_1, \dots, \rho_m)$となる. 各パラメータの事前分布を $\bm \mu_j \sim N(\bm 0, 10^5 \bm I_2)$, $\tau_j \sim \mathrm{half Cauchy}(0,5)$, $\rho_j \sim U(-1,1)$, $\bm w \sim Dirichlet(2,2, \dots, 2)$ と設定する. ここで混合比率$\bm w$は$m$次の$Dirichlet$分布に従うものとする. $\bm \mu_j$は$0$付近に存在するという背景を元に, 正規分布による弱情報事前分布とし, $\tau_j$は非負かつ値が大きくなりすぎないように, 裾の重いコーシー分布を$0$で切断した, 半コーシー分布を弱情報事前分布とする. $\rho_j$は$-1 \sim 1$に存在することが分かっているので, 一様分布を弱情報事前分布とし, $\bm w$は非負かつ和が $1$となる性質をもつディリクレ分布を弱情報事前分布とする.
+
+角度データ $\theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を $p(\bm \eta| \theta)$, パラメータベクトルの事前分布を $p(\bm \eta)$とすると事後分布は以下で定義できる. 
+
+\vspace{-1zh}
+\begin{eqnarray*}
+p(\bm \eta | \theta) = \frac{p(\theta | \bm \eta) p(\bm \eta)}{p(\theta)} \propto p(\theta | \bm \eta) p(\bm \eta)
+\end{eqnarray*}
+
+\vspace{-0.5zh}
+\noindent
+すなわち, 事後分布$p(\bm \eta | \theta)$は尤度$p(\theta | \bm \eta)$と事前分布 $p(\bm \eta| \theta)$の積に比例する. ここで, $p(\theta)$はすでに得られた, データ$\theta$にのみ依存する定数値であるので, $p(\theta | \bm \eta) p(\bm \eta)$が $\bm \eta$ の分布の形を作り, $p(\theta)$は正規化定数とみなすことが出来る. 尤度と事前分布の計算は簡単だが, $p(\theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させて事後分布の代わりとする. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 尤度は$1$より小さい多数の値の積であり, そのままでは扱いにくいため尤度の対数を取るのが一般的である. これを対数尤度と呼び, 式$\ref{logPN}$ に示す. 
+
+\vspace{-2zh}
+\begin{eqnarray}
+\label{logPN}
+\log p(\theta | \bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_2(\theta;\bm \mu_j, \Sigma_j)\} \nonumber \\ 
+&=& \sum^m_{j=1} \left[ \log w_j - \log 2\pi - \log A - \frac{1}{2} \log |\Sigma| + C + \log \left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} \right] \nonumber \\
+&\propto& \sum^m_{j=1} \left[ \log w_j - \log A - \frac{1}{2} \log |\Sigma| + C + \log \left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} \right]  
+\end{eqnarray}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%  sectio3 解析手法 %%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{解析手法}
+
+\vspace{-0.5zh}
+\subsection{マルコフ連鎖モンテカルロ法}
+
+本研究ではMCMCアルゴリズムの一つである, ハミルトニアン$\cdot$モンテカルロ法(HMC)を用いて分布の推定を行う.　HMCのアルゴリズムはハミルトン方程式の数学的性質によって正当性が保証されている. 一般の確率分布からのサンプリングについて, ハミルトン方程式を定義するには, 元の問題に存在しない仮想的な運動量を補助変数として導入する必要がある. 
+
+HMCは物理学の考えを用いて, メトロポリスアルゴリズムによるランダムウォークな振る舞いを局所的に抑圧する. 従って, 目標の分布までより素早く推移することを可能にする. 対象となる各確率変数 $(\theta_j)$に対して, 速度変数$\phi_j$を付与する. このメトロポリスアルゴリズムでは$\theta, \phi$を共に更新する. $\theta$の分布の推移には$ \phi$が大きく影響する. 
+
+HMCでは, 事後確率$p(\theta|y)$は$p(\phi)$の独立な分布によって増大する. したがって結合分布を以下のように定義する.
+
+\vspace{-1zh}
+\begin{eqnarray*}
+p(\theta, \phi|y) = p(\phi)p(\theta|y)
+\end{eqnarray*}
+
+$\theta$をシュミレーションするために, 上記の結合分布によりパラメータをシュミレーションする. この補助変数$\phi$を導入することでパラメータ空間をより効率的に移動することを可能にする. HMCは対数事後密度の勾配を要求する. $d$次元のパラメータ$\theta$の勾配は以下で表す.
+
+\vspace{-1zh}
+\begin{eqnarray*}
+\frac{d \log p(\bm \theta|y)}{d \bm \theta} = \left( 
+  \frac{d \log p(\bm \theta|y)}{d \theta_1}, \ldots,
+  \frac{d \log p(\bm \theta|y)}{d \theta_d} \right)
+\end{eqnarray*}
+
+$\phi$については, 平均$0$, 共分散行列$M$の多変量正規分布を与える. $\phi$の要素が独立の場合は各次元ごとに$\phi_j \sim N(0,M_{jj})$を与える. $M$は,事後分布の逆共分散行列 $\Bigl(\mbox{var}(\theta|y)\Bigr)^{-1}$で大まかにスケールすることができる. しかし, アルゴリズムはどんな場合でも動作するが, $M$のスケーリングが優れているだけで, HMCがより効率的となる.
+
+HMCでは3つの動作を繰り返し行う.
 
 \begin{enumerate}
 
-\item 確率モデルの構造を視覚化する簡単な方法を提供し, 新しいモデルの設計方針を決めるのに役立つ.
+\item{}
+この反復は, $\phi$をその事後分布から無作為に引くことによって開始する. これは, $\phi \sim N(0,M)$の事前分布と同様である.
 
-\item グラフの構造を調べることにより, 条件付独立性などのモデルの性質に関する知見が得られる.
+\item{}
+$\theta, \phi$を同時に更新する.
+\vspace{-0.5zh}
+\begin{eqnarray*}
+\phi_{t+\frac{1}{2}} \leftarrow \phi_t + \frac{1}{2} \epsilon \frac{d \log p(\theta|y)}{d\theta}, 
+\theta{t+1} \leftarrow \theta_t + \epsilon M^{-1}\phi_{t+\frac{1}{2}},
+\phi_{t+1} \leftarrow \phi_{t+\frac{1}{2}} + \frac{1}{2} \epsilon \frac{d \log p(\theta|y)}{d\theta_{t+1}}. 
+\end{eqnarray*}
 
-\item 精巧なモデルにおいて推論や学習を実行するためには複雑な計算が必要となるが, これを数学的な表現で暗に伴うグラフ上の操作として表現することができる.
+\item{}
+得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\theta^*, \phi^*$として,
+現在が$t$回目の反復とすると, サンプルの棄却率は
+\vspace{-0.5zh}
+$$ r = \frac{p(\theta^*|y) p(\phi^*)}{p(\theta^{t-1}|y) p(\phi^{t-1})}$$
+と定義され, $0$から$1$の間でランダムに選んだ数値より, $r$が高ければ$\theta^*$を採択する. サンプル数が定めた値に達したら, 終了する.
 
 \end{enumerate}
 
-グラフはリンク(link)によって接続されたノード(node)の集合からなる. 確率的グラフィカルモデルでは, 各ノードが確率変数を, リンクがこれらの変数間の確率的関係を表現する. 本論では有向グラフィカルとも呼ばれる, ベイジアンネットワーク(Bayesian network)を用いた分類モデルについて議論する.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%  sectio4 数値実験 %%%%%%%%%%%%%%%%%%%%%%%%
 
-本研究ではベイジアンネットワークの構造学習における問題点を改良し, 確率変数間の因果関係を正しく推論した上で, ベイジアンネットワークを構築する.
+\section{シミュレーション}
 
-%%%%%%%%%%%%%%%%%%%%% 用いるモデルの説明 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{ネットワークモデリング}
-
-\subsection{ベイジアンネットワーク}
-
-ベイジアンネットワークは, 確率変数間の条件付依存関係を表した非循環型有向グラフ(DAG: Directed Acyclic Graph)で, 各種推論などに用いられる. 各ノードは確率変数を表し, 有向辺は変数間の直接の依存関係を表す. 一般には各変数は離散値を取るが, 閾値を定めて離散値に変換すれば連続値にも適用可能である. ベイジアンネットワークでは, リンクの先にあるノードを子ノード$(X_j)$, リンクの元にあるノードを親ノード$(X_i)$と呼ぶ. 親ノードが複数あるとき子ノード$X_j$の親ノードの集合を$Pa(X_j)$と書くことにする. $X_j$と$Pa(X_j)$の間の依存関係は次の条件付確率によって表される. ただし$Pa(X_j)$が空集合の時, $X_j$はベイジアンネットワークの始点であるので, 事前確率分布($P(X_j))$となる.
-
-\begin{eqnarray}
-\label{eq1}
-P(X_j | Pa(X_j)) = \frac{P(X_j, Pa(X_j))}{P(Pa(X_j))} 
-\end{eqnarray}
-
-さらに$n$個の確率変数$X_1, \dots, X_n$のそれぞれを子ノードとして同様に考えると, 全ての確率変数の同時確率分布は式(\ref{eq2})のように表せる.
-
-\begin{eqnarray}
-\label{eq2}
-P(X_1, \dots, X_n) = \prod_{j=1}^n P(X_j | Pa(X_j))
-\end{eqnarray}
-
-上記の式(\ref{eq1})に基づいて, 各ノードについて条件付確率を求めた表を条件付確率表(CPT)といい, 各行の和は必ず$1$になる. 任意の子ノードはそのノードの親ノードのいずれかに起因するので総和は$1$となる (親ノード集合に含まれていないノードを条件とした条件付確率は$0$となる). 条件付確率表の例を表(\ref{cpt})に示す. 
-
-\begin{table}[H]
-\begin{center}
-\caption{条件付確率表（CPT）}   %キャプション
-\label{cpt}   %ラベル
-\begin{tabular}{|c||c|c|c|}   %{}で文字の揃え方を指定
-\hline
- & $Pa(X_{j})=x_{1}$ & \dots & $Pa(X_{j})=x_{m}$
-\\ \hline
-$X_j=y_1$ & $p(y_1|Pa(X_j)=x_1)$ & \dots & $p(y_1|Pa(X_j)=x_m)$
-\\ \hline
-$\vdots$ & $\vdots$ & $\ddots$ & $\vdots$
-\\ \hline
-$X_j=y_n$ & $ p(y_n|Pa(X_j)=x_1)$ & \dots & $p(y_n|Pa(X_j)=x_m)$
-\\ \hline
-\end{tabular}
-\end{center}
-\end{table}
-
-ベイジアンネットワークモデルでは親ノードに対応する変数の値が与えられたとき, 逐次的に各ノードの値も計算される. つまり親ノード以外のノードの値が与えられているとき, ベイズの定理を用いて, 尤もらしい親ノードの値を予測することができる. ベイジアンネットワークによる予測モデルとして, Naive Bayes と Tree Augmented Naive Bayes について説明する.
-
-\subsubsection{Naive Bayes}
-
-Naive Bayes 型のベイジアンネットワークは, 親ノード以外のノードがすべて葉であるような木構造である. ナイーブベイズモデルにおける重要な仮定は, 親ノード以外のノードは, 親ノードに対応する変数の値が与えられた条件の下で条件付独立であるということである. ナイーブベイズモデルの例を図(\ref{naive})に示す.
-
-\begin{figure}[H]
- \begin{center}
-  \includegraphics[width=80mm]{data/sample1.png}
- \end{center}
- \caption{ナイーブベイズの例}
- \label{naive}
-\end{figure}
-
-構造は常に同様なので, パラメータ学習のみ行う. 訓練データから親ノードと各ノードの値を用いて条件付き確率を求める. 予測を行う際には, 各変数に値を与えてそれぞれ親ノードの値の確率を求め, それらの確率の総和で親ノードの値を決定する.
-
-\subsubsection{Tree Augmented Naive Bayes (TAN)}
-
-TANは, 親ノード以外のノード間が条件付独立であるという Naive Bayes の制約を少し緩めたもので, 子ノード間にも以下に示す条件の下でリンクを与えることができる.\citep{Friedman}
-
-\begin{itemize}
-\item 木構造であること
-
-\item 全ての点の入次数は1以下であること
-
-\item $n$個の説明変数に対して、$n-1$本の有向辺が存在すること
-\end{itemize}
-
-TAN 型のベイジアンネットワークを用いた分類器は, 各変数間の依存関係をある程度反映できるため, グラフ構造から視覚的に情報が得られる. TANモデル の例を図(\ref{TAN})に示す.
-
-\begin{figure}[H]
- \begin{center}
-  \includegraphics[width=80mm]{data/sample2.png}
- \end{center}
- \caption{Tree Augmented Naive Bayes}
- \label{TAN}
-\end{figure}
-
-
-TAN 型のベイジアンネットワークは Naive Bayes 型のベイジアンネットワークを元に, 関係性の強い説明変数について相互情報量をもとにリンクを与える. その際, 元のクラスラベルの値を条件とした条件付相互情報量を用いる. ここでは条件付相互情報量をTAN 構造の仮定の下で最大化する.
-
-まず, エントロピーについて説明する. エントロピーは式(\ref{entropy})のように表され, 不確かさ(乱雑さ)の指標とされる. $p(x)$は各変数の取りうる値の出現確率を表している. 全ての確率が等しいとき($1/N)$, エントロピーは最大となり, $\log N$となる. あるひとつの値の確率が$1$となり, 他の全ての確率が$0$となるとき, エントロピーは最小となり, $0$である. 同様に結合エントロピー(式(\ref{jointentropy})), 条件付エントロピー, (式(\ref{conditionalentropy}))についても示しておく.
-
-\begin{eqnarray}
-\label{entropy}
-H(X) &=& - \int_x p(x) \log p(x) 
-\end{eqnarray}
-
-\begin{eqnarray}
-\label{jointentropy}
-H(X, Y) &=& - \int_x \int_y p(x) p(y) \log p(x) \log p(y) \\
-\label{conditionalentropy}
-H(X| Y) &=& - \int_x \int_y p(x, y) \log p(x| y) dx dy \nonumber \\
-           &=& - \int_x \int_y p(x, y) \log p(x, y) dx dy + \int_x \int_y p(x, y) \log p(x) dx dy \nonumber \\
-           &=& H(X, Y) - H(Y)
-\end{eqnarray}
-
-
-次に KL情報量(相対エントロピー)\citep{Meyer}について説明する. KL情報量は式(\ref{KL}) に示したように, 確率分布の近似に用いられる. KL情報量が小さいほど二つの分布が近似していることを表し, $p(x) = q(x)$ となるときKL情報量は$0$となる.
-
-\begin{eqnarray}
-\label{KL}
-KL(p(x) | q(x)) &=& - \int p(x) \log q(x) dx - \left(- \int p(x) \log p(x) dx \right) \nonumber \\ 
-                    &=& - \int p(x) \log \frac{q(x)}{p(x)} dx
-\end{eqnarray}
-
-相互情報量と条件付相互情報量について以下のように定義する.
-
-\begin{eqnarray*}
-\mbox{相互情報量} &=& I(X, Y) \\
-\mbox{条件付相互情報量} &=& I(X, Y | C)
-\end{eqnarray*}
-
-ここで相互情報量と条件付相互情報量をKL情報量の式で表すと以下のように表せる. 相互情報量は$X$と$Y$の依存度を表している. 式(\ref{MI})より $X$と$Y$が独立のとき$p(x, y) = p(x) p(y)$となり, KL情報量の定義より $I(X, Y) = 0$となる. すなわち依存関係がある場合に相互情報量は大きくなる. 条件付相互情報量についても同様である. 
-
-\begin{eqnarray}
-\label{MI}
-I(X, Y) &=& KL(p(x, y) | p(x) q(x)) \nonumber \\
-          &=& - \int \int p(x, y) \log \frac{p(x, y)}{p(x) q(x)} dx dy 
-\end{eqnarray}
-
-\begin{eqnarray}
-\label{CMI}
-I(X, Y | Z) &=&  KL(p(x, y| z) | p(x|z) q(x|z)) \nonumber \\
-              &=& - \int \int \int p(x, y, z) \log \frac{p(x, y|z)}{p(x|z) q(x|z)} dx dy dz \nonumber \\
-               &=& - \int \int \int p(x, y, z) \log p(x, y, z) dx dy dz  \nonumber \\
-                &&+ \int \int \int p(x, y, z) \log p(x| z) dx dy dz 
-\end{eqnarray}
-
-相互情報量と条件付相互情報量は, エントロピーの定義式(式(\ref{entropy}), 式(\ref{jointentropy}), 式(\ref{conditionalentropy}))を用いて置き換えることができる.  
-
-\begin{eqnarray}
-\label{MIentropy}
-I(X, Y) &=& H(X) - H(X|Y) \nonumber \\
-         &=& H(X) - H(X, Y) + H(Y)
-\end{eqnarray}
-
-\begin{eqnarray}
-\label{CMIentropy}
-I(X, Y | Z) &=& H(X| Z) - H(X| Y, Z) \nonumber \\
-               &=& H(X, Z) + H(Y, Z) - H(X, Y, Z) - H(Z)
-\end{eqnarray}
-
-TAN 型のベイジアンネットワークでは式(\ref{CMIentropy})に示した, 条件付相互情報量の式を元に親ノード以外のノード間にリンクを与えている. パラメータ学習はナイーブベイズモデルと同様に,  訓練データから親ノードと各ノードの値を用いて条件付き確率を求める. 予測を行う際には, 各変数に値を与えてそれぞれ親ノードの値の確率を求め, それらの確率の総和で親ノードの値を決定する.
-
-\subsection{統計的因果推論}
-
-統計的因果推論は, 因果関係をデータから推測する方法論である.\citep{清水昌平} 
-
-%%%%%%%%%%%%%%% ここまでモデル説明 %%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{データ解析}
+人工的データを用いて, 混合 Projected Normal 分布によるクラスタリングの性能評価を行う. 複数の von Mises 分布に従う乱数を発生させて, 1つのデータにまとめることで混合データを作成する. 
 
 \subsection{解析データ}
 
-本研究では, ある美容院の店舗マスタ, 担当者マスタ, 商品マスタ, 顧客マスタ, 会計履歴, 会計明細を用いて顧客のクラスタリングを行う. 
-以下にデータの詳細を示す. 
+$\mu(0 < \mu < 2\pi), \kappa(\kappa \geq 0) $をパラメータ, $\theta(0 \leq \theta < 2\pi)$を確率変数とする, Von Mises 分布の確率密度関数は以下の式で表せる. また式中の第一種変形ベッセル関数の定義式を示す.
+
+\vspace{-1zh}
+\begin{eqnarray*}
+f(\theta;\mu, \kappa) = \frac{\exp[\kappa \cos(\theta - \mu)]}{2 \pi I_0(\kappa)} , I_j(\kappa) = \left(\frac{\kappa}{2}\right)^j \sum^\infty_{i=0} \frac{\left(\frac{\kappa^2}{4}\right)^i}{i \Gamma(j + i + 1)}
+\end{eqnarray*}
+
+ユニット数$m=4$, 角度$\theta = \left( \frac{7\pi}{4}, \frac{2\pi}{3}, \frac{5\pi}{4}, \frac{\pi}{6}\right)$, パラメータ$\kappa= (2,10,5,15)$, 混合比率$(0.4, 0.2, 0.3, 0.1)$として, 乱数を生成する. 
+
+\vspace{-1zh}
+\begin{figure}[H]
+\begin{center}
+\includegraphics[clip,height= 35mm]{data/mix_test_data.png}
+\end{center}
+\caption{混合データ(クラスター数:4)}
+
+\label{mixdata}
+\end{figure}
+
+\subsection{解析結果}
+
+Mixture von Mises 分布では元のデータと同じく4つの元となる分布を推定したが, Mixture Projected Normal 分布においては3つの元となる分布により以下の結果が得られた.
+
+\begin{figure}[h]
+ \begin{tabular}{c}
+\hspace{0.5cm}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 35mm]{data/mix_pn.png}
+  \end{center}
+  %\caption{Mixture Projected Normal 分布により推定した混合分布}
+  \label{pnmix}
+ \end{minipage}
+\hspace{-1.0cm}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 35mm]{data/mix_von.png}
+  \end{center}
+ % \caption{Mixture von Mises分布により推定した混合分布}
+  \label{vonmix}
+ \end{minipage}
+  \end{tabular}
+\caption{Mixture Projected Normal 分布により推定した混合分布(左), Mixture von Mises分布により推定した混合分布(右)}
+\end{figure}
+
+
+得られた混合分布から, 混合データの分類を行う. 混合分布を構成する, 分布の中で出現確率が最も高いものをそのデータの予測クラスタとする.
+横軸を真のクラスタ, 縦軸を予測クラスタとして集計表を示す. 
 
 \begin{table}[H]
+\caption{PN 分布によるクラスター推定(左), VM 分布によるクラスター推定(右)}
+\begin{tabular}{c}
+% 1
+\hspace{1.5cm}
+\begin{minipage}{0.5\hsize}
 \begin{center}
-\caption{解析データ}   %キャプション
-\label{hairdata}   %ラベル
-\begin{tabular}{c l}
+%\caption{PN 分布によるクラスター推定}
+\begin{tabular}{|c|c|c|c|c|}
 \hline
-店舗マスタ & 店舗ID, 店舗名, 緯度, 経度, 階数 \\
+ &  & \multicolumn{3}{|c|}{Predict} \\ \hline
+ &  & 1 & 2 & 3 \\ \hline 
+ &1 & 38 & 10 & 352 \\ \cline{2-5}
+True
+ & 2 & 1 & 192 & 7 \\ \cline{2-5}
+ & 3 & 0 & 2  & 298 \\ \cline{2-5}
+ & 4 & 93 & 0 & 7 \\ 
+\hline
+ \end{tabular}
+ \end{center}
+\end{minipage}
 
-担当者マスタ　& 担当者ID, 担当者所属店舗 \\
-
-商品マスタ & 会計明細販売商品ID, 商品種別,  第1カテゴリID, 第1カテゴリ, 第2カテゴリID, \\
-               &  第2カテゴリ, 商品名, 商品略称, 本部設定税抜価格, 本部設定税込価格, 施術分数, \\
-               & 販売開始日, 販売終了日, 予約カテゴリー, 予約商品名\\
-
-顧客マスタ & 顧客ID, 初回来店年, 初回来店店舗ID, 初回来店店舗ID, 郵便番号, \\
-              & DM送信可否, 性別, 誕生年代, 備考 \\
-
-会計履歴 & 会計ID, 販売店舗ID, 会計日, 会計時刻, 顧客ID, 会計税込売上, 会計消費税,取引種別, \\
-             &  POS入力担当者ID, 会計主担当者ID, 会計指名区分, DV商品券金額, DV商品券枚数,\\
-             &  現金, クレジット, 電子マネー, 売掛金, 他社商品券金額, 他社商品券枚数, 商品券利用枚数, \\
-             &  利用商品券ID,ポイント利用額, ポイント利用区分, ポイント付与額, \\
-            &  ポイント残高, 累積来店回数, 曜日\\
-
-会計明細 & 会計明細ID, 会計ID, 明細商品種別, 会計明細税込定価売上, 会計明細割引額, \\
-              & 会計明細消費税, 会計明細販売商品ID, 会計明細販売担当者ID, 会計明細指名区分 \\
+% 2
+\hspace{-2.5cm}
+\begin{minipage}{0.5\hsize}
+\begin{center}
+%\caption{VM 分布によるクラスター推定}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+ &  & \multicolumn{4}{|c|}{Predict} \\ \hline
+ &  & 1 & 2 & 3 & 4 \\ \hline 
+ & 1 & 333 & 10 & 39 & 18 \\ \cline{2-6}
+True
+ & 2 & 7 & 192 & 1 & 0 \\ \cline{2-6}
+ & 3 & 298 & 2  & 0 & 0 \\ \cline{2-6}
+ & 4 & 0 & 1 & 94 & 5 \\ 
 \hline
 \end{tabular}
 \end{center}
-\end{table}
+\end{minipage}
 
-\subsection{評価基準}
-
-性能評価の基準として, 予測されたレーティング$\hat{r}_{i, u}$と真のレーティング$r_{i, u}$との平均二乗誤差(Mean Squared Error: MSE):
-
-\begin{eqnarray}
-\label{MSE}
-\frac{1}{|\mathcal W|} = \sum_{(i, u) \in \mathcal W} (\hat{r}_{i, u} - r_{i, u})^2
-\end{eqnarray}
-
-を用いた. ここで, $\mathcal W$は評価に用いるデータに含まれるレーティングのインデックス集合であり, $|\mathcal W|$は$\mathcal W$に含まれる要素の数, すなわちレーティングの総数を表す. MSEが小さいほど予測の精度が高いことになる.
-
-\subsection{実験結果}
-
-第2章で示した, Naive Bayes 型, TAN 型のベイジアンネットワークモデルを用いて, 予測を行う. TAN 型のベイジアンネットワークについては式(\ref{CMIentropy})を用いて, 関係性の強い変数を決定する. 変数として, age, gender, occupation, item.No を選んだ場合の条件付相互情報量を表(\ref{CMIsample})に示す.
-
-\begin{table}[H]
-\begin{center}
-\label{CMIsample}
-\caption{条件付相互情報量}
-\begin{tabular}{|c||c|c|c|c|} \hline  
-& age & gender & occupation & item.No \\ \hline \hline
-age & 3.666 & 0.0618 & \bf{0.873} & \bf{0.981} \\
-gender &  & 0.573 & \bf{0.0988} & 0.0644 \\
-occupation &  &  & 2.583 & 0.517 \\
-item.No &  &  &  & 6.564 \\ \hline
 \end{tabular}
-\end{center}
-\end{table}
-
-実際にリンクを与える部分を太字で強調した. 表からわかるように (ocupation, item.No) 間のほうが値が大きいがここに線を引くと閉路ができてしまうのでその次に大きい値を用いていることがわかる.
-
-これらの手順により相互情報量をもとに無向辺を与える. ここで相互情報量をもとに有向辺を与えることができないことに注意する. 有向辺を決定するのはTAN 型のベイジアンネットワークにおける条件を用いてベイジアンネットワークを構成する.
-
-前項で定めたグラフモデルをもとに, 全変数の取りうる値について条件付確率を求める. ここでも一例を表(\ref{CPTsample})に示す. これらの条件付確率表(CPT)をもとにテストデータについて最も確率の高いレイティングを出力とする.
-
-\begin{table}[H]
-\begin{center}
-\label{CPTsample}
-\caption{条件付確率表の例 (occupatin = executive)}
-\begin{tabular}{|c||c|c|c|c|c|} \hline  
-gender/rating & 1 & 2 & 3 & 4 & 5 \\ \hline \hline
-F & 0.113 & 0.089 & 0.242 & 0.121 & 0.147 \\
-M & 0.886 & 0.910 & 0.757 & 0.878 & 0.852 \\ \hline
-\end{tabular}
-\end{center}
-\end{table}
-
-\subsubsection{性能評価}
-
-第2章で示した, Naive Bayes 型, TAN 型のベイジアンネットワークモデルを用いて, 予測を行う. 性能評価はMSEを用いた. 結果を表(\ref{modelmse})に示す.
-
-\begin{table}[H]
-\begin{center}
-\caption{各手法における性能評価}   %キャプション
-\label{modelmse}   %ラベル
-\begin{tabular}{l c}
-\hline
-                            & MSE \\ \hline
-Matrix Factorization &  0.8832 \\ \hline
-Naive Bayes model  & 1.3027 \\ \hline
-TAN model             & 2.0558 \\ \hline
-\end{tabular}
-\end{center}
 \end{table}
 
 \section{まとめと今後の課題}
-%%%%%そもそもまだ勝ってません
-
-AdaBoost, バギングとの組み合わせを実装する. 以前読んだ論文でも Boosting の手法を取り入れたベイジアンネットワークを構築していたので, その論文を参考にする. また, 性能評価の方法が適切であるかを検討する. 
 
 \section{謝辞}
 %%%%%%%%書きましょう

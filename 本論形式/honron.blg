@@ -2,10 +2,11 @@ This is pBibTeX, Version 0.99d-j0.33 (sjis.euc) (TeX Live 2017/W32TeX)
 Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: honron.aux
 The style file: jecon.bst
-Illegal, another \bibstyle command---line 45 of file honron.aux
+Illegal, another \bibstyle command---line 27 of file honron.aux
  : \bibstyle
  :          {jplain}
 I'm skipping whatever remains of this command
+I found no \citation commands---while reading file honron.aux
 Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
 Reallocated global_strs (elt_size=20001) to 20 items from 10.
 Reallocated glb_str_end (elt_size=4) to 20 items from 10.
@@ -22,46 +23,46 @@ Database file #1: bunken.bib
 Reallocated wiz_functions (elt_size=4) to 12000 items from 9000.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
-You've used 4 entries,
+You've used 0 entries,
             9982 wiz_defined-function locations,
-            1819 strings with 13284 characters,
-and the built_in function-call counts, 5469 in all, are:
-= -- 860
-> -- 114
-< -- 9
-+ -- 40
-- -- 36
-* -- 211
-:= -- 686
-add.period$ -- 2
-call.type$ -- 4
-change.case$ -- 25
-chr.to.int$ -- 4
-cite$ -- 4
-duplicate$ -- 165
-empty$ -- 342
-format.name$ -- 48
-if$ -- 1513
+            1794 strings with 12901 characters,
+and the built_in function-call counts, 89 in all, are:
+= -- 8
+> -- 0
+< -- 0
++ -- 0
+- -- 0
+* -- 5
+:= -- 7
+add.period$ -- 0
+call.type$ -- 0
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 0
+duplicate$ -- 0
+empty$ -- 1
+format.name$ -- 0
+if$ -- 14
 int.to.chr$ -- 0
 int.to.str$ -- 0
 missing$ -- 0
-newline$ -- 36
-num.names$ -- 34
-pop$ -- 100
+newline$ -- 24
+num.names$ -- 0
+pop$ -- 0
 preamble$ -- 1
-purify$ -- 30
+purify$ -- 0
 quote$ -- 0
-skip$ -- 501
+skip$ -- 8
 stack$ -- 0
-substring$ -- 406
-swap$ -- 9
-text.length$ -- 7
-text.prefix$ -- 5
+substring$ -- 0
+swap$ -- 0
+text.length$ -- 0
+text.prefix$ -- 0
 top$ -- 0
-type$ -- 36
+type$ -- 0
 warning$ -- 0
-while$ -- 29
+while$ -- 0
 width$ -- 0
-write$ -- 79
-is.kanji.str$ -- 133
-(There was 1 error message)
+write$ -- 21
+is.kanji.str$ -- 0
+(There were 2 error messages)
