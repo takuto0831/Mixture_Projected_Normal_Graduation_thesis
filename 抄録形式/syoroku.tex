@@ -126,7 +126,7 @@
 
 射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, Presnell(1998) らによる, $\Sigma = \mathcal{I}$と定義されていた, 射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では非対称分布もしくは二峰性分布となる. ここで平均方向について説明する. 図$\ref{sample_mu}$に示した, $\pi/3$(実線) ラジアンと$5\pi/3$ ラジアン (実線)の平均方向について考える. 算術平均では$(\pi/3 + 5\pi/3)/2 = \pi$ (点線)となるが, 2つの平均方向としては不適切なことが分かる. よってこれらの角度を円周上の点 $(\cos \frac{\pi}{3}, \sin \frac{\pi}{3}) = (\frac{1}{2},\frac{\sqrt{3}}{2}), (\cos \frac{5\pi}{3}, \sin \frac{5\pi}{3}) = (\frac{1}{2},- \frac{\sqrt{3}}{2})$ と表し, 2つのベクトルの平均を取ることで $\frac{1}{2} (\cos 0, \sin 0)$ となり, 平均方向は$0$ラジアン(点線)となる. 
 
-Wang and Gelfand (2013) によると, $\Sigma \neq I$のもとで$\mathcal{PN}_2(\bm \mu,\Sigma$)のとき, 円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度は以下で表す.
+Wang and Gelfand (2013) によると, $\mathcal{PN}_2(\bm \mu,\Sigma$)の円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度は以下で表す.
 
 \vspace{-1zh}
 \begin{eqnarray*}
@@ -138,34 +138,9 @@ p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 \noindent
 ここで, $\bm u^T = (\cos\theta,\sin\theta), A(\theta) = \bm u^T\Sigma^{-1}\bm u, B(\theta) = \bm u^T \Sigma^{-1} \bm \mu, C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
 
-射影正規分布において対称分布, 非対称分布, 二峰性分布となる例を図$\ref{sample_pn}$に示す. 各パラメータを以下に示す. 
+射影正規分布において対称分布, 非対称分布, 二峰性分布となる例を図$\ref{sample_pn}$に示す. 
 
-\vspace{-1zh}
-\begin{eqnarray*}
-\bm \mu_1 = \left( \begin{array}{c} 
--1.2 \\ -0.95
-\end{array} \right), 
-\Sigma_1 = 
-\left( \begin{array}{cc} 
-1 & 0 \\ 0 & 1 
-\end{array} \right),
-\bm \mu_2 =  \left( \begin{array}{c} 
--0.19 \\ 2.09
-\end{array} \right), 
-\Sigma_2 = 
-\left( \begin{array}{cc} 
-2.49 & -1.85 \\ -1.85 & 1.96 
-\end{array} \right),
-\bm \mu_3 =  \left( \begin{array}{c} 
--0.24 \\ 0.15
-\end{array} \right), 
-\Sigma_3 = 
-\left( \begin{array}{cc} 
-0.209 & 0.068\\ 0.068 & 2.25
-\end{array} \right)
-\end{eqnarray*}
-
-\vspace{-1zh}
+\vspace{-0.5zh}
 \begin{figure}[h]
  \begin{tabular}{c}
 \hspace{0.5cm}
@@ -187,13 +162,17 @@ p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
   \end{center}
  \end{minipage}
   \end{tabular}
-\caption{パラメータ$\bm \mu_1, \Sigma_1$とした場合の対称な射影正規分布(左), パラメータ$\bm \mu_2, \Sigma_2$とした場合の非対称な射影正規分布(中央), パラメータ$\bm \mu_3, \Sigma_3$とした場合の二峰性となる射影正規分布(右)}
+\caption[Text excluding the matrix]{
+$\bm \mu = \begin{pmatrix} -1.2 \\ -0.95 \\ \end{pmatrix}, \Sigma = \begin{pmatrix}  1 & 0 \\ 0 & 1 \\ \end{pmatrix}$
+とした場合の対称な射影正規分布(左), 
+$\bm \mu = \begin{pmatrix} -0.19 \\ 2.09 \\ \end{pmatrix}, \Sigma = \begin{pmatrix} 2.49 & -1.85 \\ -1.85 & 1.96 \\ \end{pmatrix}$ とした場合の非対称な射影正規分布(中央), 
+$\bm \mu = \begin{pmatrix} -0.24 \\ 0.15 \\ \end{pmatrix}, \Sigma = \begin{pmatrix}  0.209 & 0.068\\ 0.068 & 2.25 \\ \end{pmatrix}$ とした場合の二峰性となる射影正規分布(右)}
 \label{sample_pn}
 \end{figure}
 
 % Wang and Gelfand(2013) によると各パラメータの単一の影響は良く分かっていない. だから各パラメータを細かく説明するのは困難である. しかしこの分布の柔軟な特性は予測などにおいて便利である.
 
-\vspace{-0.5zh}
+\vspace{-2zh}
 \subsection{混合 Projected Normal 分布}
 
 $m$個のユニットからなる 射影正規分布の混合分布は以下のように定式化できる. 
@@ -205,11 +184,9 @@ p(\theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_2(\theta;\bm \mu
 
 \vspace{-1zh}
 \noindent
-ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 
+ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 混合射影正規分布におけるパラメータは, $w, \bm \mu, \Sigma$であるが, パラメータに識別可能性を保持するという制約を加えると共分散行列 $\Sigma$は
 
-混合射影正規分布におけるパラメータは, $w, \bm \mu, \Sigma$であるが, 共分散行列 $\Sigma$は
-
-\vspace{-0.5zh}
+\vspace{-1zh}
 \[
  \Sigma = \left(
     \begin{array}{cc}
@@ -219,13 +196,25 @@ p(\theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_2(\theta;\bm \mu
   \right)
 \]
 
+\vspace{-0.5zh}
 \noindent
-と定義するので, パラメータベクトルは$\eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \tau_1, \dots, \tau_m, \rho_1, \dots, \rho_m)$となる. Wang and Gelfand (2013)の研究から, 各パラメータの事前分布を $\bm \mu \sim N(\bm 0, 10^5 \bm I_2)$, $\tau \sim \mathrm{half Cauchy}(0,5)$, $\rho \sim U(-1,1)$, $\bm w \sim Dirichlet(2,2, \cdots, 2)$ と設定する. 
+と定義されるので, パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \tau_1, \dots, \tau_m, \rho_1, \dots, \rho_m)$となる. 各パラメータの事前分布を $\bm \mu_i \sim N(\bm 0, 10^5 \bm I_2)$, $\tau_i \sim \mathrm{half Cauchy}(0,5)$, $\rho_i \sim U(-1,1)$, $\bm w \sim Dirichlet(2,2, \dots, 2)$ と設定する. ここで混合比率$\bm w$は$m$次の$Dirichlet$分布に従うものとする. $\bm \mu_i$は$0$付近に存在するという背景を元に, 正規分布による弱情報事前分布とし, $\tau_i$は非負かつ値が大きくなりすぎないように, 裾の重いコーシー分布を$0$で切断した, 半コーシー分布を弱情報事前分布とする. $\rho_i$は$-1 \sim 1$に存在することが分かっているので, 一様分布を弱情報事前分布とし, $\bm w$は非負かつ和が $1$となる性質をもつディリクレ分布を弱情報事前分布とする.
+
+角度データ $\theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を $p(\bm \eta| \theta)$, パラメータベクトルの事前分布を $p(\bm \eta)$とすると事後分布は以下で定義できる. 
+
+\vspace{-1zh}
+\begin{eqnarray*}
+p(\bm \eta | \theta) = \frac{p(\theta | \bm \eta) p(\bm \eta)}{p(\theta)} \propto p(\theta | \bm \eta) p(\bm \eta)
+\end{eqnarray*}
+
+\vspace{-0.5zh}
+\noindent
+すなわち, 事後分布$p(\bm \eta | \theta)$は尤度$p(\theta | \bm \eta)$と事前分布 $p(\bm \eta| \theta)$の積に比例する. ここで, $p(\theta)$はすでに得られた, データ$\theta$にのみ依存する定数値であるので, $p(\theta | \bm \eta) p(\bm \eta)$が $\bm \eta$ の分布の形を作り, $p(\theta)$は正規化定数とみなすことが出来る. 尤度と事前分布の計算は簡単だが, $p(\theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させて事後分布の代わりとする. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 尤度は$1$より小さい多数の値の積であり, そのままでは扱いにくいため尤度の対数を取るのが一般的である. これを対数尤度と呼び, 式$\ref{logPN}$ に示す. 
 
 \vspace{-2zh}
 \begin{eqnarray}
 \label{logPN}
-\log p(\theta;\bm w,\bm \mu, \Sigma)  &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_2(\theta;\bm \mu_j, \Sigma_j)\} \nonumber \\ 
+\log p(\theta | \bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_2(\theta;\bm \mu_j, \Sigma_j)\} \nonumber \\ 
 &=& \sum^m_{j=1} \left[ \log w_j - \log 2\pi - \log A - \frac{1}{2} \log |\Sigma| + C + \log \left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} \right] \nonumber \\
 &\propto& \sum^m_{j=1} \left[ \log w_j - \log A - \frac{1}{2} \log |\Sigma| + C + \log \left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} \right]  
 \end{eqnarray}
@@ -284,22 +273,6 @@ $$ r = \frac{p(\theta^*|y) p(\phi^*)}{p(\theta^{t-1}|y) p(\phi^{t-1})}$$
 と定義され, $0$から$1$の間でランダムに選んだ数値より, $r$が高ければ$\theta^*$を採択する. サンプル数が定めた値に達したら, 終了する.
 
 \end{enumerate}
-
-\vspace{-0.5zh}
-\subsection{パラメータの推定手法}
-
-Projected Normal 分布におけるパラメータは, $\bm \mu,\Sigma$ であるが, 識別可能性を保持するという制約を加えると, 共分散行列$\Sigma$は以下で定義される.
-\vspace{-0.5zh}
-\[
- \Sigma = \left(
-    \begin{array}{cc}
-      \tau^2 & \rho \tau \\
-      \rho \tau & 1
-    \end{array}
-  \right)
-\]
-
-ここで重みパラメータ$\bm w$は$m$次元の$Dirichlet$分布に従うものとする. MCMCのアルゴリズムに従って, 各パラメータを変化させながら, 式$\ref{logPN}$で定義した対数尤度を最大化するようなパラメータの分布を取得する. パラメータは収束すると, 単峰性の分布となり, その平均値をパラメータの推定値として扱うことが出来る. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%  sectio4 数値実験 %%%%%%%%%%%%%%%%%%%%%%%%
