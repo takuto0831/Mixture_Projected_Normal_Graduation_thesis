@@ -176,7 +176,7 @@ p(\theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_2(\theta;\bm \mu
 
 \vspace{-0.5zh}
 \noindent
-と定義されるので, パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \tau_1, \dots, \tau_m, \rho_1, \dots, \rho_m)$となる. 各パラメータの事前分布を $\bm \mu_j \sim N(\bm 0, 10^5 \bm I_2)$, $\tau_j \sim \mathrm{half Cauchy}(0,5)$, $\rho_j \sim U(-1,1)$, $\bm w \sim Dirichlet(2,2, \dots, 2)$ と設定する. ここで混合比率$\bm w$は$m$次の$Dirichlet$分布に従うものとする. $\bm \mu_j$は$0$付近に存在するという背景を元に, 正規分布による弱情報事前分布とし, $\tau_j$は非負かつ値が大きくなりすぎないように, 裾の重いコーシー分布を$0$で切断した, 半コーシー分布を弱情報事前分布とする. $\rho_j$は$-1 \sim 1$に存在することが分かっているので, 一様分布を弱情報事前分布とし, $\bm w$は非負かつ和が $1$となる性質をもつディリクレ分布を弱情報事前分布とする.
+と定義されるので, パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \tau_1, \dots, \tau_m, \rho_1, \dots, \rho_m)$, パラメータベクトルの次元は $d = 4m$ となる. 各パラメータの事前分布を $\bm \mu_j \sim N(\bm 0, 10^5 \bm I_2)$, $\tau_j \sim \mathrm{half Cauchy}(0,5)$, $\rho_j \sim U(-1,1)$, $\bm w \sim Dirichlet(2,2, \dots, 2)$ と設定する. ここで混合比率$\bm w$は$m$次の$Dirichlet$分布に従うものとする. $\bm \mu_j$は$0$付近に存在するという背景を元に, 正規分布による弱情報事前分布とし, $\tau_j$は非負かつ値が大きくなりすぎないように, 裾の重いコーシー分布を$0$で切断した, 半コーシー分布を弱情報事前分布とする. $\rho_j$は$-1 \sim 1$に存在することが分かっているので, 一様分布を弱情報事前分布とし, $\bm w$は非負かつ和が $1$となる性質をもつディリクレ分布を弱情報事前分布とする.
 
 角度データ $\theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を $p(\bm \eta| \theta)$, パラメータベクトルの事前分布を $p(\bm \eta)$とすると事後分布は以下で定義できる. 
 
@@ -205,50 +205,53 @@ p(\bm \eta | \theta) = \frac{p(\theta | \bm \eta) p(\bm \eta)}{p(\theta)} \propt
 \vspace{-0.5zh}
 \subsection{マルコフ連鎖モンテカルロ法}
 
-本研究ではMCMCアルゴリズムの一つである, ハミルトニアン$\cdot$モンテカルロ法(HMC)を用いて分布の推定を行う.　HMCのアルゴリズムはハミルトン方程式の数学的性質によって正当性が保証されている. 一般の確率分布からのサンプリングについて, ハミルトン方程式を定義するには, 元の問題に存在しない仮想的な運動量を補助変数として導入する必要がある. 
+本研究ではMCMCアルゴリズムの一つである, ハミルトニアン$\cdot$モンテカルロ法(HMC)を用いて分布の推定を行う. HMCのアルゴリズムはハミルトン方程式の数学的性質によって正当性が保証されている. 一般の確率分布からのサンプリングについて, ハミルトン方程式を定義するには, 元の問題に存在しない仮想的な運動量を補助変数として導入する必要がある. 
 
-HMCは物理学の考えを用いて, メトロポリスアルゴリズムによるランダムウォークな振る舞いを局所的に抑圧する. 従って, 目標の分布までより素早く推移することを可能にする. 対象となる各確率変数 $(\theta_j)$に対して, 速度変数$\phi_j$を付与する. このメトロポリスアルゴリズムでは$\theta, \phi$を共に更新する. $\theta$の分布の推移には$ \phi$が大きく影響する. 
+HMCは物理学の考えを用いて, メトロポリスアルゴリズムによるランダムウォークな振る舞いを局所的に抑圧する. 従って, 目標の分布までより素早く推移することを可能にする. 対象となる確率変数 $(\bm \eta)$に対して, 速度変数$\bm \phi$を付与する. このメトロポリスアルゴリズムでは$\bm \eta, \bm \phi$を共に更新する. $\bm \eta$の各分布の推移には$\bm \phi$が大きく影響する. 
 
-HMCでは, 事後確率$p(\theta|y)$は$p(\phi)$の独立な分布によって増大する. したがって結合分布を以下のように定義する.
-
-\vspace{-1zh}
-\begin{eqnarray*}
-p(\theta, \phi|y) = p(\phi)p(\theta|y)
-\end{eqnarray*}
-
-$\theta$をシュミレーションするために, 上記の結合分布によりパラメータをシュミレーションする. この補助変数$\phi$を導入することでパラメータ空間をより効率的に移動することを可能にする. HMCは対数事後密度の勾配を要求する. $d$次元のパラメータ$\theta$の勾配は以下で表す.
+HMCでは, 事後確率 $p(\bm \eta| \theta)$ は$p(\bm \phi)$の独立な分布によって増大する. したがって結合分布を以下のように定義する.
 
 \vspace{-1zh}
 \begin{eqnarray*}
-\frac{d \log p(\bm \theta|y)}{d \bm \theta} = \left( 
-  \frac{d \log p(\bm \theta|y)}{d \theta_1}, \ldots,
-  \frac{d \log p(\bm \theta|y)}{d \theta_d} \right)
+p(\bm \eta, \bm \phi| \theta) = p(\bm \phi) p(\bm \eta| \theta)
 \end{eqnarray*}
 
-$\phi$については, 平均$0$, 共分散行列$M$の多変量正規分布を与える. $\phi$の要素が独立の場合は各次元ごとに$\phi_j \sim N(0,M_{jj})$を与える. $M$は,事後分布の逆共分散行列 $\Bigl(\mbox{var}(\theta|y)\Bigr)^{-1}$で大まかにスケールすることができる. しかし, アルゴリズムはどんな場合でも動作するが, $M$のスケーリングが優れているだけで, HMCがより効率的となる.
+$\bm \eta$をシュミレーションするために, 上記の結合分布によりパラメータをシュミレーションする. この補助変数$\bm \phi$を導入することでパラメータ空間をより効率的に移動することを可能にする. HMCは対数事後密度の勾配を要求する. $d$次元のパラメータ$\bm \eta$の勾配は以下で表す.
 
-HMCでは3つの動作を繰り返し行う.
+\vspace{-1zh}
+\begin{eqnarray*}
+\frac{d \log p(\bm \eta| \theta)}{d \bm \eta} = \left( 
+  \frac{d \log p(\bm \eta| \theta)}{d \eta_1}, \dots,
+  \frac{d \log p(\bm \eta| \theta)}{d \eta_d} \right)
+\end{eqnarray*}
+
+$\bm \phi$の事前分布については, 平均$0$, 共分散行列$M$の多変量正規分布を与える. $\bm \phi$の要素が独立の場合は各次元ごとに$\phi_j \sim N(0,M_{jj})$を与える. $M$は事後分布の逆共分散行列 $\Bigl(\mbox{var}(\bm \eta| \theta)\Bigr)^{-1}$で大まかにスケールすることができる. アルゴリズムはどんな場合でも動作するが, $M$のスケーリングが優れていることにより, HMCがより効率的となる.
+
+HMCでは次の反復計算により事後分布からサンプリングを行う. 
 
 \begin{enumerate}
 
 \item{}
-この反復は, $\phi$をその事後分布から無作為に引くことによって開始する. これは, $\phi \sim N(0,M)$の事前分布と同様である.
+各速度変数 $\bm \phi$ を $\bm \phi \sim N(0,M)$からランダムサンプリングする.
 
 \item{}
-$\theta, \phi$を同時に更新する.
-\vspace{-0.5zh}
+$\bm \eta, \bm \phi$を同時に更新する.
+
+\vspace{-1zh}
 \begin{eqnarray*}
-\phi_{t+\frac{1}{2}} \leftarrow \phi_t + \frac{1}{2} \epsilon \frac{d \log p(\theta|y)}{d\theta}, 
-\theta{t+1} \leftarrow \theta_t + \epsilon M^{-1}\phi_{t+\frac{1}{2}},
-\phi_{t+1} \leftarrow \phi_{t+\frac{1}{2}} + \frac{1}{2} \epsilon \frac{d \log p(\theta|y)}{d\theta_{t+1}}. 
+\bm \phi_{t+\frac{1}{2}} \leftarrow \bm \phi_t + \frac{1}{2} \epsilon \frac{d \log p(\bm \eta| \theta)}{d \bm \eta}, 
+\bm \eta_{t+1} \leftarrow \bm \eta_t + \epsilon M^{-1} \bm \phi_{t+\frac{1}{2}},
+\bm \phi_{t+1} \leftarrow \bm \phi_{t+\frac{1}{2}} + \frac{1}{2} \epsilon \frac{d \log p(\bm \eta| \theta)}{d \eta_{t+1}}. 
 \end{eqnarray*}
 
 \item{}
-得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\theta^*, \phi^*$として,
+得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\bm \eta^*, \bm \phi^*$として,
 現在が$t$回目の反復とすると, サンプルの棄却率は
-\vspace{-0.5zh}
-$$ r = \frac{p(\theta^*|y) p(\phi^*)}{p(\theta^{t-1}|y) p(\phi^{t-1})}$$
-と定義され, $0$から$1$の間でランダムに選んだ数値より, $r$が高ければ$\theta^*$を採択する. サンプル数が定めた値に達したら, 終了する.
+
+\vspace{-1zh}
+$$ r = \frac{p(\eta \eta^*|y) p(\bm \phi^*)}{p(\bm \eta^{t-1}|y) p(\phi^{t-1})}$$
+
+と定義され, $0$から$1$の間でランダムに選んだ数値より, $r$が高ければ$\bm \eta^*$を採択する. サンプル数が定めた値に達したら, 終了する.
 
 \end{enumerate}
 
