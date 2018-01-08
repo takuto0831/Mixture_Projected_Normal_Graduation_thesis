@@ -1,25 +1,32 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%  This bbl file is created by jecon.bst ver.5.4
-%  The latest jecon.bst is available at
-%  <http://shirotakeda.org/ja/tex-ja/jecon-ja.html>
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thebibliography}{1}
 
-%%% Definition of \bysame
-\ifx\undefined\bysame
-\newcommand{\bysame}{\hskip.3em \leavevmode\rule[.5ex]{2.5em}{.3pt}\hskip0.5em}
-\fi
+\bibitem{PML}
+Presnell. B, Morrison.~S. P, and Littell.~R. C.
+\newblock Projected multivariate linear models for directional data.
+\newblock {\em Journal of the American Statistical Association}, Vol. 443, pp.
+  1068--1077, 1998.
 
-%%% Definition of \bysamejp
-\ifx\undefined\bysamejp
-\newcommand{\bysamejp}{\hskip.2em
-  \leavevmode\rule[.7ex]{2.5em}{.3pt}\hskip0.3em}
-\fi
+\bibitem{GPN}
+D.Hernandez-Stumpfhauser, F.~Jay Breidt, and Mark~J. van~der Woerd.
+\newblock The general projected normal distribution of arbitrary dimension:
+  Modeling and bayesian inference.
+\newblock {\em Journal of Bayesian Analysis}, Vol.~12, No.~1, pp. 113--133,
+  2017.
 
+\bibitem{SKMcluster}
+S.~Dhillon and S.~Modha.
+\newblock Concept decompositions for large sparse text data using clustering.
+\newblock {\em Machine Learning}, Vol.~42, pp. 143--175, 2001.
 
-\begin{thebibliography}{xxx}
+\bibitem{Gopal}
+Siddharth Gopal and Yiming Yang.
+\newblock Von mises-fisher clustering models.
+\newblock In {\em ICML}, 2014.
 
+\bibitem{PN1}
+F.~Wang and A.~E. Gelfand.
+\newblock Directional data analysis under the general projected normal
+  distribution.
+\newblock {\em Statistical Methodology}, Vol.~10, No.~1, pp. 113--127, 2013.
 
 \end{thebibliography}
-

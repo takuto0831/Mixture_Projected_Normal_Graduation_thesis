@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.2-170924-2.6 (utf8.sjis) (TeX Live 2017/W32TeX) (preloaded format=platex 2017.12.1)  8 JAN 2018 01:14
+This is e-pTeX, Version 3.14159265-p3.7.2-170924-2.6 (utf8.sjis) (TeX Live 2017/W32TeX) (preloaded format=platex 2017.12.1)  8 JAN 2018 16:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -209,16 +209,9 @@ Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 \WF@everypar=\toks27
 Package: wrapfig 2003/01/31  v 3.6
 )
-(c:/w32tex/share/texmf-dist/tex/latex/natbib/natbib.sty
-Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip48
-\bibsep=\skip49
-LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count115
-)
-\c@theo=\count116
-\c@defi=\count117
-\c@lemm=\count118
+\c@theo=\count115
+\c@defi=\count116
+\c@lemm=\count117
  (./honron.aux)
 \openout1 = `honron.aux'.
 
@@ -238,7 +231,7 @@ LaTeX Font Info:    Checking defaults for JY1/mc/m/n on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
 LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
-\c@lstlisting=\count119
+\c@lstlisting=\count118
 LaTeX Font Info:    Try loading font information for U+msa on input line 50.
 
 (c:/w32tex/share/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -341,16 +334,25 @@ Overfull \hbox (8.7236pt too wide) in paragraph at lines 285--303
 
 [6] [7] (./honron.bbl
 
-Package natbib Warning: Empty `thebibliography' environment on input line 24.
+LaTeX Font Warning: Font shape `JT1/gt/m/it' undefined
+(Font)              using `JT1/gt/m/n' instead on input line 6.
 
-) [8] (./honron.aux) ) 
+
+LaTeX Font Warning: Font shape `JY1/gt/m/it' undefined
+(Font)              using `JY1/gt/m/n' instead on input line 6.
+
+) [8] [9] (./honron.aux)
+
+LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+
+ ) 
 Here is how much of TeX's memory you used:
- 3383 strings out of 493628
- 43960 string characters out of 6150204
- 121143 words of memory out of 5000000
- 6912 multiletter control sequences out of 15000+600000
- 21805 words of font info for 85 fonts, out of 8000000 for 9000
+ 3060 strings out of 493628
+ 40137 string characters out of 6150204
+ 115201 words of memory out of 5000000
+ 6592 multiletter control sequences out of 15000+600000
+ 22151 words of font info for 86 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
  27i,17n,32p,1264b,468s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on honron.dvi (10 pages, 32440 bytes).
+Output written on honron.dvi (11 pages, 33944 bytes).
