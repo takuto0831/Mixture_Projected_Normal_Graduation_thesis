@@ -1,4 +1,4 @@
-This is e-pTeX, Version 3.14159265-p3.7.2-170924-2.6 (utf8.sjis) (TeX Live 2017/W32TeX) (preloaded format=platex 2017.12.1)  8 JAN 2018 16:20
+This is e-pTeX, Version 3.14159265-p3.7.2-170924-2.6 (utf8.sjis) (TeX Live 2017/W32TeX) (preloaded format=platex 2017.12.1)  11 JAN 2018 02:10
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -212,7 +212,17 @@ Package: wrapfig 2003/01/31  v 3.6
 \c@theo=\count115
 \c@defi=\count116
 \c@lemm=\count117
- (./honron.aux)
+ (./honron.aux
+
+LaTeX Warning: Label `PNC' multiply defined.
+
+
+LaTeX Warning: Label `sample_pn' multiply defined.
+
+
+LaTeX Warning: Label `PNS' multiply defined.
+
+)
 \openout1 = `honron.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
@@ -233,8 +243,7 @@ LaTeX Font Info:    Checking defaults for JT1/mc/m/n on input line 47.
 LaTeX Font Info:    ... okay on input line 47.
 \c@lstlisting=\count118
 LaTeX Font Info:    Try loading font information for U+msa on input line 50.
-
-(c:/w32tex/share/texmf-dist/tex/latex/amsfonts/umsa.fd
+ (c:/w32tex/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 50.
@@ -256,39 +265,32 @@ LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <10.95> not available
 \openout4 = `honron.toc'.
 
 
-(./honron.lof)
+(./honron.lof [1
+
+])
 \tf@lof=\write5
 \openout5 = `honron.lof'.
 
- [1
-
-] (./honron.lot)
+ (./honron.lot)
 \tf@lot=\write6
 \openout6 = `honron.lot'.
 
  [2]
 LaTeX Font Info:    Font shape `JT1/mc/bx/n' in size <12> not available
-(Font)              Font shape `JT1/gt/m/n' tried instead on input line 78.
+(Font)              Font shape `JT1/gt/m/n' tried instead on input line 79.
 LaTeX Font Info:    Font shape `JY1/mc/bx/n' in size <12> not available
-(Font)              Font shape `JY1/gt/m/n' tried instead on input line 78.
+(Font)              Font shape `JY1/gt/m/n' tried instead on input line 79.
 File: data/sample_False.png Graphic file (type bmp)
 <data/sample_False.png>
-
-Overfull \hbox (3.46396pt too wide) in paragraph at lines 87--88
- [] 
- []
-
 File: data/sample_True.png Graphic file (type bmp)
 <data/sample_True.png>
-
-Overfull \hbox (3.46396pt too wide) in paragraph at lines 93--94
- [] 
- []
-
 
 Overfull \hbox (7.91907pt too wide) in paragraph at lines 83--97
 [][][][] 
  []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 [1
 
@@ -300,15 +302,53 @@ File: data/sample_asymmetry.png Graphic file (type bmp)
 File: data/sample_bimodal.png Graphic file (type bmp)
 <data/sample_bimodal.png>
 
-Underfull \hbox (badness 1354) in paragraph at lines 144--144
+Underfull \hbox (badness 1354) in paragraph at lines 143--143
 []\JY1/mc/m/n/10.95 図 \OT1/cmr/m/n/10.95 3.2: $\OML/cmm/b/it/10.95 ^^V \OT1/cm
 r/m/n/10.95 = [] \OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 ^^F = []$ \JY1/mc/m/n
 /10.95 とした場合の対称な射影正規分布 \OT1/cmr/m/n/10.95 (\JY1/mc/m/n/10.95 左\
 OT1/cmr/m/n/10.95 ), $\OML/cmm/b/it/10.95 ^^V \OT1/cmr/m/n/10.95 =
  []
 
-[2] [3] [4]
-Overfull \hbox (12.65012pt too wide) in paragraph at lines 268--269
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+
+Overfull \hbox (42.42668pt too wide) in alignment at lines 152--156
+ [][][] []
+ []
+
+[2]
+File: data/sample_symmetry.png Graphic file (type bmp)
+<data/sample_symmetry.png>
+File: data/sample_asymmetry.png Graphic file (type bmp)
+<data/sample_asymmetry.png>
+File: data/sample_bimodal.png Graphic file (type bmp)
+<data/sample_bimodal.png>
+
+Underfull \hbox (badness 1354) in paragraph at lines 208--208
+[]\JY1/mc/m/n/10.95 図 \OT1/cmr/m/n/10.95 4.1: $\OML/cmm/b/it/10.95 ^^V \OT1/cm
+r/m/n/10.95 = [] \OML/cmm/m/it/10.95 ; \OT1/cmr/m/n/10.95 ^^F = []$ \JY1/mc/m/n
+/10.95 とした場合の対称な射影正規分布 \OT1/cmr/m/n/10.95 (\JY1/mc/m/n/10.95 左\
+OT1/cmr/m/n/10.95 ), $\OML/cmm/b/it/10.95 ^^V \OT1/cmr/m/n/10.95 =
+ []
+
+[3]
+Overfull \hbox (42.42668pt too wide) in alignment at lines 217--221
+ [][][] []
+ []
+
+[4] [5]
+Overfull \hbox (88.04527pt too wide) in alignment at lines 312--317
+ [][][] []
+ []
+
+[6]
+Overfull \hbox (71.08426pt too wide) in alignment at lines 352--356
+ [][][] []
+ []
+
+
+Overfull \hbox (12.65012pt too wide) in paragraph at lines 386--387
 []\JY1/mc/m/n/10.95 ユニ ッ ト数 $\OML/cmm/m/it/10.95 m \OT1/cmr/m/n/10.95 = 4$
 , \JY1/mc/m/n/10.95 角度 $\OML/cmm/m/it/10.95 ^^R \OT1/cmr/m/n/10.95 = []$, \JY
 1/mc/m/n/10.95 パラメ ータ $\OML/cmm/m/it/10.95 ^^T \OT1/cmr/m/n/10.95 = (2\OML
@@ -320,19 +360,19 @@ T1/cmr/m/n/10.95 (0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 4\OML/cmm/m/it/10.95
 it/10.95 ; \OT1/cmr/m/n/10.95 0\OML/cmm/m/it/10.95 :\OT1/cmr/m/n/10.95 1)$
  []
 
+[7]
 File: data/mix_test_data.png Graphic file (type bmp)
 <data/mix_test_data.png>
-[5]
 File: data/mix_pn.png Graphic file (type bmp)
 <data/mix_pn.png>
 File: data/mix_von.png Graphic file (type bmp)
 <data/mix_von.png>
 
-Overfull \hbox (8.7236pt too wide) in paragraph at lines 285--303
+Overfull \hbox (8.7236pt too wide) in paragraph at lines 403--421
 [][][][] 
  []
 
-[6] [7] (./honron.bbl
+[8] [9] (./honron.bbl
 
 LaTeX Font Warning: Font shape `JT1/gt/m/it' undefined
 (Font)              using `JT1/gt/m/n' instead on input line 6.
@@ -341,18 +381,21 @@ LaTeX Font Warning: Font shape `JT1/gt/m/it' undefined
 LaTeX Font Warning: Font shape `JY1/gt/m/it' undefined
 (Font)              using `JY1/gt/m/n' instead on input line 6.
 
-) [8] [9] (./honron.aux)
+) [10] [11] (./honron.aux)
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: There were multiply-defined labels.
+
  ) 
 Here is how much of TeX's memory you used:
- 3060 strings out of 493628
- 40137 string characters out of 6150204
- 115201 words of memory out of 5000000
- 6592 multiletter control sequences out of 15000+600000
+ 3066 strings out of 493628
+ 40174 string characters out of 6150204
+ 119272 words of memory out of 5000000
+ 6598 multiletter control sequences out of 15000+600000
  22151 words of font info for 86 fonts, out of 8000000 for 9000
  929 hyphenation exceptions out of 8191
- 27i,17n,32p,1264b,468s stack positions out of 5000i,500n,10000p,500000b,80000s
+ 27i,17n,32p,1258b,468s stack positions out of 5000i,500n,10000p,500000b,80000s
 
-Output written on honron.dvi (11 pages, 33944 bytes).
+Output written on honron.dvi (13 pages, 50636 bytes).

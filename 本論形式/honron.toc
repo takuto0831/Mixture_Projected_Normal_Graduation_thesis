@@ -2,12 +2,16 @@
 \contentsline {section}{\numberline {2}はじめに}{1}
 \contentsline {section}{\numberline {3}混合 Projected Normal 分布}{1}
 \contentsline {subsection}{\numberline {3.1}Projected Normal 分布}{1}
-\contentsline {subsection}{\numberline {3.2}混合 Projected Normal 分布}{3}
-\contentsline {section}{\numberline {4}解析手法}{4}
-\contentsline {subsection}{\numberline {4.1}マルコフ連鎖モンテカルロ法}{4}
-\contentsline {section}{\numberline {5}シミュレーション}{5}
-\contentsline {subsection}{\numberline {5.1}解析データ}{5}
-\contentsline {subsection}{\numberline {5.2}解析結果}{6}
-\contentsline {section}{\numberline {6}まとめと今後の課題}{7}
-\contentsline {section}{\numberline {7}謝辞}{7}
-\contentsline {section}{参考文献}{8}
+\contentsline {section}{\numberline {4}混合射影正規分布}{3}
+\contentsline {subsection}{\numberline {4.1}射影正規分布}{3}
+\contentsline {subsection}{\numberline {4.2}混合射影正規分布}{4}
+\contentsline {section}{\numberline {5}解析手法}{6}
+\contentsline {subsection}{\numberline {5.1}t-SNE}{6}
+\contentsline {subsection}{\numberline {5.2}マルコフ連鎖モンテカルロ法}{6}
+\contentsline {section}{\numberline {6}データ解析}{7}
+\contentsline {subsection}{\numberline {6.1}評価指標}{7}
+\contentsline {subsection}{\numberline {6.2}解析データ}{7}
+\contentsline {subsection}{\numberline {6.3}解析結果}{8}
+\contentsline {section}{\numberline {7}まとめと今後の課題}{9}
+\contentsline {section}{\numberline {8}謝辞}{9}
+\contentsline {section}{参考文献}{10}

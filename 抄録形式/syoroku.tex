@@ -150,10 +150,23 @@ $\bm \mu = \begin{pmatrix} -0.24 \\ 0.15 \\ \end{pmatrix}, \Sigma = \begin{pmatr
 
 % Wang and Gelfand(2013) によると各パラメータの単一の影響は良く分かっていない. だから各パラメータを細かく説明するのは困難である. しかしこの分布の柔軟な特性は予測などにおいて便利である.
 
-\vspace{-2zh}
-\subsection{混合射影正規分布}
+Daniel Hernandez-Stumpfhauser et al (2016)によると, $\mathcal{PN}_3(\bm \mu,\Sigma$)の球形データの場合, 単位球面上の方向を表す$U = (\cos\Theta_1 \sin \Theta_2, \sin\Theta_1 \sin \Theta_2, \cos \Theta_2)^T$における$\theta_1, \theta_2$の確率密度は以下で表す.
 
-$m$個のユニットからなる 射影正規分布の混合分布は以下のように定式化できる. 
+\vspace{-1zh}
+\begin{eqnarray*}
+\label{PNS}
+p(\bm \theta; \bm \mu, \Sigma) = \left(\frac{1}{2\pi A(\bm \theta)}\right)^{\frac{3}{2}} |\Sigma|^{-\frac{1}{2}}
+\exp(C)\left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) I_{[0,2\pi)}(\theta_1) I_{[0,\pi)}(\theta_2)
+\end{eqnarray*}
+
+\noindent
+ここで, $\bm u^T = (\cos\theta_1 \sin \theta_2, \sin\theta_1 \sin \theta_2, \cos \theta_2), 
+D(\bm \theta) = B(\bm \theta) A^{-\frac{1}{2}}(\bm \theta), A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,  B(\bm \theta) = \bm u^T \Sigma^{-1} \bm \mu, C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot), I_{[0,\pi)}(\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
+
+\vspace{-1zh}
+\subsection{混合射影正規分布}
+%%%%%%%%%%%%%%%%  円周 %%%%%%%%%%%%%%%%%%%%%%%%%%
+$m$個のユニットからなる 円周上の射影正規分布の混合分布は以下のように定式化できる. 
 
 \vspace{-2zh}
 \begin{eqnarray*}
@@ -187,20 +200,70 @@ p(\bm \eta | \theta) = \frac{p(\theta | \bm \eta) p(\bm \eta)}{p(\theta)} \propt
 
 \vspace{-0.5zh}
 \noindent
-すなわち, 事後分布$p(\bm \eta | \theta)$は尤度$p(\theta | \bm \eta)$と事前分布 $p(\bm \eta| \theta)$の積に比例する. ここで, $p(\theta)$はすでに得られた, データ$\theta$にのみ依存する定数値であるので, $p(\theta | \bm \eta) p(\bm \eta)$が $\bm \eta$ の分布の形を作り, $p(\theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単だが, 周辺分布 $p(\theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させて事後分布の代わりとする. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 尤度関数を式$\ref{logPN}$ に示す. 
+すなわち, 事後分布$p(\bm \eta | \theta)$は尤度$p(\theta | \bm \eta)$と事前分布 $p(\bm \eta| \theta)$の積に比例する. ここで, $p(\theta)$はすでに得られた, データ$\theta$にのみ依存する定数値であるので, $p(\theta | \bm \eta) p(\bm \eta)$が $\bm \eta$ の分布の形を作り, $p(\theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単だが, 周辺分布 $p(\theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させて事後分布の代わりとする. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 尤度関数を式$\ref{logPNC}$ に示す. 
 
 \vspace{-2zh}
 \begin{eqnarray}
-\label{logPN}
+\label{logPNC}
 \log p(\theta | \bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_2(\theta;\bm \mu_j, \Sigma_j)\} \nonumber \\ 
-&=& \sum^m_{j=1} \left[ \log w_j - \log 2\pi - \log A - \frac{1}{2} \log |\Sigma| + C + \log \left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} \right] \nonumber \\
-&\propto& \sum^m_{j=1} \left[ \log w_j - \log A - \frac{1}{2} \log |\Sigma| + C + \log \left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} \right]  
+&=& \sum^m_{j=1} \left[ \log w_j - \log 2\pi - \log A - \frac{1}{2} \log |\Sigma_j| + C + \log \left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} \right] \nonumber \\
+&\propto& \sum^m_{j=1} \left[ \log w_j - \log A - \frac{1}{2} \log |\Sigma_j| + C + \log \left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} \right]  
+\end{eqnarray}
+
+%%%%%%%%%%%%%%%%  球面 %%%%%%%%%%%%%%%%%%%%%%%%%%
+$m$個のユニットからなる 球面上の射影正規分布の混合分布は以下のように定式化できる. 
+
+\vspace{-2zh}
+\begin{eqnarray*}
+p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j) 
+\end{eqnarray*}
+
+\vspace{-1zh}
+\noindent
+ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 混合射影正規分布におけるパラメータは, $w, \bm \mu_j, \Sigma_j$であるが, パラメータに識別可能性を保持するという制約を加えると共分散行列 $\Sigma$は
+
+\vspace{-1zh}
+\[
+ \Sigma_j = \left(
+    \begin{array}{cc}
+      \Sigma^*_j + \bm \gamma_j \bm \gamma_j^T & \bm \gamma_j \\
+      \bm \gamma_j^T & 1
+    \end{array}
+  \right)
+\]
+
+\vspace{-0.5zh}
+\noindent
+と定義されるので, パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \Sigma^*_1, \dots, \Sigma^*_m, \bm \gamma_1, \dots, \bm \gamma_m)^T$, パラメータベクトルの次元は $d = 4m$ となる. 各パラメータの事前分布を $\bm \mu_j \sim N(\bm 0, 10^5 \bm I_3)$, $\bm \gamma_j \sim  N(\bm 0, 10^5 \bm I_2)$, $\Sigma^*_j \sim \mathrm{inverse Wishart}(4,\bm I_2)$, $\bm w \sim Dirichlet(2,2, \dots, 2)$ と設定する. ここで混合比率$\bm w$は$m$次の$Dirichlet$分布に従うものとする. $\bm \mu_j, \bm \gamma_j$は$0$付近に存在するという背景を元に, 正規分布による弱情報事前分布とし, $\Sigma^*_j$は正定値対象行列となるように, 多変量正規分布の共分散行列の共役事前分布として扱われる逆ウィシャート分布を用いる. $\bm w$は非負かつ和が $1$となる性質をもつディリクレ分布を弱情報事前分布とする.
+
+角度データ $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を $p(\bm \eta| \bm \theta)$, パラメータベクトルの事前分布を $p(\bm \eta)$とすると事後分布は以下で定義できる. 
+
+\vspace{-1zh}
+\begin{eqnarray*}
+p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \theta)} \propto p(\bm \theta | \bm \eta) p(\bm \eta)
+\end{eqnarray*}
+
+\vspace{-0.5zh}
+\noindent
+すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. ここで, $p(\bm \theta)$はすでに得られた, データ$\bm \theta$にのみ依存する定数値であるので, $p(\bm \theta | \bm \eta) p(\bm \eta)$が $\bm \eta$ の分布の形を作り, $p(\bm \theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単だが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させて事後分布の代わりとする. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 尤度関数を式$\ref{logPNS}$ に示す. 
+
+\vspace{-1zh}
+\begin{eqnarray}
+\label{logPNS}
+\log p(\bm \theta | \bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j)\} \nonumber \\ 
+&=& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log 2\pi - \frac{3}{2} \log A - \frac{1}{2} \log |\Sigma_j| + C + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right)\right] \nonumber \\
+&\propto& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A - \frac{1}{2} \log |\Sigma_j| + C + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) \right]  
 \end{eqnarray}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%  sectio3 解析手法 %%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{解析手法}
+
+\vspace{-0.5zh}
+\subsection{t-SNE}
+
+t-SNEは高次元データの次元を圧縮するアルゴリズムであり, 特に高次元データを可視化する際に有用である. 詳しいアルゴリズムは L. Maaten and G. Hinton (2008) を参照されたい.  
 
 \vspace{-0.5zh}
 \subsection{マルコフ連鎖モンテカルロ法}
@@ -213,12 +276,12 @@ p(\bm \eta | \theta) = \frac{p(\theta | \bm \eta) p(\bm \eta)}{p(\theta)} \propt
 \frac{d \eta_j(t)}{dt} = \frac{\partial V(\bm q)}{\partial q_j}, \frac{d q_j(t)}{dt} = - \frac{\partial U(\bm \eta)}{\partial \eta_j}
 \end{eqnarray*}
 
-ここで, $\bm \eta, \bm q$ の同時確率密度関数 $p(\bm \eta, \bm q)$ をハミルトニアン $H(\bm \eta, \bm q)$の関数で定義したとき, 上記のハミルトン方程式に従って, $\bm \eta, \bm q$の値を変化させると, 確率密度関数 $p(\bm \eta, \bm q) = f(H(\bm \eta, \bm q))$ からのサンプリングとみなすことができる. また$\bm \eta, \bm q$が独立であることを用いて, リープ$\cdot$フロッグ法で$\bm \eta$の分布を求める. 詳しい解説はNeal (2011)やHoffman and Gelman (2013)を参照されたい.
+ここで, $\bm \eta, \bm q$ の同時確率密度関数 $p(\bm \eta, \bm q)$ をハミルトニアン $H(\bm \eta, \bm q)$の関数で定義したとき, 上記のハミルトン方程式に従って, $\bm \eta, \bm q$の値を変化させると, 確率密度関数 $p(\bm \eta, \bm q) = f(H(\bm \eta, \bm q))$ からのサンプリングとみなすことができる. また$\bm \eta, \bm q$が独立であることを用いて, リープ$\cdot$フロッグ法で$\bm \eta$の分布を求める. リープ$\cdot$フロッグ法について以下に簡単に示すが, 詳しい解説はNeal (2011)やHoffman and Gelman (2013)を参照されたい.
 
 \begin{enumerate}
 
 \item{}
-$\eta_j(0), q_j(0)$の初期値を設定する. $\eta_j(0)$は各パラメータの事前分布からの設定し, $q_j(0)$は$N(0,M_j)$からランダムサンプリングする. 
+$\eta_j(0), q_j(0)$の初期値を設定する. $\eta_j(0)$は各パラメータの事前分布からの設定し, $q_j(0)$は$N(0,M_j)$からランダムサンプリングする. $M_j$ は任意の分散パラメータである. 
  
 \item{}
 
@@ -244,10 +307,13 @@ $$ r = \frac{p(\bm \eta^*|\bm \theta) p(\bm q^*)}{p(\bm \eta(t-1)|\bm \theta) p(
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%  sectio4 数値実験 %%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{シミュレーション}
+\section{データ解析}
 
-人工的データを用いて, 混合 Projected Normal 分布によるクラスタリングの性能評価を行う. 複数の von Mises 分布に従う乱数を発生させて, 1つのデータにまとめることで混合データを作成する. 
+\vspace{-0.5zh}
+\subsection{評価指標}
 
+情報量基準(WAIC)を用いて, 混合分布のクラスター推定を行う. AICやBICなどの情報量基準には, 事後分布が正規分布で近似されている必要があるなど, 様々な制約が存在するが, WAICは真の分布, 確率モデル, 事前分布がどのような場合でも用いることができる. 
+ 
 \subsection{解析データ}
 
 $\mu(0 < \mu < 2\pi), \kappa(\kappa \geq 0) $をパラメータ, $\theta(0 \leq \theta < 2\pi)$を確率変数とする, Von Mises 分布の確率密度関数は以下の式で表せる. また式中の第一種変形ベッセル関数の定義式を示す.
@@ -382,6 +448,9 @@ Neal (2011) \cite{HMC}
 
 Hoffman and Gelman (2013) \cite{NUTS}
 
+Daniel Hernandez-Stumpfhauser (2016) \cite{SGPN}
+
+L. Maaten and G. Hinton (2008) \cite{tSNE}
 
 \if0
 %%%%%%%% 図の挿入用 %%%%%%%%%%%%%%
