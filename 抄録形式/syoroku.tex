@@ -205,53 +205,39 @@ p(\bm \eta | \theta) = \frac{p(\theta | \bm \eta) p(\bm \eta)}{p(\theta)} \propt
 \vspace{-0.5zh}
 \subsection{マルコフ連鎖モンテカルロ法}
 
-本研究ではMCMCアルゴリズムの一つである, ハミルトニアン$\cdot$モンテカルロ法(HMC)を用いて分布の推定を行う. HMCのアルゴリズムはハミルトン方程式の数学的性質によって正当性が保証されている. 一般の確率分布からのサンプリングについて, ハミルトン方程式を定義するには, 元の問題に存在しない仮想的な運動量を補助変数として導入する必要がある. 
-
-HMCは物理学の考えを用いて, メトロポリスアルゴリズムによるランダムウォークな振る舞いを局所的に抑圧する. 従って, 目標の分布までより素早く推移することを可能にする. 対象となる確率変数 $(\bm \eta)$に対して, 速度変数$\bm \phi$を付与する. このメトロポリスアルゴリズムでは$\bm \eta, \bm \phi$を共に更新する. $\bm \eta$の各分布の推移には$\bm \phi$が大きく影響する. 
-
-HMCでは, 事後確率 $p(\bm \eta| \theta)$ は$p(\bm \phi)$の独立な分布によって増大する. したがって結合分布を以下のように定義する.
+本研究ではMCMCアルゴリズムの一つである, ハミルトニアン$\cdot$モンテカルロ法(HMC)を用いて分布の推定を行う. 
+ハミルトニアンとはポテンシャルエネルギー $U(\bm \eta)$ と運動エネルギー $V(\bm q)$ の和で定義される物理量 $H(\bm \eta, \bm q) = U(\bm \eta) + V(\bm q)$ のことであり. ここで, $\bm q = (q_1, \dots, q_d)^T$ は$\bm \eta$ と同じ$d$次元のベクトルである. $t$番目のステップにおける, ハミルトニアン方程式は以下で定義される. 
 
 \vspace{-1zh}
 \begin{eqnarray*}
-p(\bm \eta, \bm \phi| \theta) = p(\bm \phi) p(\bm \eta| \theta)
+\frac{d \eta_j(t)}{dt} = \frac{\partial V(\bm q)}{\partial q_j}, \frac{d q_j(t)}{dt} = - \frac{\partial U(\bm \eta)}{\partial \eta_j}
 \end{eqnarray*}
 
-$\bm \eta$をシュミレーションするために, 上記の結合分布によりパラメータをシュミレーションする. この補助変数$\bm \phi$を導入することでパラメータ空間をより効率的に移動することを可能にする. HMCは対数事後密度の勾配を要求する. $d$次元のパラメータ$\bm \eta$の勾配は以下で表す.
-
-\vspace{-1zh}
-\begin{eqnarray*}
-\frac{d \log p(\bm \eta| \theta)}{d \bm \eta} = \left( 
-  \frac{d \log p(\bm \eta| \theta)}{d \eta_1}, \dots,
-  \frac{d \log p(\bm \eta| \theta)}{d \eta_d} \right)
-\end{eqnarray*}
-
-$\bm \phi$の事前分布については, 平均$0$, 共分散行列$M$の多変量正規分布を与える. $\bm \phi$の要素が独立の場合は各次元ごとに$\phi_j \sim N(0,M_{jj})$を与える. $M$は事後分布の逆共分散行列 $\Bigl(\mbox{var}(\bm \eta| \theta)\Bigr)^{-1}$で大まかにスケールすることができる. アルゴリズムはどんな場合でも動作するが, $M$のスケーリングが優れていることにより, HMCがより効率的となる.
-
-HMCでは次の反復計算により事後分布からサンプリングを行う. 
+ここで, $\bm \eta, \bm q$ の同時確率密度関数 $p(\bm \eta, \bm q)$ をハミルトニアン $H(\bm \eta, \bm q)$の関数で定義したとき, 上記のハミルトン方程式に従って, $\bm \eta, \bm q$の値を変化させると, 確率密度関数 $p(\bm \eta, \bm q) = f(H(\bm \eta, \bm q))$ からのサンプリングとみなすことができる. また$\bm \eta, \bm q$が独立であることを用いて, リープ$\cdot$フロッグ法で$\bm \eta$の分布を求める. 詳しい解説はNeal (2011)やHoffman and Gelman (2013)を参照されたい.
 
 \begin{enumerate}
 
 \item{}
-各速度変数 $\bm \phi$ を $\bm \phi \sim N(0,M)$からランダムサンプリングする.
-
+$\eta_j(0), q_j(0)$の初期値を設定する. $\eta_j(0)$は各パラメータの事前分布からの設定し, $q_j(0)$は$N(0,M_j)$からランダムサンプリングする. 
+ 
 \item{}
-$\bm \eta, \bm \phi$を同時に更新する.
 
+以下の式に従い, $\bm \eta, \bm q$を更新する. $\epsilon$は状態変化のステップ幅を表す.
 \vspace{-1zh}
 \begin{eqnarray*}
-\bm \phi_{t+\frac{1}{2}} \leftarrow \bm \phi_t + \frac{1}{2} \epsilon \frac{d \log p(\bm \eta| \theta)}{d \bm \eta}, 
-\bm \eta_{t+1} \leftarrow \bm \eta_t + \epsilon M^{-1} \bm \phi_{t+\frac{1}{2}},
-\bm \phi_{t+1} \leftarrow \bm \phi_{t+\frac{1}{2}} + \frac{1}{2} \epsilon \frac{d \log p(\bm \eta| \theta)}{d \eta_{t+1}}. 
+q_j(t+\frac{\epsilon}{2}) = q_j(t) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t)),
+\eta_j(t+\epsilon) = \eta_j(t) + \epsilon \frac{q_j(t + \frac{\epsilon}{2})}{M_j},
+q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t + \epsilon))
 \end{eqnarray*}
 
 \item{}
-得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\bm \eta^*, \bm \phi^*$として,
+得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\bm \eta^*, \bm q^*$として,
 現在が$t$回目の反復とすると, サンプルの棄却率は
 
 \vspace{-1zh}
-$$ r = \frac{p(\eta \eta^*|y) p(\bm \phi^*)}{p(\bm \eta^{t-1}|y) p(\phi^{t-1})}$$
+$$ r = \frac{p(\bm \eta^*|\bm \theta) p(\bm q^*)}{p(\bm \eta(t-1)|\bm \theta) p(\bm q(t-1))}$$
 
-と定義され, $0$から$1$の間でランダムに選んだ数値より, $r$が高ければ$\bm \eta^*$を採択する. サンプル数が定めた値に達したら, 終了する.
+と定義され, $0$から$1$の間でランダムに選んだ数値より, $r$が高ければ$\bm \eta^*$を採択する. サンプル数が定めた値に達したら終了する. 
 
 \end{enumerate}
 
@@ -391,6 +377,11 @@ D. Hemandez(2017) \cite{GPN}
 Dhillon and Modha(2001) \cite{SKMcluster}
 
 Gopal and Yang(2014) \cite{Gopal}
+
+Neal (2011) \cite{HMC}
+
+Hoffman and Gelman (2013) \cite{NUTS}
+
 
 \if0
 %%%%%%%% 図の挿入用 %%%%%%%%%%%%%%
