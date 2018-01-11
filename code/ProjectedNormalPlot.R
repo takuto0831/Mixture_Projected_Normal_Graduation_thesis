@@ -44,7 +44,7 @@ data.frame(theta = theta,prob = x) %>%
   geom_line() 
 
 ff <- function(x) dpnorm(x, mu=mu, sigma=Sigma)
-curve.circular(ff, shrink=1.6,n=1000)
+curve.circular(ff, shrink=1.6,n=1000,cex=1.4,lwd=2)
 
 # project normal 2峰性
 mu = matrix(c(-0.24,0.15),ncol=1); 
@@ -60,7 +60,7 @@ data.frame(theta = theta,prob = x) %>%
   geom_line() 
 
 ff <- function(x) dpnorm(x, mu=mu, sigma=Sigma)
-curve.circular(ff, shrink=1.6,n=1000)
+curve.circular(ff, shrink=1.6,n=1000,cex=1.4,lwd=2)
 
 # project normal 共分散行列 = I
 mu = matrix(c(-1.2,-0.95),ncol=1)
@@ -75,7 +75,7 @@ data.frame(theta = theta,prob = x) %>%
   geom_line() 
 
 ff <- function(x) dpnorm(x, mu=mu, sigma=Sigma)
-curve.circular(ff, shrink=1.6,n=1000)
+curve.circular(ff, shrink=1.6,n=1000,cex=1.4,lwd=2)
 # von Mises sample
 
 x <- foreach(i=theta, .combine = c) %do% dvonmises(i, mu=circular(3/4), kappa=5)
