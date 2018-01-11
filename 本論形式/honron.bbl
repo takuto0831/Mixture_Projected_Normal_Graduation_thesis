@@ -23,6 +23,28 @@ Siddharth Gopal and Yiming Yang.
 \newblock Von mises-fisher clustering models.
 \newblock In {\em ICML}, 2014.
 
+\bibitem{SGPN}
+Daniel Hernandez-Stumpfhauser, F.~Jay Breidt, and Mark~J. van~der Woerd.
+\newblock Supple- mentary material of the general projected normal distribution
+  of arbitrary dimen- sion: Modeling and bayesian inference.
+\newblock {\em Bayesian Analysis}, 2016.
+
+\bibitem{NUTS}
+Hoffman. M and Gelman. A.
+\newblock The no-u-turn sampler: Adaptively setting path lengths in hamiltonian
+  monte carlo.
+\newblock {\em Journal of Machine Learning Research}, 2014.
+
+\bibitem{HMC}
+Neal.~R. M.
+\newblock Mcmc using hamiltonian dynamics.
+\newblock {\em In Handbook of Markov Chain MonteCarlo}, pp. 113--162, 2011.
+
+\bibitem{tSNE}
+L.~Maaten and G.~Hinton.
+\newblock Visualizing data using t-sne.
+\newblock {\em Journal of Machine Learning}, Vol.~9, pp. 2579--2605, 2008.
+
 \bibitem{PN1}
 F.~Wang and A.~E. Gelfand.
 \newblock Directional data analysis under the general projected normal
