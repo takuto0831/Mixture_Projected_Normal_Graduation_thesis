@@ -280,16 +280,16 @@ $\eta_j(0), q_j(0)$の初期値を設定する. $\eta_j(0)$は各パラメータ
 以下の式に従い, $\bm \eta, \bm q$を更新する. $\epsilon$は状態変化のステップ幅を表す.
 
 \begin{eqnarray*}
-q_j(t+\frac{\epsilon}{2}) = q_j(t) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t)), \\
-\eta_j(t+\epsilon) = \eta_j(t) + \epsilon \frac{q_j(t + \frac{\epsilon}{2})}{M_j}, \\
-q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t + \epsilon))
+&&q_j(t+\frac{\epsilon}{2}) = q_j(t) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t)), \\
+&&\eta_j(t+\epsilon) = \eta_j(t) + \epsilon \frac{q_j(t + \frac{\epsilon}{2})}{M_j}, \\
+&&q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t + \epsilon)),
 \end{eqnarray*}
 
 \item{}
 得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\bm \eta^*, \bm q^*$として,
 現在が$t$回目の反復とすると, サンプルの棄却率は
 
-$$ r = \frac{p(\bm \eta^*|\bm \theta) p(\bm q^*)}{p(\bm \eta(t-1)|\bm \theta) p(\bm q(t-1))}$$
+$$ r = \frac{p(\bm \eta^*|\bm \theta) p(\bm q^*)}{p(\bm \eta(t-1)|\bm \theta) p(\bm q(t-1))},$$
 
 と定義され, $0$から$1$の間でランダムに選んだ数値より, $r$が高ければ$\bm \eta^*$を採択する. サンプル数が定めた値に達したら終了する. 
 
