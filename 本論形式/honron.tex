@@ -39,14 +39,11 @@
 \def\sym{\mathop{\operator@font sym}\nolimits}
 \makeatother
 
-%\setlength\textheight{230mm}   %テキスト高さ
-%\setlength\textwidth{160mm}   %テキスト幅
-%\setlength{\oddsidemargin}{0mm}   %余白
 \setlength\textfloatsep{1pt}
 \setlength\floatsep{1pt}
 
 \begin{document}
-%\bibliographystyle{jecon}
+%\bibliographystyle{jecon} % 経済学などでよく使われる
 \bibliographystyle{plainnat}
 
 %%%%%%%%%%% タイトルはいらない %%%%%%%%%%%%%%%%%%%
@@ -64,35 +61,35 @@
 \section{はじめに}
 %%% 2-3ページ  %%%%
 
-円周上や球面上のデータを扱う統計手法を方向統計学といい, 近年多様体上の統計分析手法として, 注目を集めている. 方向統計学とは風向データ, 渡り鳥の移動方向データなどの角度観測値を含むデータを対称とする統計学である. 単位超球面上 $(\mathbb{S}^{p-1})$ に分布するようなデータをユークリッド空間上のデータとして扱い, ベクトル間の類似度の指標にユークリッド距離を用いると良い解析が行えない場合がある. そこで, データを多様体上の確率分布として扱うことで, 数学的モデルを作る際に低次元で考えられるなどの利点がある. 円周あるいは超球面上の分布を生成するいくつかの方法が知られている. 代表的なものは, 巻き込み法, 射影法, 条件付法, 投影法である. 本研究では射影法を用いた射影分布によるクラスタリングについて議論する.
+円周上や球面上のデータを扱う統計手法を方向統計学といい, 近年多様体上の統計分析手法として, 注目を集めている. 方向統計学とは風向データ, 渡り鳥の移動方向データなどの角度観測値を含むデータを対称とする統計学である. 単位超球面上 $(\mathbb{S}^{p-1})$ に分布するようなデータをユークリッド空間上のデータとして扱い, ベクトル間の類似度の指標にユークリッド距離を用いると良い解析が行えない場合がある. そこで, データを多様体上の確率分布として扱うことで, 超球面上でのベクトル間の類似度指標を用いることができ, 加えて数学的モデルを作る際に低次元で考えられるなどの利点がある. 円周あるいは超球面上の分布を生成するいくつかの方法が知られている. 代表的なものとして, 巻き込み法, 射影法, 条件付法, 投影法である. 本研究では射影法を用いた射影分布によるクラスタリングについて議論する.
 
-代表的なクラスタリング手法として, $k$平均法が挙げられる. $k$平均法は, 各データと各クラスタの中心のユークリッド距離を最小化することで, 各データをクラスタリングする. しかし確率変数が円周上や球面上に値をとるようなデータに対して, ユークリッド空間のクラスタリングを前提とした$k$平均法はしばしば誤った分類結果をもたらす. \citet{SKMcluster}は, ユークリッド距離に基づく非類似度の尺度を単位球面上に射影したコサイン非類似度の最小化に基づく超球面上の$k$平均法を提案した. データの単位方向ベクトルと各クラスタにおける重心ベクトルとのコサイン非類似度を最小化することで, 各データをクラスタリングする. 
+代表的なクラスタリング手法として, $k$平均法が挙げられる. $k$平均法は, 各データと各クラスタの中心のユークリッド距離を最小化することで, 各データをクラスタリングする. しかし確率変数が円周上や球面上に値をとるようなデータに対して, ユークリッド空間のクラスタリングを前提とした$k$平均法はしばしば誤った分類結果をもたらすことがある. \citet{SKMcluster}は, ユークリッド距離に基づく非類似度の尺度を単位球面上に射影したコサイン非類似度の最小化に基づく超球面上の$k$平均法を提案した. この手法ではデータの単位方向ベクトルと各クラスタにおける重心ベクトルとのコサイン非類似度を最小化することで, 各データをクラスタリングする. 
 
-超球面上の$k$平均法は確率モデルを仮定しないノンパラメトリックな手法であるのに対し,  パラメトリックな超球面上のクラスタリング手法として, \citet{Gopal}による von Mises Fisher 分布の混合分布を用いた手法がある. 単位超球面上の分布として知られる, von Mises Fisher 分布を用いて, MCMCサンプリングにより高次元データのクラスタリングを行う. MCMCを用いることで求める事後分布のパラメータの平均値, 標準偏差を求めることができる. 本研究では方向データの分布として知られる, 射影正規分布の混合分布によるクラスタリングの性能評価を行う. クラスター数の評価指標には\citet{WAIC}によるWAIC基準を用いる. クラスターごとの特徴量を確認することで, 混合射影正規分布によるクラスタリングの妥当性を検証する.
+超球面上の$k$平均法は確率モデルを仮定しないノンパラメトリックな手法であるのに対し,  パラメトリックな超球面上のクラスタリング手法として, \citet{Gopal}による von Mises Fisher 分布の混合分布を用いた手法がある. 単位超球面上の分布として知られる, von Mises Fisher 分布を用いて, MCMCサンプリングにより高次元データのクラスタリングを行う. MCMCを用いることで求める事後分布のパラメータの平均値, 標準偏差を求めることができ, さらに事後分布を利用したモデルの妥当性の検証を行うことができる. 本研究では方向データの分布として知られる, 射影正規分布の混合分布によるクラスタリングの性能評価を行う. コンポーネント数の評価指標には\citet{WAIC}によるWAIC基準を用いる. クラスターごとの特徴量を確認することで, 混合射影正規分布によるクラスタリングの妥当性を検証する.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% senction2 混合分布 %%%%%%%%%%%%%%%%%%%%%
 
 \section{理論}
 
-球面上における平均方向の定義, 射影正規分布の確率密度関数について示し, パラメーターを変化させて射影正規分布の図例を示す. クラスタリング分析に用いる, 混合射影正規分布について定義し, MCMCによるパラメーターの推定方法について述べる.  
+球面上における平均方向の定義, 射影正規分布の確率密度関数について示し, パラメーターを変化させて射影正規分布の確率分布の概形について示す. クラスタリング分析に用いる, 混合射影正規分布について定義し, MCMCによるパラメーターの推定方法について述べる.  
 
 \subsection{Projected Normal 分布}
 
-射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, \citet{PML}で, $\Sigma = \mathcal{I}$と定義されていた射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では非対称分布もしくは二峰性分布となる. ここで平均方向について説明する. $\pi/3$ラジアン(実線)と$5\pi/3$ラジアン(実線)の平均方向について考える. 算術平均では$(\pi/3 + 5\pi/3)/2 = \pi$より, $\pi$ラジアン(破線)となるが, 図\ref{sample_mu1}より$2$つの平均方向としては不適切なことが分かる. よって図\ref{sample_mu2}よりこれらの角度を円周上の点 $(\cos \frac{\pi}{3},\sin \frac{\pi}{3}) = (\frac{1}{2},\frac{\sqrt{3}}{2}),\ (\cos \frac{5\pi}{3}, \sin \frac{5\pi}{3}) = (\frac{1}{2},- \frac{\sqrt{3}}{2})$ と表し, 2つのベクトルの平均を取ることで $\frac{1}{2} (\cos 0, \sin 0)$となり, 平均方向は$0$ラジアン(破線)となる. 
+射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, \citet{PML}で, $\Sigma = \mathcal{I}$と定義されていた射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では非対称分布もしくは二峰性分布となる. ここで平均方向について説明する. $\pi/3$ラジアン(実線)と$5\pi/3$ラジアン(実線)の平均方向について考える. 算術平均では$(\pi/3 + 5\pi/3)/2 = \pi$より, $\pi$ラジアン(破線)となるが, 図\ref{sample_mu1}より$2$つの平均方向としては不適切なことが分かる. よって図\ref{sample_mu2}に示したように, これらの角度を円周上の点 $(\cos \frac{\pi}{3},\sin \frac{\pi}{3}) = (\frac{1}{2},\frac{\sqrt{3}}{2}),\ (\cos \frac{5\pi}{3}, \sin \frac{5\pi}{3}) = (\frac{1}{2},- \frac{\sqrt{3}}{2})$ と表し, 2つのベクトルの平均を取ることで $\frac{1}{2} (\cos 0, \sin 0)$となり, 平均方向は$0$ラジアン(破線)となる. 
 
 \begin{figure}[tbp]
  \begin{tabular}{c}
  \begin{minipage}{0.5\hsize}
   \begin{center}
-   \includegraphics[clip,height= 50mm]{data/sample_False.png}
+   \includegraphics[clip,height= 60mm]{data/sample_False.png}
 \caption{算術平均による平均の定義}
 \label{sample_mu1}
   \end{center}
  \end{minipage}
  \begin{minipage}{0.5\hsize}
   \begin{center}
- \includegraphics[clip,height= 50mm]{data/sample_True.png}
+ \includegraphics[clip,height= 60mm]{data/sample_True.png}
 \caption{円周上における平均方向の定義}
 \label{sample_mu2}
   \end{center}
@@ -116,8 +113,8 @@ p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 
 \begin{figure}[tbp]
 \begin{center}
-\includegraphics[clip,height= 70mm]{data/sample_symmetry.png}
-\caption[Text excluding the matrix]{
+\includegraphics[clip,height= 80mm]{data/sample_symmetry.png}
+\caption[対称な射影正規分布]{
 $\bm \mu = \begin{pmatrix} -1.2 \\ -0.95 \\ \end{pmatrix}, \ \Sigma = \begin{pmatrix}  1 & 0 \\ 0 & 1 \\ \end{pmatrix}$
 とした場合の対称な射影正規分布.}
 \label{sample_pnc1}
@@ -126,8 +123,8 @@ $\bm \mu = \begin{pmatrix} -1.2 \\ -0.95 \\ \end{pmatrix}, \ \Sigma = \begin{pma
 
 \begin{figure}[tbp]  
 \begin{center}
-\includegraphics[clip,height= 70mm]{data/sample_asymmetry.png}
-\caption[Text excluding the matrix]{
+\includegraphics[clip,height= 80mm]{data/sample_asymmetry.png}
+\caption[非対称な射影正規分布]{
 $\bm \mu = \begin{pmatrix} -0.19 \\ 2.09 \\ \end{pmatrix}, \ \Sigma = \begin{pmatrix} 2.49 & -1.85 \\ -1.85 & 1.96 \\ \end{pmatrix}$ とした場合の非対称な射影正規分布.}
 \label{sample_pnc2}
 \end{center}
@@ -136,7 +133,7 @@ $\bm \mu = \begin{pmatrix} -0.19 \\ 2.09 \\ \end{pmatrix}, \ \Sigma = \begin{pma
 \begin{figure}[tbp]  
 \begin{center}
 \includegraphics[clip,height= 70mm]{data/sample_bimodal.png}
-\caption[Text excluding the matrix]{
+\caption[二峰性となる射影正規分布]{
 $\bm \mu = \begin{pmatrix} -0.24 \\ 0.15 \\ \end{pmatrix}, \ \Sigma = \begin{pmatrix} 0.209 & 0.068\\ 0.068 & 2.25 \\ \end{pmatrix}$ とした場合の二峰性となる射影正規分布.}
 \label{sample_pnc3}
 \end{center}
@@ -149,8 +146,9 @@ $\bm \mu = \begin{pmatrix} -0.24 \\ 0.15 \\ \end{pmatrix}, \ \Sigma = \begin{pma
 \footnotesize %式を小さくする
 \begin{eqnarray}
 \label{PNS}
-p(\bm \theta; \bm \mu, \Sigma) = \left(\frac{1}{2\pi A(\bm \theta)}\right)^{\frac{3}{2}} |\Sigma|^{-\frac{1}{2}}
-\exp(C)\left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) I_{[0,2\pi)}(\theta_1) I_{[0,\pi)}(\theta_2), 
+p(\bm \theta; \bm \mu, \Sigma) &= \left(\frac{1}{2\pi A(\bm \theta)}\right)^{\frac{3}{2}} |\Sigma|^{-\frac{1}{2}}
+\exp(C) 
+\left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) I_{[0,2\pi)}(\theta_1) I_{[0,\pi)}(\theta_2),
 \end{eqnarray}
 \normalsize
 
@@ -192,7 +190,7 @@ p(\bm \eta | \theta) = \frac{p(\theta | \bm \eta) p(\bm \eta)}{p(\theta)} \propt
 \end{eqnarray*}
 
 \noindent
-すなわち, 事後分布$p(\bm \eta | \theta)$は尤度$p(\theta | \bm \eta)$と事前分布 $p(\bm \eta| \theta)$の積に比例する. ここで, $p(\theta)$はすでに得られた, データ$\theta$にのみ依存する定数値であるので, $p(\theta | \bm \eta) p(\bm \eta)$が $\bm \eta$ の分布の形を作り, $p(\theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単だが, 周辺分布 $p(\theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させて事後分布の代わりとする. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 尤度関数を式$\ref{logPNC}$に示す. 
+すなわち, 事後分布$p(\bm \eta | \theta)$は尤度$p(\theta | \bm \eta)$と事前分布 $p(\bm \eta| \theta)$の積に比例する. ここで, $p(\theta)$はすでに得られた, データ$\theta$にのみ依存する定数値であるので, $p(\theta | \bm \eta) p(\bm \eta)$が $\bm \eta$ の分布の形を作り, $p(\theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単だが, 周辺分布 $p(\theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させて事後分布の代わりとする. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 尤度関数を式\ref{logPNC}に示す. 
 
 \footnotesize
 \begin{eqnarray}
@@ -213,7 +211,7 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
 \end{eqnarray}
 
 \noindent
-ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 混合射影正規分布におけるパラメータは, $w, \bm \mu_j, \Sigma_j$であるが, 球面上の混合射影正規分布のパラメータについては識別性を考慮して次のように分散共分散行列を定式化する. 
+ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 混合射影正規分布におけるパラメータは, $w, \bm \mu_j, \Sigma_j$であるが, 球面上の混合射影正規分布のパラメータについては識別性を考慮して分散共分散行列を定式化する. 分散共分散行列を式(\ref{SIGMA})に示す.
 
 \begin{eqnarray}
 \label{SIGMA}
@@ -226,7 +224,7 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
 \end{eqnarray}
 
 \noindent
-と定義されるので, パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \Sigma^*_1, \dots, \Sigma^*_m, \bm \gamma_1, \dots, \bm \gamma_m)^T$となり, パラメータベクトルの次元は $d = 4m$ となる. ここで, 混合射影正規分布のパラメータのベイズ推定を考える. そのためにモデルパラメータの事前分布を定義する必要がある. 各パラメータの事前分布を $\bm \mu_j \sim N(\bm 0, 10^5 \bm I_3)$,\ $\bm \gamma_j \sim  N(\bm 0, 10^5 \bm I_2)$,\ $\Sigma^*_j \sim \mathrm{inverse Wishart}(4,\bm I_2)$,\ $\bm w \sim Dirichlet(2,2, \dots, 2)$ と設定する. ここで混合比率$\bm w$は$m$次の$Dirichlet$分布に従うものとする. $\bm \mu_j,\ \bm \gamma_j$は$0$付近に存在するという基準化したデータを想定した下で, 正規分布による弱情報事前分布とし, $\Sigma^*_j$は正定値対象行列となるように, 多変量正規分布の共分散行列の共役事前分布として扱われる逆ウィシャート分布を用いる. $\bm w$は非負かつ和が $1$となる性質をもつディリクレ分布を弱情報事前分布とする.
+パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \Sigma^*_1, \dots, \Sigma^*_m, \bm \gamma_1, \dots, \bm \gamma_m)^T$となり, パラメータベクトルの次元は $d = 4m$ となる. ここで, 混合射影正規分布のパラメータのベイズ推定を考える. そのためにモデルパラメータの事前分布を定義する必要がある. 各パラメータの事前分布を $\bm \mu_j \sim N(\bm 0, 10^5 \bm I_3)$,\ $\bm \gamma_j \sim  N(\bm 0, 10^5 \bm I_2)$,\ $\Sigma^*_j \sim \mathrm{inverse Wishart}(4,\bm I_2)$,\ $\bm w \sim Dirichlet(2,2, \dots, 2)$ と設定する. ここで混合比率$\bm w$は$m$次の$Dirichlet$分布に従うものとする. $\bm \mu_j,\ \bm \gamma_j$は$0$付近に存在するという基準化したデータを想定した下で, 正規分布による弱情報事前分布とし, $\Sigma^*_j$は正定値対象行列となるように, 多変量正規分布の共分散行列の共役事前分布として扱われる逆ウィシャート分布を用いる. $\bm w$は非負かつ和が $1$となる性質をもつディリクレ分布を弱情報事前分布とする.
 
 角度データ $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を $p(\bm \eta| \bm \theta)$, パラメータベクトルの事前分布を $p(\bm \eta)$とすると事後分布を式(\ref{BAYES})に示す. 
 
@@ -236,18 +234,16 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 \end{eqnarray}
 
 \noindent
-すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. ここで, $p(\bm \theta)$はすでに得られた, データ$\bm \theta$にのみ依存する定数値であるので, $p(\bm \theta | \bm \eta) p(\bm \eta)$が $\bm \eta$  の事後分布の核関数を形成し, $p(\bm \theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単だが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ.尤度関数を式$(\ref{logPNS})$ に示す. 
+すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. ここで, $p(\bm \theta)$はすでに得られた, データ$\bm \theta$にのみ依存する定数値であるので, $p(\bm \theta | \bm \eta) p(\bm \eta)$が $\bm \eta$  の事後分布の核関数を形成し, $p(\bm \theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単であるが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 球面上における混合射影正規分布の尤度関数を式(\ref{logPNS})に示す. 
 
-\begin{equation}
+\begin{eqnarray}
 \label{logPNS}
-\begin{split}
-\log p(\bm \theta | \bm \eta) &= \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j)\} \\ 
-&= \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log 2\pi - \frac{3}{2} \log A - \frac{1}{2} \log |\Sigma_j| + C \right. \\
-&\quad \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right)\right] \\
-&\propto \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A - \frac{1}{2} \log |\Sigma_j| + C \right. \\
-&\quad \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) \right], 
-\end{split}
-\end{equation}
+\log p(\bm \theta | \bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j)\} \nonumber \\
+&=& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log 2\pi - \frac{3}{2} \log A - \frac{1}{2} \log |\Sigma_j| + C \right. \nonumber \\
+&&\  \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right)\right] \nonumber \\
+&\propto& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A - \frac{1}{2} \log |\Sigma_j| + C \right. \nonumber \\
+&&\ \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) \right], 
+\end{eqnarray}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%  sectio3 解析手法 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -258,21 +254,20 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 
 \subsection{t-SNE}
 
-\citet{tSNE}によるt-SNEは高次元データの次元を圧縮するアルゴリズムであり, 特に高次元データを可視化する際に有用である. このアルゴリズムでは高次元空間における$2$点間の近さを確率分布として表現する. $N$個の高次元データにおいて点$x_i$とその他の全ての点$x_j (1 \leq j \leq n)$との距離を考え, 点$x_j$と点$x_i$の類似度を条件付確率$P_{j|i}$によって表す. すなわち二点間の距離が小さいとき, 確率$P_{j|i}$は高くなる. t-SNEでは, 基準となる点$x_i$を中心とした正規分布を考え, 条件付確率$P_{j|i}$, 同時確率$P_{ij}$を式$(\ref{tsne1})$で表す.
+\citet{tSNE}によるt-SNEは高次元データの次元を圧縮するアルゴリズムであり, 特に高次元データを可視化する際に有用である. このアルゴリズムでは高次元空間における$2$点間の近さを確率分布として表現する. $N$個の高次元データにおいて点$x_i$とその他の全ての点$x_j (1 \leq j \leq N)$との距離を考え, 点$x_j$と点$x_i$の類似度を条件付確率$P_{j|i}$によって表す. 二点間の距離が小さいとき, 確率$P_{j|i}$は大きくなり. 距離が大きいとき, 確率$P_{j|i}$は小さくなる. また$P_{i|i} = 0$と定義する. t-SNEでは, 基準となる点$x_i$を中心とした正規分布を考え, 条件付確率$P_{j|i}$, 同時確率$P_{ij}$を式$(\ref{tsne1})$で表す.
 
 \begin{eqnarray}
 \label{tsne1}
 P_{j|i} = \frac{\exp(-||x_i - x_j||^2 / 2\sigma_i^2}{\Sigma_{k \neq i}\exp(-||x_i - x_k||^2/ 2\sigma_i^2)},\ 
-P_{ij} = \frac{P_{j|i} + P_{i|j}}{2N},\ 
-P_{i|i} = 0,
+P_{ij} = \frac{P_{j|i} + P_{i|j}}{2N}
 \end{eqnarray}
 
 \noindent
-ここで, $\sigma_i$は点$x_i$を中心とした正規分布における, 任意の分散パラメータである. 高次元データ$\bm x$を低次元データ$\bm y$に近似したとき, 次元圧縮後の点$y_j$と点$y_i$の類似度を同時確率$Q_{ij}$によって表す. 次元圧縮後の近さを正規分布ではなく, 裾の重い自由度$1$の$t$分布で表すことで, 点$x_j$と点$x_i$が遠くにある場合, 点$y_j$と点$y_i$を正規分布より遠くに配置することができる. 同時確率$Q_{ij}$は式$(\ref{tsne2})$で表す.
+ここで, $\sigma_i$は点$x_i$を中心とした正規分布における, 任意の分散パラメータである. 高次元データ$\bm x$を低次元データ$\bm y$に近似したとき, 次元圧縮後の点$y_j$と点$y_i$の類似度を同時確率$Q_{ij}$によって表す. 点$x_j$と点$x_i$が遠くにあるとき, 点$y_j$と点$y_i$を正規分布を仮定した場合より遠くに配置するために. 次元圧縮後の近さを裾の重い自由度$1$の$t$分布で表す. 元のデータと同様に$Q_{i|i} = 0$と定義し, 同時確率$Q_{ij}$は式$(\ref{tsne2})$で表す.
 
 \begin{eqnarray}
 \label{tsne2}
-Q_{ij} = \frac{(1 + ||y_i - y_j||^2)^{-1}}{\Sigma_{k \neq i}(1 + ||y_i - y_k||^2)^{-1}},\ Q_{i|i} = 0,
+Q_{ij} = \frac{(1 + ||y_i - y_j||^2)^{-1}}{\Sigma_{k \neq i}(1 + ||y_i - y_k||^2)^{-1}}
 \end{eqnarray}
 
 圧縮前の確率分布と圧縮後の確率分布のカルバック$\cdot$ライブラー情報量を損失関数$C$として, $C$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$C$を式$(\ref{tsne3})$に示す.
@@ -422,7 +417,7 @@ True
 
 \subsection{解析データ}
 
-本研究では, GroupLensプロジェクトによる公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個の評価値, 簡単なユーザ情報, コンテンツ情報から構成されている. 評価値では, $0$はまだ見ていないことを表し, 評価については1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個のレーティングを持っている. コンテンツ情報, ユーザ情報について表(\ref{MovieLens1})にまとめる. また表(\ref{MovieLens2})にMovie Lensデータセットの一部を示す.
+本研究では, GroupLensプロジェクトによる公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個の評価値, 簡単なユーザ情報, コンテンツ情報から構成されている. 評価値において, $0$は見ていないことを表し, 評価については1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個の映画に対する評価値を持っている. コンテンツ情報, ユーザ情報について表(\ref{MovieLens1})にまとめる. また表(\ref{MovieLens2})にMovie Lensデータセットの一部を示す.
 
 \begin{table}[tbp]
 \begin{center}
@@ -445,7 +440,7 @@ True
 
 \begin{table}[tbp]
 \begin{center}
-\caption{Movie Lens データ例}   %キャプション
+\caption{MovieLens データセット例}   %キャプション
 \label{MovieLens2}   %ラベル
 \begin{tabular}{c c c c c c}
 \hline
@@ -459,15 +454,15 @@ user-No	&	age	&	gender	&	occupation	&	item-No	& rating \\ \hline \hline
 \end{center}
 \end{table}
 
-MovieLensのデータセットを用いて, 映画に対する評価に基づいて, ユーザをクラスタリングする. このデータは$94\%$が$0$であるスパースな行列として表せる. 評価値における$0$から$6$の構成数を表(\ref{MovieLens3})に示す.
+MovieLensのデータセットを用いて, 映画に対する評価に基づいて, ユーザをクラスタリングする. このデータは$94\%$が$0$であるスパースな行列として表せる. 映画の評価値において$0$から$6$の出現回数を表(\ref{MovieLens3})に示す.
 
 \begin{table}[tbp]
 \begin{center}
-\caption{映画に対する評価値の構成数}   %キャプション
+\caption{映画に対する各評価値の出現回数}   %キャプション
 \label{MovieLens3}   %ラベル
 \begin{tabular}{c c c c c c}
 \hline
-0 & 1 & 2 & 3 & 4 & 5 \\ \hline
+0 & 1 & 2 & 3 & 4 & 5 \\ \hline \hline
 1506126 & 4719 & 9178 & 21963 & 27396 & 16744 \\ \hline
 \end{tabular}
 \end{center}
@@ -531,7 +526,7 @@ $9$個のデータにおいて, クラスター数が$4$つのときWAICが最�
 \includegraphics[clip,height= 180mm]{data/cluster_4.png}
 \end{center}
  \vspace{-0.9cm}
-\caption{クラスタリング結果}
+\caption{混合分布によるクラスタリング結果}
 \label{clusterplot}
 \end{figure}
 
@@ -549,13 +544,12 @@ $9$個のデータにおいて, クラスター数が$4$つのときWAICが最�
 %%%%%%%%%%%%%%%%%%%%%%%  section5 まとめ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{まとめと今後の課題}
 
-本研究では高次元データを$3$次元に圧縮し, クラスタリングを試みたが, 一般化射影正規分布では任意次元の超球面において分布を生
-成することができるので, 超球面上でのクラスタリングに取り組みたい.
+本研究では計算量の問題で高次元データをあらかじめ$3$次元に圧縮し, クラスタリングを試みたが, クラスターごとの特徴を明確に抽出することができなかった. 一般化射影正規分布では任意次元の超球面において分布を生成することができるので, 計算量の問題を解決し, 次元を圧縮することなく超球面上でのクラスタリングに取り組みたい. また超球面上でのクラスタリングは主にテキストマイニングなどに用いられているので, 文書データのクラスタリングを行い, 従来手法との比較を行いたい. 
 
 %%%%%%%%%%%%%%%%%%%%%%%  謝辞 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{謝辞}
 
-本研究を行うにあたり, ご指導を頂いた塩濱教授に感謝しています. またお忙しい中, 学部生の質問に対応して頂いた院生の皆様にも感謝しています.
+本研究を行うにあたり, ご指導を頂いた塩濱教授に感謝しています. この一年間で, 卒業研究だけでなく, 興味を持った多くのことに対して取り組むことができました. またお忙しい中, 学部生の質問に対応して頂いた院生の皆様にも感謝しています. 同期の皆様のおかげで, 卒業研究や研究室行事を協力して乗り切ることができたと思っています. 特に黒木君は大学院に進む友人として, 共に切磋琢磨し, お互いを鼓舞することができたと思います. 最後になりますが, ここまで支えてくれた両親に感謝しています.
 
 \newpage
 \addcontentsline{toc}{section}{参考文献} %目次に参考文献を入れる
