@@ -65,7 +65,7 @@
 
 代表的なクラスタリング手法として, $k$平均法が挙げられる. $k$平均法は, 各データと各クラスタの中心のユークリッド距離を最小化することで, 各データをクラスタリングする. しかし確率変数が円周上や球面上に値をとるようなデータに対して, ユークリッド空間のクラスタリングを前提とした$k$平均法はしばしば誤った分類結果をもたらすことがある. \citet{SKMcluster}は, ユークリッド距離に基づく非類似度の尺度を単位球面上に射影したコサイン非類似度の最小化に基づく超球面上の$k$平均法を提案した. この手法ではデータの単位方向ベクトルと各クラスタにおける重心ベクトルとのコサイン非類似度を最小化することで, 各データをクラスタリングする. 
 
-超球面上の$k$平均法は確率モデルを仮定しないノンパラメトリックな手法であるのに対し,  パラメトリックな超球面上のクラスタリング手法として, \citet{Gopal}による von Mises Fisher 分布の混合分布を用いた手法がある. 単位超球面上の分布として知られる, von Mises Fisher 分布を用いて, MCMCサンプリングにより高次元データのクラスタリングを行う. MCMCを用いることで求める事後分布のパラメータの平均値, 標準偏差を求めることができ, さらに事後分布を利用したモデルの妥当性の検証を行うことができる. 本研究では方向データの分布として知られる, 射影正規分布の混合分布によるクラスタリングの性能評価を行う. コンポーネント数の評価指標には\citet{WAIC}によるWAIC基準を用いる. クラスターごとの特徴量を確認することで, 混合射影正規分布によるクラスタリングの妥当性を検証する.
+超球面上の$k$平均法は確率モデルを仮定しないノンパラメトリックな手法であるのに対し,  パラメトリックな超球面上のクラスタリング手法として, \citet{Gopal}による von Mises Fisher 分布の混合分布を用いた手法がある. 単位超球面上の分布として知られる, von Mises Fisher 分布を用いて, MCMCサンプリングにより高次元データのクラスタリングを行う. MCMCを用いることで求める事後分布のパラメータの平均値, 標準偏差を求めることができ, さらに事後分布を利用したモデルの妥当性の検証を行うことができる. 本研究では方向データの分布として知られる, 射影正規分布の混合分布によるクラスタリングの性能評価を行う. 混合分布のコンポーネント数の評価指標には\citet{WAIC}によるWAIC基準を用いる. クラスターごとの特徴量を確認することで, 混合射影正規分布によるクラスタリングの妥当性を検証する.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%% senction2 混合分布 %%%%%%%%%%%%%%%%%%%%%
@@ -78,7 +78,7 @@
 
 射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/||X||$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, \citet{PML}で, $\Sigma = \mathcal{I}$と定義されていた射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では非対称分布もしくは二峰性分布となる. ここで平均方向について説明する. $\pi/3$ラジアン(実線)と$5\pi/3$ラジアン(実線)の平均方向について考える. 算術平均では$(\pi/3 + 5\pi/3)/2 = \pi$より, $\pi$ラジアン(破線)となるが, 図\ref{sample_mu1}より$2$つの平均方向としては不適切なことが分かる. よって図\ref{sample_mu2}に示したように, これらの角度を円周上の点 $(\cos \frac{\pi}{3},\sin \frac{\pi}{3}) = (\frac{1}{2},\frac{\sqrt{3}}{2}),\ (\cos \frac{5\pi}{3}, \sin \frac{5\pi}{3}) = (\frac{1}{2},- \frac{\sqrt{3}}{2})$ と表し, 2つのベクトルの平均を取ることで $\frac{1}{2} (\cos 0, \sin 0)$となり, 平均方向は$0$ラジアン(破線)となる. 
 
-\begin{figure}[tbp]
+\begin{figure}[bp]
  \begin{tabular}{c}
  \begin{minipage}{0.5\hsize}
   \begin{center}
@@ -98,6 +98,7 @@
 \label{sample_mu}
 \end{figure}
 
+\newpage
 \citet{PN1}によると, $\mathcal{PN}_2(\bm \mu,\Sigma$)の円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度を式(\ref{PNC})に示す.
 
 \begin{eqnarray}
@@ -111,7 +112,7 @@ p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 
 射影正規分布において対称分布, 非対称分布, 二峰性分布となる例をそれぞれ図\ref{sample_pnc1}, 図\ref{sample_pnc2}, 図\ref{sample_pnc3}に示す. 
 
-\begin{figure}[tbp]
+\begin{figure}[bp]
 \begin{center}
 \includegraphics[clip,height= 80mm]{data/sample_symmetry.png}
 \caption[対称な射影正規分布]{
@@ -143,18 +144,18 @@ $\bm \mu = \begin{pmatrix} -0.24 \\ 0.15 \\ \end{pmatrix}, \ \Sigma = \begin{pma
 
 \citet{GPN}によると, $\mathcal{PN}_3(\bm \mu,\Sigma$)の球形データの場合, 単位球面上の方向を表す$U = (\cos\Theta_1 \sin \Theta_2, \sin\Theta_1 \sin \Theta_2, \cos \Theta_2)^T$における$\bm \theta = (\theta_1, \theta_2)^T$の確率密度を式(\ref{PNS})に示す.
 
-\footnotesize %式を小さくする
+%\footnotesize %式を小さくする
 \begin{eqnarray}
 \label{PNS}
-p(\bm \theta; \bm \mu, \Sigma) &= \left(\frac{1}{2\pi A(\bm \theta)}\right)^{\frac{3}{2}} |\Sigma|^{-\frac{1}{2}}
-\exp(C) 
-\left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) I_{[0,2\pi)}(\theta_1) I_{[0,\pi)}(\theta_2),
+p(\bm \theta; \bm \mu, \Sigma) &=& \left(\frac{1}{2\pi A(\bm \theta)}\right)^{\frac{3}{2}} |\Sigma|^{-\frac{1}{2}}
+\exp(C) \nonumber \\ 
+&& \hspace{-1.5cm} \times \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) I_{[0,2\pi)}(\theta_1) I_{[0,\pi)}(\theta_2),
 \end{eqnarray}
-\normalsize
+%\normalsize
 
 \noindent
 ここで, $\bm u^T = (\cos\theta_1 \sin \theta_2, \sin\theta_1 \sin \theta_2, \cos \theta_2), 
-\ D(\bm \theta) = B(\bm \theta) A^{-\frac{1}{2}}(\bm \theta), \ A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u, \ B(\bm \theta) = \bm u^T \Sigma^{-1} \bm \mu, \ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot), I_{[0,\pi)}(\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
+\ D(\bm \theta) = B(\bm \theta) A^{-\frac{1}{2}}(\bm \theta), \ A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\\ B(\bm \theta) = \bm u^T \Sigma^{-1} \bm \mu, \ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot), I_{[0,\pi)}(\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
 
 \subsection{混合射影正規分布}
 \if0
@@ -202,7 +203,7 @@ p(\bm \eta | \theta) = \frac{p(\theta | \bm \eta) p(\bm \eta)}{p(\theta)} \propt
 \normalsize
 \fi
 %%%%%%%%%%%%%%%%  球面 %%%%%%%%%%%%%%%%%%%%%%%%%%
-$m$個のユニットからなる球面上の射影正規分布の混合分布を式(\ref{MPNS})に示す. 
+$m$個のコンポーネントからなる球面上の射影正規分布の混合分布を式(\ref{MPNS})に示す. 
 
 \vspace{-2zh}
 \begin{eqnarray}
@@ -259,7 +260,7 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 \begin{eqnarray}
 \label{tsne1}
 P_{j|i} = \frac{\exp(-||x_i - x_j||^2 / 2\sigma_i^2}{\Sigma_{k \neq i}\exp(-||x_i - x_k||^2/ 2\sigma_i^2)},\ 
-P_{ij} = \frac{P_{j|i} + P_{i|j}}{2N}
+P_{ij} = \frac{P_{j|i} + P_{i|j}}{2N},
 \end{eqnarray}
 
 \noindent
@@ -267,14 +268,15 @@ P_{ij} = \frac{P_{j|i} + P_{i|j}}{2N}
 
 \begin{eqnarray}
 \label{tsne2}
-Q_{ij} = \frac{(1 + ||y_i - y_j||^2)^{-1}}{\Sigma_{k \neq i}(1 + ||y_i - y_k||^2)^{-1}}
+Q_{ij} = \frac{(1 + ||y_i - y_j||^2)^{-1}}{\Sigma_{k \neq i}(1 + ||y_i - y_k||^2)^{-1}},
 \end{eqnarray}
 
-圧縮前の確率分布と圧縮後の確率分布のカルバック$\cdot$ライブラー情報量を損失関数$C$として, $C$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$C$を式$(\ref{tsne3})$に示す.
+ここでは, 分布間の近さを測る方法として, KL(カルバック$\cdot$ライブラー)情報量を用いる. 圧縮前の確率分布と圧縮後の確率分布のKL
+情報量を損失関数$C$として, $C$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$C$を式$(\ref{tsne3})$に示す.
 
 \begin{eqnarray}
 \label{tsne3}
-C = KL(P || Q) = \Sigma_i \Sigma_j P_{ij} \log \frac{P_{ij}}{Q_{ij}},
+C = KL(P || Q) = \Sigma_i \Sigma_j P_{ij} \log \frac{P_{ij}}{Q_{ij}}.
 \end{eqnarray}
 
 \subsection{マルコフ連鎖モンテカルロ法}
@@ -307,13 +309,20 @@ $\eta_j(0), q_j(0)$の初期値を設定する. $\eta_j(0)$は各パラメータ
 
 \item{}
 得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\bm \eta^*, \bm q^*$として,
-現在が$t$回目の反復とすると, サンプルの棄却率は以下の式で定義される.
+現在が$t$回目の反復とすると, サンプルの棄却率は以下の式で定義する.
 
-$$ r = \frac{p(\bm \eta^*|\bm \theta) p(\bm q^*)}{p(\bm \eta(t-1)|\bm \theta) p(\bm q(t-1))},$$
+\begin{eqnarray*}
+r = \frac{p(\bm \eta^*|\bm \theta) p(\bm q^*)}{p(\bm \eta(t-1)|\bm \theta) p(\bm q(t-1))}.
+\end{eqnarray*}
 
-一様乱数 $u \sim U(0,1)$を発生し, $r > u$ならば, ランダムサンプル $\bm \eta^*$を採択する. 
+\item{}
+一様乱数 $u \sim U(0,1)$を発生し, $r > u$ならば, ランダムサンプル $\bm \eta^*$を採択し, $r < u$ならば, $\bm \eta^{t-1}$を保持する. サンプル数$t$が任意の数に達したとき, MCMCサンプリングを終了する. 
 
 \end{enumerate}
+
+\subsection{混合分布によるクラスタリング分析}
+
+混合分布によるクラスタリングは, 対象となるデータが$m$個のコンポーネントからなる混合データであると仮定し, 分布における各ユニットのパラメータベクトル$\bm \eta$を推定する. 得られたパラメータとデータから, 各データがどのコンポーネントに所属しているかを確率的に表すことができる. 最も高い確率を示す, ユニットの番号をデータのラベルとすることで, 各データをクラスタリングすることができる. 加えて, 得られたパラメータベクトル$\bm \eta$の事後分布を用いて, 推定した混合分布の妥当性を検証することができる.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%  sectio4 数値シミュレーション %%%%%%%%%%%%%%%%%%%%%%%%
@@ -415,22 +424,24 @@ True
 %%%%%%%%%%%%%%%%%%%%%%%  sectio4 数値実験 %%%%%%%%%%%%%%%%%%%%%%%%
 \section{データ解析}
 
+本章では, 実際のデータに対して混合射影正規分布によるクラスタリングを適用する. クラスターごとの特徴量を確認することで, 混合射影正規分布によるクラスタリングの妥当性を検証する.
+
 \subsection{解析データ}
 
-本研究では, GroupLensプロジェクトによる公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個の評価値, 簡単なユーザ情報, コンテンツ情報から構成されている. 評価値において, $0$は見ていないことを表し, 評価については1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個の映画に対する評価値を持っている. コンテンツ情報, ユーザ情報について表(\ref{MovieLens1})にまとめる. また表(\ref{MovieLens2})にMovie Lensデータセットの一部を示す.
+本研究では, \citet{MovieLens}による公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個の評価値, 簡単なユーザ情報, コンテンツ情報から構成されている. 評価値において, $0$は見ていないことを表し, 評価については1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個の映画に対する評価値を持っている. コンテンツ情報, ユーザ情報について表\ref{MovieLens1}にまとめる. また表\ref{MovieLens2}にMovieLensデータセットの一部を示す.
 
-\begin{table}[tbp]
+\begin{table}[bp]
 \begin{center}
 \caption{コンテンツ情報およびユーザ情報}   %キャプション
 \label{MovieLens1}   %ラベル
 \begin{tabular}{c l}
 \hline
-映画ジャンル & unknown, Action, Adventure, Animation, Children's, Comedy, Crime, \\
-                 & Documentary, Drama, Fantasy, Film-Noir, Horror, Musical, Mystery, \\
-                 & Romance, Sci-Fi, Thriller, War, Western \\
+ジャンル & unknown, Action, Adventure, Animation, Children's, Comedy, \\
+                 & Crime, Documentary, Drama, Fantasy, Film-Noir, Horror, Musical, \\
+                 & Mystery, Romance, Sci-Fi, Thriller, War, Western \\
 職業          & administrator, artist, doctor, educator, engineer, entertainment, executive, \\
-                & healthcare, homemaker, lawyer, librarian, marketing, none, other, programmer, \\
-                & retired, salesman, scientist, student, technician, writer \\
+                & healthcare, homemaker, lawyer, librarian, marketing, none, other, \\
+                & programmer, retired, salesman, scientist, student, technician, writer \\
 年齢 & 7歳 $\sim$ 73歳 \\
 性別 & male, female\\ 
 \hline
@@ -454,7 +465,7 @@ user-No	&	age	&	gender	&	occupation	&	item-No	& rating \\ \hline \hline
 \end{center}
 \end{table}
 
-MovieLensのデータセットを用いて, 映画に対する評価に基づいて, ユーザをクラスタリングする. このデータは$94\%$が$0$であるスパースな行列として表せる. 映画の評価値において$0$から$6$の出現回数を表(\ref{MovieLens3})に示す.
+MovieLensのデータセットを用いて, 映画に対する評価値に基づいて, ユーザをクラスタリングする. MovieLensデータセットをユーザー($943$人)$\times$コンテンツ($1682$個)の行列データに変換する. この行列データは評価値の$94\%$が$0$であるスパースな行列として表すことができる. 映画の評価値において$0$から$6$の出現回数を表\ref{MovieLens3}に示す.
 
 \begin{table}[tbp]
 \begin{center}
@@ -462,7 +473,7 @@ MovieLensのデータセットを用いて, 映画に対する評価に基づい
 \label{MovieLens3}   %ラベル
 \begin{tabular}{c c c c c c}
 \hline
-0 & 1 & 2 & 3 & 4 & 5 \\ \hline \hline
+0 & 1 & 2 & 3 & 4 & 5 \\ \hline 
 1506126 & 4719 & 9178 & 21963 & 27396 & 16744 \\ \hline
 \end{tabular}
 \end{center}
@@ -474,22 +485,23 @@ MovieLensのデータセットを用いて, 映画に対する評価に基づい
 
 \begin{eqnarray}
 \label{WAIC1}
-\mbox{WAIC} = T + \frac{V}{n}
+\mbox{WAIC} = T + \frac{V}{n}, 
 \end{eqnarray}
 
 \noindent
 ここで, $T = - \frac{1}{n} \Sigma^n_{i=1} \log E_{\bm \eta}[p(\bm \theta_i| \bm \eta)], 
-V = \Sigma^n_{i=1} \{ E_{\bm \eta}[(\log p(\bm \theta_i| \bm \eta))^2] - E_{\bm \eta}[\log p(\bm \theta_i| \bm \eta)]^2 \}$であり, $n$は$\bm \theta$のデータ数である. また$E_{\bm \eta}[ ]$は$\bm \eta$の事後分布の下で評価した期待値である.  
+V = \Sigma^n_{i=1} \{ E_{\bm \eta}[(\log p(\bm \theta_i| \bm \eta))^2] - E_{\bm \eta}[\log p(\bm \theta_i| \bm \eta)]^2 \}$であり, $n$は$\bm \theta$のデータ数である. また$E_{\bm \eta}[\cdot]$は$\bm \eta$の事後分布の下で評価した期待値である.  
 
 \subsection{クラスター分析}
 
-t-SNEを用いてデータを3次元に圧縮する. 得られたデータを正規化し, 極座標変換することで角度データ$\bm \theta = (\theta_1, \theta_2)^T$を得る. t-SNEにより得られた異なる$10$個の$3$次元データに対し, クラスター数を$1$から$4$まで変化させた場合のWAICを表$\ref{WAIC2}$に示す. 
+t-SNEを用いて高次元データを$3$次元に圧縮する. 得られた$3$次元データをノルムで割ることで正規化し, 極座標変換することで角度データ$\bm \theta = (\theta_1, \theta_2)^T$を取得する. t-SNEにより得られた異なる$10$個の$3$次元データに対し, コンポーネントを$1$から$4$まで変化させた場合のWAICを表$\ref{WAIC2}$に示す. 
+
 
 \begin{table}[tbp]
 \caption{WAICによるコンポーネントの選択結果}
 \label{WAIC2}
 \begin{center}
-\scalebox{0.8}{
+\scalebox{0.75}{
 \begin{tabular}{l | c c c c c c c c c c}
 \hline
  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline 
@@ -503,8 +515,9 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 \end{center}
 \end{table}
 
+
 \noindent
-$9$個のデータにおいて, クラスター数が$4$つのときWAICが最小になっていることがわかる. クラスター数を$4$つとして混合射影正規分布によるクラスタリングを行う. HMCによって推定された混合射影正規分布のパラメータを式$(\ref{parameter})$に示す. なお, $\hat {\bm w}$はクラスターごとの混合比率を表し, パラメータの添え字はクラスターの番号に対応している.
+$9$個のデータにおいて, コンポーネントが$4$つのときWAICが最小になっていることがわかる. コンポーネントを$4$つと仮定して混合射影正規分布によるクラスタリングを行う. HMCによって推定された, $4$つのコンポーネントにおける混合射影正規分布のパラメータを式(\ref{parameter})に示す. なお, $\hat {\bm w}$は各コンポーネントの混合比率を表し, パラメータの添え字はコンポーネントの番号に対応している.
 
 \begin{equation}
 \label{parameter}
@@ -521,28 +534,127 @@ $9$個のデータにおいて, クラスター数が$4$つのときWAICが最�
 \end{split}
 \end{equation}
 
+得られたパラメータベクトル$\bm \eta$と$3$次元データを用いて, 混合分布によるクラスタリングを行う. 球面上におけるクラスタリング結果を図\ref{clusterplot3d}に示す. ここで, 中心部からの各矢線は各コンポーネントの平均方向を表す. また球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$における, クラスタリング結果を図\ref{clusterplot2d}に示す.
+
 \begin{figure}[tbp]
 \begin{center}
-\includegraphics[clip,height= 180mm]{data/cluster_4.png}
+\includegraphics[clip,height= 120mm]{data/cluster_3d.png}
 \end{center}
- \vspace{-0.9cm}
-\caption{混合分布によるクラスタリング結果}
-\label{clusterplot}
+\caption{混合分布による, 球面上におけるクラスタリング結果}
+\label{clusterplot3d}
 \end{figure}
 
 \begin{figure}[tbp]
 \begin{center}
-\includegraphics[clip,height= 160mm]{data/cluster_plot.png}
+\includegraphics[clip,height= 110mm]{data/cluster_4.png}
 \end{center}
- \vspace{-0.9cm}
+\caption{混合分布による, 球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$におけるクラスタリング結果}
+\label{clusterplot2d}
+\end{figure}
+
+\newpage
+各ユーザの評価値と各映画のジャンル($19$種類)を用いて, ユーザごとに各ジャンルへの総評価値を算出する. 各映画には複数のジャンルが対応している. ユーザごとに全ての映画に対して, 
+
+\begin{equation*}
+\mbox{(任意の映画に対する評価値)} \times \mbox{(任意の映画のジャンル)},
+\end{equation*}
+
+\noindent
+を算出し, 総和をとることで, ユーザごとに各ジャンルへの総評価値を求める. これらの計算は, ユーザー($943$人)$\times$コンテンツ($1682$個)の行列とコンテンツ($1682$個)$\times$ジャンル($19$個)の行列の演算に相当しており, 省略形を式(\ref{user_genre_matrix})に示す. 
+
+\begin{equation}
+\label{user_genre_matrix}
+\begin{pmatrix} 
+5 & 3 & 4 & 3 & \ldots & 0 \\
+4 & 0 & 0 & 0 & \ldots & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 5 & 0 & 0 & \ldots & 0 \\
+\end{pmatrix} 
+\times
+\begin{pmatrix} 
+0 & 0 & \ldots & 0 \\
+0 & 1 & \ldots & 0 \\
+0 & 0 & \ldots & 0 \\
+0 & 1 & \ldots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \ldots & 0 \\
+\end{pmatrix}
+=
+\begin{pmatrix} 
+0 & 95 & \ldots & 4 \\
+0 & 17 & \ldots & 0 \\
+0 & 17 & \ldots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 227 & \ldots & 23 \\
+\end{pmatrix},
+\end{equation}
+
+\noindent
+ここで, 得られたユーザごとジャンルへの評価値から, コンポーネントごとのジャンルへの評価値を求めることを考える. 図\ref{genre_count}に示したように, 各ジャンルは均等に出現していないので, 各ジャンルの影響を基準化する必要がある. 式(\ref{user_genre_matrix})で得られた行列を各列ごとに標準偏差で割ることで, 正規化を行う. 
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[clip,height= 100mm]{data/genre_count.png}
+\end{center}
+\caption{コンテンツの各ジャンルの出現回数}
+\label{genre_count}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[clip,height= 110mm]{data/cluster_plot.png}
+\end{center}
 \caption{クラスターごとのジャンルへの評価値}
 \label{clustergenre}
 \end{figure}
 
-各ユーザの評価値と各映画のジャンル($20$種類)を用いて, ユーザごとに各ジャンルへの総評価値を算出し, 正規化を行った. 各映画には複数のジャンルが対応している. 得られた評価値からクラスターごとのジャンルへの評価値を求めた. 結果を図$\ref{clustergenre}$に示す. クラスター$2$は幅広いジャンルの映画に対して, 高評価を与えているユーザが所属し, クラスター$1,3,4$ではジャンルへの評価値に差が現れた. しかし, ユーザの映画に対する評価値において$0$が非常に多く, 次元圧縮において$0$のデータも特徴として扱われてしまう問題点がある. 実際には$0$のデータはまだ見ていないことを表しており, 特徴として意味がないので, $0$のデータを取り除いて考える必要がある.
+%\newpage
+正規化した, ユーザごとジャンルへの評価値から, コンポーネントごとのジャンルへの評価値を求める. 結果を図\ref{clustergenre}に示す. クラスター$2$は幅広いジャンルの映画に対して, 高評価を与えているユーザが所属し, クラスター$1,3,4$ではジャンルへの評価値に差が現れた. 
+MovieLensのデータセットには映画のジャンルに加えて, ユーザの簡単な情報も記載されている. 各コンポーネントにおいて, ユーザの評価値の平均値, ユーザの平均年齢, 所属するユーザ数を表\ref{component_stat}にまとめる. 各コンポーネントにおける平均評価値, 所属するユーザの年齢と職業の出現回数を図\ref{rating_average},\ref{job_count},\ref{age_count}にまとめる. 
+
+\begin{table}[H]
+\begin{center}
+\caption{各コンポーネントにおけるユーザ情報の平均値と所属ユーザ数}   %キャプション
+\label{component_stat}   %ラベル
+\begin{tabular}{c | c c c c}
+\hline
+&1 & 2 & 3 & 4 \\ \hline \hline
+平均評価値 &3.576 & 3.653 & 3.453 & 3.606 \\ \hline
+平均年齢 & 34.5 &  33.5 & 35.4 & 28.4 \\ \hline
+所属ユーザ数 & 244 & 468 & 202 & 29 \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[clip,height= 130mm]{data/rating_average.png}
+\end{center}
+\caption{各コンポーネントの平均評価値}
+\label{rating_average}
+\end{figure}
+
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[clip,height= 130mm]{data/job_count.png}
+\end{center}
+\caption{各コンポーネントに所属するユーザの職業の出現回数}
+\label{job_count}
+\end{figure}
+
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[clip,height= 130mm]{data/age_count.png}
+\end{center}
+\caption{各コンポーネントに所属するユーザの年齢の出現回数}
+\label{age_count}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%  section5 まとめ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
 \section{まとめと今後の課題}
+
+しかし, ユーザの映画に対する評価値において$0$が非常に多く, 次元圧縮において$0$のデータも特徴として扱われてしまう問題点がある. 実際には$0$のデータはまだ見ていないことを表しており, 特徴として意味がないので, $0$のデータを取り除いて考える必要がある.
 
 本研究では計算量の問題で高次元データをあらかじめ$3$次元に圧縮し, クラスタリングを試みたが, クラスターごとの特徴を明確に抽出することができなかった. 一般化射影正規分布では任意次元の超球面において分布を生成することができるので, 計算量の問題を解決し, 次元を圧縮することなく超球面上でのクラスタリングに取り組みたい. また超球面上でのクラスタリングは主にテキストマイニングなどに用いられているので, 文書データのクラスタリングを行い, 従来手法との比較を行いたい. 
 
