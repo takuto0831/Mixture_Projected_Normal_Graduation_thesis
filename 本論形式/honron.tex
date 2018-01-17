@@ -335,118 +335,106 @@ r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%  sectio4 数値シミュレーション %%%%%%%%%%%%%%%%%%%%%%%%
-
+\newpage
 \section{シミュレーション}
 
-複数の射影正規分布の乱数を用いて, 混合データを生成する. MCMCにより平均, 共分散行列し, 推定されたパラメータベクトルを基に, 混合データをクラスタリングする. 
+複数の射影正規分布の乱数を用いて, 混合データを生成する. MCMCによりパラメータベクトル$\bm \eta$を推定し, 推定されたパラメータベクトルを基に, 混合データをクラスタリングする. 
+
+\subsection{人工データ}
+
+$3$変量正規分布を生成し, 各$3$次元データをノルムで割り, 球面上の射影正規分布を得る. シミュレーションではコンポーネントを$4$として, 混合射影正規分布の人工データを生成する. シミュレーションに用いた, 各パラメータと混合比率を式(\ref{sim_parameter_real})に示す. 添え字の数字は各コンポーネントの番号に対応している. 
 
 \begin{equation}
-\label{sim_parameter}
+\label{sim_parameter_real}
 \begin{split}
-&\hat {\bm w} = \begin{pmatrix} 0.26 \\ 0.51 \\ 0.20 \\ 0.03 \\ \end{pmatrix},\ 
-\hat{\bm \mu}_1 = \begin{pmatrix} 0.44 \\ 2.85 \\ -1.67 \\ \end{pmatrix},\ 
-\hat \Sigma_1 = \begin{pmatrix}  2.40 & 1.52 &  0.06 \\ 1.52 & 2.20 & -0.25 \\ 0.06 & -0.25 &1.00 \\ \end{pmatrix},\\ 
-&\hat{\bm \mu}_2 = \begin{pmatrix} 0.14 \\ -0.50 \\ 1.09 \\ \end{pmatrix},\ 
-\hat \Sigma_2 = \begin{pmatrix}   0.28  & 0.14 &  0.20 \\ 0.14 & 0.61 & 0.06 \\  0.20 & 0.06 &1.00 \\ \end{pmatrix},\ 
-\hat{\bm \mu}_3 = \begin{pmatrix} -2.08  \\ -1.96 \\ -8.11 \\ \end{pmatrix},\\ 
-&\hat \Sigma_3 = \begin{pmatrix}  1.86  & -0.18 &  -0.10 \\-0.18 & 3.89 & 1.60 \\  -0.10 & 1.60 & 1.00 \\ \end{pmatrix},\ 
-\hat{\bm \mu}_4 = \begin{pmatrix} -12.29   \\ -2.48 \\ -4.84 \\ \end{pmatrix},\ 
-\hat \Sigma_4 = \begin{pmatrix} 15.19 & 4.01 &  0.12 \\ 4.01 & 1.88 & 0.08 \\ 0.12 & 0.08 &1.00 \\ \end{pmatrix}.
+&\bm w = \begin{pmatrix} 0.25 \\ 0.25 \\ 0.25 \\ 0.25 \\ \end{pmatrix},\ 
+\bm \mu_1 = \begin{pmatrix} 1 \\ 0 \\ 0 \\ \end{pmatrix},\ 
+\Sigma_1 = \begin{pmatrix}  0.936 & 0.058 &  0.295 \\ 0.058 & 0.023 & 0.109 \\ 0.295 & 0.109 & 0.277 \\ \end{pmatrix},\\ 
+&\bm \mu_2 = \begin{pmatrix} 0 \\ 0.5 \\ 2 \\ \end{pmatrix},\ 
+\Sigma_2 = \begin{pmatrix}   7.19  & 15.34 & 12.52 \\ 15.34 & 40.19 & 30.85 \\  12.52 & 30.85 & 24.82 \\ \end{pmatrix},\  
+\bm \mu_3 = \begin{pmatrix} 1.5 \\ 1 \\ 0 \\ \end{pmatrix},\\ 
+&\Sigma_3 = \begin{pmatrix}  3.01 & -1.54 &  -0.15 \\ -1.54 & 1.17 & 0.42 \\  -0.15 & 0.42 & 0.90 \\ \end{pmatrix},\ 
+\bm \mu_4 = \begin{pmatrix} 1 \\ 1 \\ 1 \\ \end{pmatrix},\ 
+\Sigma_4 = \begin{pmatrix} 7.98 & -6.83 & -4.84 \\ -6.83 & 6.12 & 4.16 \\ -4.84 & 4.16 & 3.33 \\ \end{pmatrix}. \\
 \end{split}
 \end{equation}
 
-$\mu(0 < \mu < 2\pi), \kappa(\kappa \geq 0) $をパラメータ, $\theta(0 \leq \theta < 2\pi)$を確率変数とする, Von Mises 分布の確率密度関数は以下の式で表せる. また式中の第一種変形ベッセル関数の定義式を示す.
-
-\begin{eqnarray*}
-f(\theta;\mu, \kappa) = \frac{\exp[\kappa \cos(\theta - \mu)]}{2 \pi I_0(\kappa)} , I_j(\kappa) = \left(\frac{\kappa}{2}\right)^j \sum^\infty_{i=0} \frac{\left(\frac{\kappa^2}{4}\right)^i}{i \Gamma(j + i + 1)}
-\end{eqnarray*}
-
-ユニット数$m=4$, 角度$\theta = \left( \frac{7\pi}{4}, \frac{2\pi}{3}, \frac{5\pi}{4}, \frac{\pi}{6}\right)$, パラメータ$\kappa= (2,10,5,15)$, 混合比率$(0.4, 0.2, 0.3, 0.1)$として, 乱数を生成する. 
-
-\vspace{-1zh}
-\begin{figure}[H]
-\begin{center}
-\includegraphics[clip,height= 35mm]{data/mix_test_data.png}
-\end{center}
-\caption{混合データ(クラスター数:4)}
-
-\label{mixdata}
-\end{figure}
-
 \subsection{解析結果}
 
-Mixture von Mises 分布では元のデータと同じく4つの元となる分布を推定したが, Mixture Projected Normal 分布においては3つの元となる分布により以下の結果が得られた.
+MCMCサンプリングにより得られた, パラメータを式(\ref{sim_parameter_pred})に示す. 
 
-\begin{figure}[tbp]
- \begin{tabular}{c}
-\hspace{0.5cm}
- \begin{minipage}{0.5\hsize}
-  \begin{center}
-   \includegraphics[clip,height= 35mm]{data/mix_pn.png}
-  \end{center}
-  %\caption{Mixture Projected Normal 分布により推定した混合分布}
-  \label{pnmix}
- \end{minipage}
-\hspace{-1.0cm}
- \begin{minipage}{0.5\hsize}
-  \begin{center}
-   \includegraphics[clip,height= 35mm]{data/mix_von.png}
-  \end{center}
- % \caption{Mixture von Mises分布により推定した混合分布}
-  \label{vonmix}
- \end{minipage}
-  \end{tabular}
-\caption{Mixture Projected Normal 分布により推定した混合分布(左), Mixture von Mises分布により推定した混合分布(右)}
-\end{figure}
+\begin{equation}
+\label{sim_parameter_pred}
+\begin{split}
+&\hat {\bm w} = \begin{pmatrix} 0.20 \\ 0.24 \\ 0.29 \\ 0.27 \\ \end{pmatrix},\ 
+\hat{\bm \mu}_1 = \begin{pmatrix} 1.52 \\ 1.65 \\ -0.04 \\ \end{pmatrix},\ 
+\hat \Sigma_1 = \begin{pmatrix}  4.91 & -2.15 &  0.02 \\ -2.15 & 1.93 & 0.40 \\ 0.02 & 0.40 &1.00 \\ \end{pmatrix},\\ 
+&\hat{\bm \mu}_2 = \begin{pmatrix} 1.98 \\ -0.15 \\ -0.44 \\ \end{pmatrix},\ 
+\hat \Sigma_2 = \begin{pmatrix}   3.98 & -0.21 &  1.22 \\ -0.21 & 1.17 & 0.07 \\  1.22 & 0.07 &1.00 \\ \end{pmatrix},\ 
+\hat{\bm \mu}_3 = \begin{pmatrix}  0.66 \\ 0.58 \\ 0.55 \\ \end{pmatrix},\\ 
+&\hat \Sigma_3 = \begin{pmatrix}  2.35  & -1.98 &  -1.41 \\ -1.98 & 1.82 & 1.22 \\ -1.41 & 1.22 & 1.00 \\ \end{pmatrix},\ 
+\hat{\bm \mu}_4 = \begin{pmatrix} 0 \\ 0.10 \\ 0.44 \\ \end{pmatrix},\ 
+\hat \Sigma_4 = \begin{pmatrix} 0.30 & 0.60 & 0.49 \\ 0.60 & 1.63 & 1.23 \\ 0.49 & 1.23 &1.00 \\ \end{pmatrix},
+\end{split}
+\end{equation}
 
-
-得られた混合分布から, 混合データの分類を行う. 混合分布を構成する, 分布の中で出現確率が最も高いものをそのデータの予測クラスタとする.
-横軸を真のクラスタ, 縦軸を予測クラスタとして集計表を示す. 
+得られた混合分布のパラメータを用いて, 混合データの分類を行う. 混合分布を構成する, 各コンポーネントの確率分布を用いて, 所属する確率が最も高いコンポーネントを各データのコンポーネントとする.
+横軸を真のコンポーネント, 縦軸を予測のコンポーネントとして集計表を表\ref{cross}に示す.
 
 \begin{table}[tbp]
-\caption{PN 分布によるクラスター推定(左), VM 分布によるクラスター推定(右)}
-\begin{tabular}{c}
-% 1
-\hspace{1.5cm}
-\begin{minipage}{0.5\hsize}
 \begin{center}
-%\caption{PN 分布によるクラスター推定}
-\begin{tabular}{|c|c|c|c|c|}
+\caption{混合射影正規分布によるクラスタリング分析}
+\label{cross}
+\begin{tabular}{c|c|c c c c}
 \hline
- &  & \multicolumn{3}{|c|}{Predict} \\ \hline
- &  & 1 & 2 & 3 \\ \hline 
- &1 & 38 & 10 & 352 \\ \cline{2-5}
+ &  & \multicolumn{4}{c}{Predict} \\ \hline
+ &  & 1 & 2 & 3 & 4  \\ \hline 
+ & 1 & 94 & \textbf{301} & 78 & 27 \\ 
 True
- & 2 & 1 & 192 & 7 \\ \cline{2-5}
- & 3 & 0 & 2  & 298 \\ \cline{2-5}
- & 4 & 93 & 0 & 7 \\ 
-\hline
- \end{tabular}
- \end{center}
-\end{minipage}
-
-% 2
-\hspace{-2.5cm}
-\begin{minipage}{0.5\hsize}
-\begin{center}
-%\caption{VM 分布によるクラスター推定}
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
- &  & \multicolumn{4}{|c|}{Predict} \\ \hline
- &  & 1 & 2 & 3 & 4 \\ \hline 
- & 1 & 333 & 10 & 39 & 18 \\ \cline{2-6}
-True
- & 2 & 7 & 192 & 1 & 0 \\ \cline{2-6}
- & 3 & 298 & 2  & 0 & 0 \\ \cline{2-6}
- & 4 & 0 & 1 & 94 & 5 \\ 
+ & 2 & 1 & 2 & 24 & \textbf{473} \\
+ & 3 & \textbf{274} & 140 & 72 & 14 \\ 
+ & 4 & 44 & 80 & \textbf{315} & 61 \\ 
 \hline
 \end{tabular}
 \end{center}
-\end{minipage}
-
-\end{tabular}
 \end{table}
-\fi
+
+人工データの球面上における散布図を図\ref{clusterplot3d_real}に, 球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$における散布図を図\ref{clusterplot2d_real}に示す. 球面上におけるクラスタリング結果を図\ref{clusterplot3d}に示す. ここで, 中心部からの各矢線は各コンポーネントの平均方向を表す. また球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$における, クラスタリング結果を図\ref{clusterplot2d}に示す.
+
+\newpage %この図は1ページにする
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[clip,height= 140mm]{data/cluster_3d_sim_real.png}
+\end{center}
+\caption{人工データの球面上における散布図}
+\label{clusterplot3d_real}
+\end{figure}
+
+\newpage %この図は1ページにする
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[clip,height= 140mm]{data/cluster_3d_sim_pred.png}
+\end{center}
+\caption{混合分布による, 球面上におけるクラスタリング結果}
+\label{clusterplot3d_sim}
+\end{figure}
+
+\clearpage
+\begin{figure}[H]
+\begin{center}
+\includegraphics[clip,height= 90mm]{data/real.png}
+\end{center}
+\caption{人工データの角度$\bm \theta = (\theta_1, \theta_2)^T$における散布図}
+\label{clusterplot2d_real}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[clip,height=90mm]{data/pred.png}
+\end{center}
+\caption{混合分布による, 球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$におけるクラスタリング結果}
+\label{clusterplot2d_sim}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%  sectio4 数値実験 %%%%%%%%%%%%%%%%%%%%%%%%
