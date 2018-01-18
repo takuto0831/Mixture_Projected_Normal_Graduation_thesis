@@ -46,16 +46,26 @@
 %\bibliographystyle{jecon} % 経済学などでよく使われる
 \bibliographystyle{plainnat}
 
+\pagenumbering{roman}   %目次ページ番号のスタイル
+\begin{abstract}
+
+代表的なクラスタリング手法として$k$平均法がある. しかし, 単位超球面上に分布するデータに対して, ユークリッド空間を前提としたクラスタリング手法は誤った結果をもたらす場合がある. そこで本研究では超球面上の確率分布として知られる射影正規分布の混合分布によるクラスタリング手法を提案する. 射影正規分布は分布の形状に柔軟性と汎用性があり, 様々な分布のクラスタリングに対応できる. MCMCサンプリングにより推定したパラメータの事後分布を元に混合データをクラスタリングする. 人工データと実データに対して, 混合射影正規分布によるクラスタリングを適用し, 性能評価を行う. 高次元の実データについてはt-SNEにより, 次元圧縮を行なった. 
+
+\begin{center} \textbf{Abstract} \end{center}
+
+The $k$-means method is one of the representative clustering method. However, clustering methods based on Euclidean space may give incorrect result for data distributed on the unit hyper sphere. So, we propose clustering method by using mixture of projected normal distributions. It is known as the probability distribution on the hyper-sphere, which is flexible and versatility distribution for the clustering of various distribution. We estimate unknown model parameters from posterior distribution using MCMC sampling. We evaluate the performance of clustering based on mixture projected normal distributions on artificial data and actual data. For high dimensional actual data, dimensionality reduction was performed by t-SNE.
+
+\end{abstract} 
+
 %%%%%%%%%%% タイトルはいらない %%%%%%%%%%%%%%%%%%%
 %\maketitle   %タイトルを付ける
+\newpage
 \setlength{\baselineskip}{20pt}   %行間幅
-\pagenumbering{roman}   %目次ページ番号のスタイル
 \tableofcontents   %目次を付ける
 \listoffigures   %図目次を付ける
 \listoftables   %表目次を付ける
 \clearpage   %目次と本文を分ける
 \pagenumbering{arabic}   %本文ページ番号のスタイル
-
 %%%%%これ以下, 本文%%%%%
 
 \section{はじめに}
@@ -324,7 +334,7 @@ r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
 \end{eqnarray*}
 
 \item{}
-一様乱数 $u_j \sim U(0,1)$を発生し, $r_j > u_j$ならば, ランダムサンプル $\eta^*_j$を採択し, $r_j < u_j$ならば, $\eta_j(t-1)$を保持する. サンプル数$t$が任意の数に達したとき, MCMCサンプリングを終了する. 
+一様乱数 $u_j \sim U(0,1)$を発生し, $r_j > u_j$ならば, ランダムサンプル $\eta^*_j$を採択し, $r_j < u_j$ならば, $\eta_j(t-1)$を保持する. サンプル数$T$が任意の数に達したとき, MCMCサンプリングを終了する. 
 
 \end{enumerate}
 
@@ -360,20 +370,20 @@ $3$変量正規分布に従う乱数を生成し, 各$3$次元データをノル
 
 \subsection{解析結果}
 
-サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した. 得られたパラメータを式(\ref{sim_parameter_pred})に示す. サンプリング数とはリープ$\cdot$フロッグ法により採択するサンプル数$t$を表し, バーンイン期間はパラメータの収束に要する期間であり, 得られたサンプルは各パラメータのサンプルには含まない. 
+サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した. 得られたパラメータを式(\ref{sim_parameter_pred})に示す. サンプリング数とはリープ$\cdot$フロッグ法により採択するサンプル数$t$を表し, バーンイン期間はパラメータの収束に要する期間であり, バーンイン期間で得られたサンプルは各パラメータの事後分布には含まない. 
 
 \begin{equation}
 \label{sim_parameter_pred}
 \begin{split}
-&\hat {\bm w} = \begin{pmatrix} 0.20 \\ 0.24 \\ 0.29 \\ 0.27 \\ \end{pmatrix},\ 
-\hat{\bm \mu}_1 = \begin{pmatrix} 1.52 \\ 1.65 \\ -0.04 \\ \end{pmatrix},\ 
-\hat \Sigma_1 = \begin{pmatrix}  4.91 & -2.15 &  0.02 \\ -2.15 & 1.93 & 0.40 \\ 0.02 & 0.40 &1.00 \\ \end{pmatrix},\\ 
-&\hat{\bm \mu}_2 = \begin{pmatrix} 1.98 \\ -0.15 \\ -0.44 \\ \end{pmatrix},\ 
-\hat \Sigma_2 = \begin{pmatrix}   3.98 & -0.21 &  1.22 \\ -0.21 & 1.17 & 0.07 \\  1.22 & 0.07 &1.00 \\ \end{pmatrix},\ 
-\hat{\bm \mu}_3 = \begin{pmatrix}  0.66 \\ 0.58 \\ 0.55 \\ \end{pmatrix},\\ 
-&\hat \Sigma_3 = \begin{pmatrix}  2.35  & -1.98 &  -1.41 \\ -1.98 & 1.82 & 1.22 \\ -1.41 & 1.22 & 1.00 \\ \end{pmatrix},\ 
-\hat{\bm \mu}_4 = \begin{pmatrix} 0 \\ 0.10 \\ 0.44 \\ \end{pmatrix},\ 
-\hat \Sigma_4 = \begin{pmatrix} 0.30 & 0.60 & 0.49 \\ 0.60 & 1.63 & 1.23 \\ 0.49 & 1.23 &1.00 \\ \end{pmatrix},
+&\hat {\bm w} = \begin{pmatrix} 0.24 \\ 0.27 \\ 0.20 \\ 0.29 \\ \end{pmatrix},\ 
+\hat{\bm \mu}_1 = \begin{pmatrix} 1.98 \\ -0.15 \\ -0.44 \\ \end{pmatrix},\ 
+\hat \Sigma_1 = \begin{pmatrix}   3.98 & -0.21 &  1.22 \\ -0.21 & 1.17 & 0.07 \\  1.22 & 0.07 &1.00 \\ \end{pmatrix},\\ 
+&\hat{\bm \mu}_2 = \begin{pmatrix} 0 \\ 0.10 \\ 0.44 \\ \end{pmatrix},\ 
+\hat \Sigma_2 = \begin{pmatrix} 0.30 & 0.60 & 0.49 \\ 0.60 & 1.63 & 1.23 \\ 0.49 & 1.23 &1.00 \\ \end{pmatrix},\ 
+\hat{\bm \mu}_3 = \begin{pmatrix} 1.52 \\ 1.65 \\ -0.04 \\ \end{pmatrix},\\ 
+&\hat \Sigma_3 = \begin{pmatrix}  4.91 & -2.15 &  0.02 \\ -2.15 & 1.93 & 0.40 \\ 0.02 & 0.40 &1.00 \\ \end{pmatrix},\ 
+\hat{\bm \mu}_4 = \begin{pmatrix}  0.66 \\ 0.58 \\ 0.55 \\ \end{pmatrix},\ 
+\hat \Sigma_4 = \begin{pmatrix}  2.35  & -1.98 &  -1.41 \\ -1.98 & 1.82 & 1.22 \\ -1.41 & 1.22 & 1.00 \\ \end{pmatrix}. 
 \end{split}
 \end{equation}
 
@@ -388,17 +398,19 @@ $3$変量正規分布に従う乱数を生成し, 各$3$次元データをノル
 \hline
  &  & \multicolumn{4}{c}{Predict} \\ \hline
  &  & 1 & 2 & 3 & 4  \\ \hline 
- & 1 & 94 & \textbf{301} & 78 & 27 \\ 
+ & 1 &  \textbf{301} & 27  & 94 & 78 \\ 
 True
- & 2 & 1 & 2 & 24 & \textbf{473} \\
- & 3 & \textbf{274} & 140 & 72 & 14 \\ 
- & 4 & 44 & 80 & \textbf{315} & 61 \\ 
+ & 2 & 2 & \textbf{473} & 1 & 24 \\
+ & 3 & 140 & 14 & \textbf{274} &72 \\ 
+ & 4 & 80 & 61 & 44 & \textbf{315} \\ 
 \hline
 \end{tabular}
 \end{center}
 \end{table}
 
 人工データの球面上における散布図を図\ref{clusterplot3d_real}に, 球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$における散布図を図\ref{clusterplot2d_real}に示す. 球面上におけるクラスタリング結果を図\ref{clusterplot3d_sim}に示す. ここで, 中心部からの各矢線は各コンポーネントの平均方向を表す. また球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$における, クラスタリング結果を図\ref{clusterplot2d_sim}に示す.
+
+図\ref{clusterplot3d_real}, \ref{clusterplot3d_sim} から各コンポーネントの平均方向は, 正しく推定されていることが分かる. 図\ref{clusterplot2d_real}, \ref{clusterplot2d_sim}から, 各コンポーネントのデータが入り混じっている部分を, クラスタリングにより入り混じることなく分類されていることが分かる. 混合分布によるクラスタリングでは, 複数の分布が密集している部分では, 誤差が大きくなると考えられる.
 
 \newpage %この図は1ページにする
 \begin{figure}[tbp]
@@ -436,7 +448,7 @@ True
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%  sectio4 数値実験 %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%  sectio5 数値実験 %%%%%%%%%%%%%%%%%%%%%%%%
 \section{データ解析}
 
 本章では, 実際のデータに対して混合射影正規分布によるクラスタリングを適用する. クラスターごとの特徴量を確認することで, 混合射影正規分布によるクラスタリングの妥当性を検証する.
@@ -511,7 +523,7 @@ V = \Sigma^n_{i=1} \{ E_{\bm \eta}[(\log p(\bm \theta_i| \bm \eta))^2] - E_{\bm 
 
 t-SNEを用いて高次元データを$3$次元に圧縮する. 得られた$3$次元データをノルムで割ることで正規化し, 極座標変換することで角度データ$\bm \theta = (\theta_1, \theta_2)^T$を取得する. t-SNEにより得られた異なる$10$個の$3$次元データに対し, コンポーネントを$1$から$4$まで変化させた場合のWAICを表$\ref{WAIC2}$に示す. 
 
-\begin{table}[tbp]
+\begin{table}[H]
 \caption{WAICによるコンポーネントの選択結果}
 \label{WAIC2}
 \begin{center}
@@ -529,8 +541,8 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 \end{center}
 \end{table}
 
-\noindent
-$9$個のデータにおいて, コンポーネントが$4$つのときWAICが最小になっていることがわかる. コンポーネントを$4$つと仮定して混合射影正規分布によるクラスタリングを行う. HMCによって推定された, $4$つのコンポーネントにおける混合射影正規分布のパラメータを式(\ref{parameter})に示す. なお, $\hat {\bm w}$は各コンポーネントの混合比率を表し, パラメータの添え字はコンポーネントの番号に対応している.
+\newpage
+$9$個のデータにおいて, コンポーネントが$4$つのときWAICが最小になっていることがわかる. コンポーネントを$4$つと仮定して混合射影正規分布によるクラスタリングを行う. サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した. $4$つのコンポーネントにおける混合射影正規分布のパラメータを式(\ref{parameter})に示す. なお, $\hat {\bm w}$は各コンポーネントの混合比率を表し, パラメータの添え字は各コンポーネントの番号に対応している.
 
 \begin{equation}
 \label{parameter}

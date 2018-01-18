@@ -218,25 +218,50 @@ Dhillon and Modha (2001) は, ユークリッド距離に基づく非類似度�
 
 %%%%%%%%%%%%% 混合射影正規分布 %%%%%%%%%%%%%%%
 \section{混合射影正規分布}
-\begin{frame}{射影正規分布}
+\begin{frame}{射影正規分布(1/2)}
 
 Wang and Gelfand (2013)によると, $\mathcal{PN}_2(\bm \mu,\Sigma$)の円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度を式(\ref{PNC})に示す.
 
+\vspace{-0.5cm}
+\footnotesize
 \begin{eqnarray}
 \label{PNC}
 p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 \exp(C)\left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} I_{[0,2\pi)}(\theta),
 \end{eqnarray}
+\normalsize
 
-\noindent
-ここで, $\bm u^T = (\cos\theta,\sin\theta), \ A(\theta) = \bm u^T\Sigma^{-1}\bm u, \ B(\theta) = \bm u^T \Sigma^{-1} \bm \mu, \ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
+%\noindent
+ここで, $\bm u^T = (\cos\theta,\sin\theta), \ A(\theta) = \bm u^T\Sigma^{-1}\bm u, \ B(\theta) = \bm u^T \Sigma^{-1} \bm \mu,$
+$\ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
 
 \end{frame}
 
-\begin{frame}{混合 Projected Normal 分布}
+\begin{frame}{射影正規分布(2/2)}
+Hernandez-Stumpfhauser et al. (2017) によると, $\mathcal{PN}_3(\bm \mu,\Sigma$)の球形データの場合, 単位球面上の方向を表す$U = (\cos\Theta_1 \sin \Theta_2, \sin\Theta_1 \sin \Theta_2, \cos \Theta_2)^T$における$\bm \theta = (\theta_1, \theta_2)^T$の確率密度を式(\ref{PNS})に示す.
+
+\vspace{-0.5cm}
+\footnotesize %式を小さくする
+\begin{eqnarray}
+\label{PNS}
+p(\bm \theta; \bm \mu, \Sigma) &=& \left(\frac{1}{2\pi A(\bm \theta)}\right)^{\frac{3}{2}} |\Sigma|^{-\frac{1}{2}}
+\exp(C) \nonumber \\ 
+&& \hspace{-1.5cm} \times \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) I_{[0,2\pi)}(\theta_1) I_{[0,\pi)}(\theta_2),
+\end{eqnarray}
+\normalsize
+
+%\noindent
+ここで, $\bm u^T = (\cos\theta_1 \sin \theta_2, \sin\theta_1 \sin \theta_2, \cos \theta_2), \ D(\bm \theta) = B(\bm \theta) A^{-\frac{1}{2}}(\bm \theta),$
+$A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1} \bm \mu, \ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, 
+
+$I_{[0,2\pi)} (\cdot), I_{[0,\pi)}(\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である. 
+\end{frame}
+
+\begin{frame}{混合射影正規分布}
 
 $m$個のコンポーネントからなる球面上の射影正規分布の混合分布を式(\ref{MPNS})に示す. 
 
+\vspace{-0.5cm}
 \begin{eqnarray}
 \label{MPNS}
 p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j),
@@ -245,6 +270,7 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
 \noindent
 ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 混合射影正規分布におけるパラメータは, $w, \bm \mu_j, \Sigma_j$であるが, 球面上の混合射影正規分布のパラメータについては識別性を考慮して分散共分散行列を定式化する必要がある. 分散共分散行列を式(\ref{SIGMA})に示す.
 
+\vspace{-0.5cm}
 \begin{eqnarray}
 \label{SIGMA}
  \Sigma_j = \left(
@@ -259,28 +285,7 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
 
 %%%%%%%%%%% シミュレーション %%%%%%%%%%%%%
 \section{シュミレーション}
-\begin{frame}{シュミレーション(1/3)}
-
-\begin{itemize}
-\item
-複数のvon Mises 分布に従う乱数を発生させて, 1つのデータにまとめることで混合データを作成する.
-
-\item
-Mixture von Mises 分布 および Mixture Projected Normal 分布による混合分布の推定を行う.
-\end{itemize}
-
-\vspace{-0.3cm}
-\begin{figure}[H]
-\begin{center}
-\includegraphics[clip,height= 35mm]{data/mix_test_data.png}
-\end{center}
-\caption{混合データ(クラスター数:4)}
-\label{mixdata}
-\end{figure}
-
-\end{frame}
-
-\begin{frame}{シュミレーション(2/3)}
+\begin{frame}{シュミレーション(1/2)}
 
 \begin{itemize}
 \item
@@ -291,67 +296,114 @@ Mixture von Mises 分布では元のデータと同じく4つの元となる分�
 
 \end{itemize}
 
-\end{frame}
-
-\begin{frame}{シュミレーション(3/3)}
-
-\begin{itemize}
-
-\item
-混合分布を構成する, 各分布を推定する.
-
-横軸が実際のクラスターで, 縦軸が予測のクラスターにおける分布である.
-
-\end{itemize}
-
-\begin{table}[H]
+\begin{table}[tbp]
 \begin{center}
-\begin{tabular}{cc}
-
-% 1
-\begin{minipage}{0.5\hsize}
-\begin{center}
-\caption{PN 分布によるクラスター推定}
-\begin{tabular}{c|c|c|c}
+\caption{混合射影正規分布によるクラスタリング分析}
+\label{cross}
+\begin{tabular}{c|c|c c c c}
 \hline
-  & 1 & 2 & 3 \\ \hline \hline
-1 & 38 & 10 & 352 \\
- 2 & 1 & 192 & 7 \\
- 3 & 0 & 2  & 298 \\
- 4 & 93 & 0 & 7 \\
+ &  & \multicolumn{4}{c}{Predict} \\ \hline
+ &  & 1 & 2 & 3 & 4  \\ \hline 
+ & 1 & 94 & \textbf{301} & 78 & 27 \\ 
+True
+ & 2 & 1 & 2 & 24 & \textbf{473} \\
+ & 3 & \textbf{274} & 140 & 72 & 14 \\ 
+ & 4 & 44 & 80 & \textbf{315} & 61 \\ 
 \hline
- \end{tabular}
- \end{center}
-\end{minipage}
-
-% 2
-\begin{minipage}{0.5\hsize}
-\begin{center}
-\caption{VM 分布によるクラスター推定}
-\begin{tabular}{c|c|c|c|c}
-\hline
- & 1 & 2 & 3 & 4 \\ \hline \hline
-1 & 333 & 10 & 39 & 18 \\
-2 & 7 & 192 & 1 & 0 \\
-3 & 298 & 2  & 0 & 0 \\
-4 & 0 & 1 & 94 & 5 \\
-\hline
-\end{tabular}
-\end{center}
-\end{minipage}
-
 \end{tabular}
 \end{center}
 \end{table}
 
 \end{frame}
 
-\section{データ解析}
-\begin{frame}{データ解析}
+\begin{frame}{シュミレーション(2/2)}
 
+\vspace{-1zh}
+\begin{figure}[H]
+\begin{tabular}{c}
+
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[clip,height= 45mm]{data/real.png}
+\end{center}
+\end{minipage}
+
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[clip,height= 45mm]{data/pred.png}
+\end{center}
+\end{minipage}
+\end{tabular}
+\caption{人工データの角度$\bm \theta = (\theta_1, \theta_2)^T$における散布図(左), 球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$におけるクラスタリング結果(右)}
+\end{figure}
+
+\begin{itemize}
+\item
+複数のvon Mises 分布に従う乱数を発生させて, 1つのデータにまとめることで混合データを作成する.
+\end{itemize}
 
 \end{frame}
 
+%%%%%%%%%  データ解析 %%%%%%%%%%%%
+\section{データ解析}
+\begin{frame}{解析データ}
+
+本研究では, GroupLens による公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個の評価値, 簡単なユーザ情報, コンテンツ情報から構成されている. 評価値において, $0$は見ていないことを表し, 評価については1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個の映画に対する評価値を持っている. コンテンツ情報, ユーザ情報について表\ref{MovieLens1}にまとめる. また表\ref{MovieLens2}にMovieLensデータセットの一部を示す.
+
+
+\begin{table}[bp]
+\begin{center}
+\caption{コンテンツ情報およびユーザ情報}   %キャプション
+\label{MovieLens1}   %ラベル
+\scalebox{0.7}{
+\begin{tabular}{c l}
+\hline
+ジャンル & unknown, Action, Adventure, Animation, Children's, Comedy, \\
+                 & Crime, Documentary, Drama, Fantasy, Film-Noir, Horror, Musical, \\
+                 & Mystery, Romance, Sci-Fi, Thriller, War, Western \\
+職業          & administrator, artist, doctor, educator, engineer, entertainment, executive, \\
+                & healthcare, homemaker, lawyer, librarian, marketing, none, other, \\
+                & programmer, retired, salesman, scientist, student, technician, writer \\
+年齢 & 7歳 $\sim$ 73歳 \\
+性別 & male, female\\ 
+\hline
+\end{tabular}
+}
+\end{center}
+\end{table}
+
+\end{frame}
+
+\begin{frame}{データ解析(1/2)}
+
+情報量基準(WAIC)を用いて, 混合分布のコンポーネントの選択を行う. AICやBICなどの情報量基準には, 事後分布が正規分布で近似されている必要があるなど, 様々な制約が存在するが, WAICは真の分布, 確率モデル, 事前分布がどのような場合でも用いることができる. WAICは式$(\ref{WAIC1})$で求められる.
+
+\begin{eqnarray}
+\label{WAIC1}
+\mbox{WAIC} = T + \frac{V}{n}, 
+\end{eqnarray}
+
+\begin{table}[tbp]
+\caption{WAICによるコンポーネントの選択結果}
+\label{WAIC2}
+\begin{center}
+\scalebox{0.5}{
+\begin{tabular}{l | c c c c c c c c c c}
+\hline
+ & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline 
+$m=1$ & -1014.1 & -1237.0 & -1350.6 & -1009.5 & -1308.8 & -1227.8 & -1152.4 & -902.5 & -1322.6 & -1140.2 \\ 
+$m=2$ & -1610.9 & -1675.0 & -1760.4 & -1552.8 & -1633.1 & -1529.6 & -1507.1 & -1366.1 & -1645.2 & -1693.3 \\ 
+$m=3$ & -1846.8 & -1744.7 & -1728.9 & -1804.9 & -1741.0 & -1654.3 & -1705.2 & -1633.8 & -1789.3 & \textbf{-1872.1} \\ 
+$m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5} & \textbf{-1787.5} & \textbf{-1687.8} &\textbf{-1749.5} & \textbf{-1686.7} & \textbf{-1844.5} & -1802.6 \\ 
+\hline
+\end{tabular}
+}
+\end{center}
+\end{table}
+
+\end{frame}
+
+%%%%%%%%%%%%%% まとめと今後の課題 %%%%%%%%%%%%%%%%%
 \section{まとめと今後の課題}
 \begin{frame}{まとめと今後の課題}
 
@@ -366,7 +418,6 @@ Mixture von Mises 分布では元のデータと同じく4つの元となる分�
 \end{itemize}
 
 \end{frame}
-
 
 \section{参考文献}
 \begin{frame}[allowframebreaks]{参考文献}
