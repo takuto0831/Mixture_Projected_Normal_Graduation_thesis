@@ -45,8 +45,7 @@
 \begin{document}
 %\bibliographystyle{jecon} % 経済学などでよく使われる
 \bibliographystyle{plainnat}
-
-\pagenumbering{roman}   %目次ページ番号のスタイル
+\thispagestyle{empty}
 \begin{abstract}
 
 代表的なクラスタリング手法として$k$平均法がある. しかし, 単位超球面上に分布するデータに対して, ユークリッド空間を前提としたクラスタリング手法は誤った結果をもたらす場合がある. そこで本研究では超球面上の確率分布として知られる射影正規分布の混合分布によるクラスタリング手法を提案する. 射影正規分布は分布の形状に柔軟性と汎用性があり, 様々な分布のクラスタリングに対応できる. MCMCサンプリングにより推定したパラメータの事後分布を元に混合データをクラスタリングする. 人工データと実データに対して, 混合射影正規分布によるクラスタリングを適用し, 性能評価を行う. 高次元の実データについてはt-SNEにより, 次元圧縮を行なった. 
@@ -60,8 +59,10 @@ The $k$-means method is one of the representative clustering method. However, cl
 %%%%%%%%%%% タイトルはいらない %%%%%%%%%%%%%%%%%%%
 %\maketitle   %タイトルを付ける
 \newpage
+\pagenumbering{roman}   %目次ページ番号のスタイル
 \setlength{\baselineskip}{20pt}   %行間幅
 \tableofcontents   %目次を付ける
+\newpage
 \listoffigures   %図目次を付ける
 \listoftables   %表目次を付ける
 \clearpage   %目次と本文を分ける
@@ -86,7 +87,7 @@ The $k$-means method is one of the representative clustering method. However, cl
 
 \subsection{射影正規分布}
 
-射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/\|X\|$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, \citet{PML}で, $\Sigma = \mathcal{I}$と定義されていた射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では非対称分布もしくは二峰性分布となる. ここで超球面上における平均方向について, 円周上の例を用いて説明する. $\pi/3$ラジアン(実線)と$5\pi/3$ラジアン(実線)の平均方向について考える. 算術平均では$(\pi/3 + 5\pi/3)/2 = \pi$より, $\pi$ラジアン(破線)となるが, 図\ref{sample_mu1}より$2$つのベクトルの平均方向としては不適切なことが分かる. よって図\ref{sample_mu2}に示したように, これらの角度を円周上の点 $(\cos \frac{\pi}{3},\sin \frac{\pi}{3}) = (\frac{1}{2},\frac{\sqrt{3}}{2}),\ (\cos \frac{5\pi}{3}, \sin \frac{5\pi}{3}) = (\frac{1}{2},- \frac{\sqrt{3}}{2})$ と表し, 円周上における2つの座標の平均を取ると $\frac{1}{2} (\cos 0, \sin 0)$となり, ベクトルの平均方向は$0$ラジアン(破線)となる. 
+射影分布は平面または空間上の放射状の射影によって得られる. 一般的には, 多変量正規ベクトルをノルムで割ることで, 単位超球面上への射影分布が得られる. 多変量正規ベクトル($k$次元)を$X$として, $k \geq 2$ の場合には, 単位超球面上への単位ベクトル $U$ は $U = X/\|X\|$ で表される. このとき$U$は$k$次元の一般化射影正規分布に従い, $U \sim \mathcal{PN}_k(\bm \mu,\Sigma)$と表せる. 一般化射影正規分布は, パラメータ$\bm \mu, \Sigma$をもち, \citet{PML}で, $\Sigma = \mathcal{I}$\\と定義されていた射影正規分布を一般化したものである. $\mathcal{PN}_k(\bm \mu,\mathcal{I})$は平均方向$\bm \mu$に対して, 単峰性かつ対称の分布となるが, $\mathcal{PN}_k(\bm \mu,\Sigma)$では非対称分布もしくは二峰性分布となる. ここで超球面上における平均方向について, 円周上の例を用いて説明する. $\pi/3$ラジアン(実線)と$5\pi/3$ラジアン(実線)の平均方向について考える. 算術平均では$(\pi/3 + 5\pi/3)/2 = \pi$より, $\pi$ラジアン(破線)となるが, 図\ref{sample_mu1}より$2$つのベクトルの平均方向としては不適切なことが分かる. よって図\ref{sample_mu2}に示したように, これらの角度を円周上の点 $(\cos \frac{\pi}{3},\sin \frac{\pi}{3}) = (\frac{1}{2},\frac{\sqrt{3}}{2}),\ (\cos \frac{5\pi}{3}, \sin \frac{5\pi}{3}) = (\frac{1}{2},- \frac{\sqrt{3}}{2})$ と表し, 円周上における2つの座標の平均を取ると $\frac{1}{2} (\cos 0, \sin 0)$となり, ベクトルの平均方向は$0$ラジアン(破線)となる. 
 
 \begin{figure}[bp]
  \begin{tabular}{c}
@@ -129,7 +130,7 @@ I_{[0,2\pi)}(\theta) = \left\{
 \right.
 \end{eqnarray*}
 
-射影正規分布において対称分布, 非対称分布, 二峰性分布となる例をそれぞれ図\ref{sample_pnc1}, 図\ref{sample_pnc2}, 図\ref{sample_pnc3}に示す. 
+射影正規分布において対称分布, 非対称分布, 二峰性分布となる例をそれぞれ図\ref{sample_pnc1},\\ 図\ref{sample_pnc2}, 図\ref{sample_pnc3}に示す. 
 
 \begin{figure}[bp]
 \begin{center}
@@ -161,7 +162,7 @@ $\bm \mu = \begin{pmatrix} -0.24 \\ 0.15 \\ \end{pmatrix}, \ \Sigma = \begin{pma
 
 % Wang and Gelfand(2013) によると各パラメータの単一の影響は良く分かっていない. だから各パラメータを細かく説明するのは困難である. しかしこの分布の柔軟な特性は予測などにおいて便利である.
 
-\citet{GPN}によると, $\mathcal{PN}_3(\bm \mu,\Sigma$)の球形データの場合, 単位球面上の方向を表す$U = (\cos\Theta_1 \sin \Theta_2, \sin\Theta_1 \sin \Theta_2, \cos \Theta_2)^T$における$\bm \theta = (\theta_1, \theta_2)^T$の確率密度を式(\ref{PNS})に示す.
+\citet{GPN}によると, $\mathcal{PN}_3(\bm \mu,\Sigma$)の球形データの場合, 単位球面上の方向を表す$U = (\cos\Theta_1 \sin \Theta_2, \sin\Theta_1 \sin \Theta_2, \cos \Theta_2)^T$における$\bm \theta = (\theta_1, \theta_2)^T$の確率密度関数を式(\ref{PNS})に示す.
 
 %\footnotesize %式を小さくする
 \begin{eqnarray}
@@ -180,7 +181,7 @@ p(\bm \theta; \bm \mu, \Sigma) &=& \left(\frac{1}{2\pi A(\bm \theta)}\right)^{\f
 \if0
 %%%%%%%%%%%%%%%%  円周 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% 重複するからいらない %%%%%
-$m$個のユニットからなる 円周上の射影正規分布の混合分布は以下のように定式化できる. 
+$m$個のユニットからなる 円周上の射影正規分布の混合分布の密度関数は以下のように定式化できる. 
 
 \begin{eqnarray*}
 \label{MPNC}
@@ -243,7 +244,7 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
 \end{eqnarray}
 
 \noindent
-ここで, $\Sigma^*_j$は$(2 \times 2)$の正定値対称行列, $\bm \gamma_j$は$(2 \times 1)$の回帰係数ベクトルである. パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \Sigma^*_1, \dots, \Sigma^*_m, \bm \gamma_1, \dots, \bm \gamma_m)^T$となり, パラメータベクトルの次元は $d = 4m$ となる. ここで, 混合射影正規分布のパラメータのベイズ推定を考える. そのためにモデルパラメータの事前分布を定義する必要がある. 各パラメータの事前分布を $\bm \mu_j \sim N(\bm 0, 10^5 \bm I_3)$,\ $\bm \gamma_j \sim  N(\bm 0, 10^5 \bm I_2)$,\ $\Sigma^*_j \sim \mathrm{inverse Wishart}(4,\bm I_2)$,\ $\bm w \sim Dirichlet(2,2, \dots, 2)$ と設定する. ここで混合比率$\bm w$は$m$次の$Dirichlet$分布に従うものとする. $\bm \mu_j,\ \bm \gamma_j$は$0$付近に存在するという基準化したデータを想定した下で, 正規分布による弱情報事前分布とし, $\Sigma^*_j$は正定値対象行列となるように, 多変量正規分布の共分散行列の共役事前分布として扱われる逆ウィシャート分布を用いる. $\bm w$は非負かつ和が $1$となる性質をもつディリクレ分布を弱情報事前分布とする.
+ここで, $\Sigma^*_j$は$(2 \times 2)$の正定値対称行列, $\bm \gamma_j$は$(2 \times 1)$のベクトルである. パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \Sigma^*_1, \dots, \Sigma^*_m, \bm \gamma_1, \dots, \bm \gamma_m)^T$となり, パラメータベクトルの次元を$d$とする. ここで, 混合射影正規分布のパラメータのベイズ推定を考える. そのためにモデルパラメータの事前分布を定義する必要がある. 各パラメータの事前分布を $\bm \mu_j \sim N(\bm 0, 10^5 \bm I_3)$,\ $\bm \gamma_j \sim  N(\bm 0, 10^5 \bm I_2)$,\ $\Sigma^*_j \sim \mathrm{inverse Wishart}(4,\bm I_2)$,\ $\bm w \sim Dirichlet(2,2, \dots, 2)$ と設定する. ここで混合比率$\bm w$は$m$次のディリクレ分布に従うものとする. $\bm \mu_j,\ \bm \gamma_j$は$0$付近に存在するという基準化したデータを想定した下で, 正規分布による弱情報事前分布とし, $\Sigma^*_j$は正定値対象行列となるように, 多変量正規分布の共分散行列の共役事前分布として扱われる逆ウィシャート分布を用いる. $\bm w$は非負かつ和が $1$となる性質をもつディリクレ分布を弱情報事前分布とする.
 
 角度データ $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を $p(\bm \eta| \bm \theta)$, パラメータベクトルの事前分布を $p(\bm \eta)$とすると事後分布は式(\ref{BAYES})で表せる. 
 
@@ -253,14 +254,14 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 \end{eqnarray}
 
 \noindent
-すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. ここで, $p(\bm \theta)$はすでに得られた, データ$\bm \theta$にのみ依存する定数値であるので, $p(\bm \theta | \bm \eta) p(\bm \eta)$が $\bm \eta$  の事後分布の核関数を形成し, $p(\bm \theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単であるが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 球面上における混合射影正規分布の尤度関数を式(\ref{logPNS})に示す. 
+すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. ここで, $p(\bm \theta)$はすでに得られた, データ$\bm \theta$にのみ依存する定数値であるので, $p(\bm \theta | \bm \eta) p(\bm \eta)$が $\bm \eta$  の事後分布の核関数を形成し, $p(\bm \theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単であるが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 球面上における混合射影正規分布の尤度関数を式(\ref{logPNS})に示す. 式中の$A(\bm \theta), C(\bm \theta), D(\bm \theta)$は式(\ref{PNS})の下に示してある.
 
 \begin{eqnarray}
 \label{logPNS}
 \log p(\bm \theta | \bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j)\} \nonumber \\
-&=& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log 2\pi - \frac{3}{2} \log A - \frac{1}{2} \log |\Sigma_j| + C \right. \nonumber \\
+&=& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log 2\pi - \frac{3}{2} \log A(\bm \theta) - \frac{1}{2} \log |\Sigma_j| + C(\bm \theta) \right. \nonumber \\
 &&\  \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right)\right] \nonumber \\
-&\propto& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A - \frac{1}{2} \log |\Sigma_j| + C \right. \nonumber \\
+&\propto& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A(\bm \theta) - \frac{1}{2} \log |\Sigma_j| + C(\bm \theta) \right. \nonumber \\
 &&\ \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) \right], 
 \end{eqnarray}
 
@@ -290,11 +291,11 @@ Q_{ij} = \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\Sigma_{k \neq i}(1 + \|y_i - y_k\|^2
 \end{eqnarray}
 
 ここでは, 分布間の近さを測る方法として, KL(カルバック$\cdot$ライブラー)情報量を用いる. 圧縮前の確率分布と圧縮後の確率分布のKL
-情報量を損失関数$C$として, $C$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$C$を式$(\ref{tsne3})$に示す.
+情報量を損失関数$L$として, $L$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$L$を式$(\ref{tsne3})$に示す.
 
 \begin{eqnarray}
 \label{tsne3}
-C = KL(P || Q) = \Sigma_i \Sigma_j P_{ij} \log \frac{P_{ij}}{Q_{ij}}.
+L = KL(P || Q) = \Sigma_i \Sigma_j P_{ij} \log \frac{P_{ij}}{Q_{ij}}.
 \end{eqnarray}
 
 \subsection{マルコフ連鎖モンテカルロ法}
@@ -408,7 +409,7 @@ True
 \end{center}
 \end{table}
 
-人工データの球面上における散布図を図\ref{clusterplot3d_real}に, 球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$における散布図を図\ref{clusterplot2d_real}に示す. 球面上におけるクラスタリング結果を図\ref{clusterplot3d_sim}に示す. ここで, 中心部からの各矢線は各コンポーネントの平均方向を表す. また球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$における, クラスタリング結果を図\ref{clusterplot2d_sim}に示す.
+人工データの球面上における散布図を図\ref{clusterplot3d_real}に, 球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$における散布図を図\ref{clusterplot2d_real}に示す. 球面上におけるクラスタリング結果を図\ref{clusterplot3d_sim}に示す. ここで, 図中の中心部からの各矢線は各コンポーネントの平均方向を表す. また球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$における, クラスタリング結果を図\ref{clusterplot2d_sim}に示す.
 
 図\ref{clusterplot3d_real}, \ref{clusterplot3d_sim} から各コンポーネントの平均方向は, 正しく推定されていることが分かる. 図\ref{clusterplot2d_real}, \ref{clusterplot2d_sim}から, 各コンポーネントのデータが入り混じっている部分を, クラスタリングにより入り混じることなく分類されていることが分かる. 混合分布によるクラスタリングでは, 複数の分布が密集している部分では, 誤差が大きくなると考えられる.
 
@@ -638,7 +639,7 @@ $9$個のデータにおいて, コンポーネントが$4$つのときWAICが�
 
 %\newpage
 正規化したユーザごとジャンルへの評価値から, コンポーネントごとのジャンルへの評価値を求めた. 結果を図\ref{clustergenre}に示す. クラスター$2$は幅広いジャンルの映画に対して, 高評価を与えているユーザが所属し, クラスター$1,3,4$ではジャンルへの評価値に差が現れた. 
-MovieLensのデータセットには映画のジャンルに加えて, ユーザの簡単な情報も記載されている. 各コンポーネントにおいて, ユーザの評価値の平均値, ユーザの平均年齢, 所属するユーザ数を表\ref{component_stat}にまとめる. また, 各コンポーネントにおける平均評価値, 所属するユーザの年齢と職業の出現回数を図\ref{rating_average}, 図\ref{job_count}, 図\ref{age_count}に示す. 結果から分かるように, 各コンポーネントの特徴は現れなった. 表\ref{component_stat}より, 混合分布によるクラスタリングでは所属ユーザにばらつきが生まれてしまうことが分かる. ユーザの評価値に基づいて, クラスリング分析を行っているので, ユーザの評価値の特徴とユーザの属性の特徴が対応している必要がある. しかし, ユーザの映画に対する評価値において$0$の値が非常に多く, $0$のデータを特徴として扱うと, 各ユーザの特性がわかりにくくなる可能性がある. 実際には$0$のデータはまだ見ていないことを表しており, 数値的な意味が存在しないので, $0$のデータを取り除いて考える必要がある.
+MovieLensのデータセットには映画のジャンルに加えて, ユーザの簡単な情報も記載されている. 各コンポーネントにおいて, ユーザの評価値の平均値, ユーザの平均年齢, 所属するユーザ数を表\ref{component_stat}にまとめる. また, 各コンポーネントにおける平均評価値, 所属するユーザの年齢と職業の出現回数を図\ref{rating_average}, 図\ref{job_count}, 図\ref{age_count}に示す. 表\ref{component_stat}より, 混合分布によるクラスタリングでは所属ユーザにばらつきが生まれてしまうことが分かる. ユーザの評価値に基づいて, クラスリング分析を行っているので, ユーザの評価値の特徴とユーザの属性の特徴が対応している必要がある. しかし, ユーザの映画に対する評価値において$0$の値が非常に多く, $0$のデータを特徴として扱うと, 各ユーザの特性がわかりにくくなる可能性がある. 実際には$0$のデータはまだ見ていないことを表しており, 数値的な意味が存在しないので, $0$のデータを取り除いて考える必要がある.
 
 \begin{table}[H]
 \begin{center}
@@ -685,7 +686,7 @@ MovieLensのデータセットには映画のジャンルに加えて, ユーザ
 本研究では計算量の問題で高次元データをあらかじめ$3$次元に圧縮し, クラスタリングを試みたが, クラスターごとの特徴を明確に抽出することができなかった. 一般化射影正規分布では任意次元の超球面において分布を生成することができるので, 計算量の問題を解決し, 次元を圧縮することなく超球面上でのクラスタリングに取り組みたい. 本研究では数値データを球面上に配置し, クラスタリングを行ったのが, 超球面上でのクラスタリングは主にテキストマイニングや画像データに用いられているので, それらのデータに対するパラメトリックなクラスタリングを行い, 従来手法との比較を行いたい. 
 
 %%%%%%%%%%%%%%%%%%%%%%%  謝辞 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{謝辞}
+\section*{謝辞}
 
 本研究を行うにあたり, ご指導を頂いた塩濱教授に感謝しています. この一年間で, 卒業研究だけでなく, 興味を持った多くのことに対して取り組むことができました. またお忙しい中, 学部生の質問に対応して頂いた院生の皆様にも感謝しています. 同期の皆様のおかげで, 卒業研究や研究室行事を協力して乗り切ることができたと思っています. 特に黒木君は大学院に進む友人として, 共に切磋琢磨し, お互いを鼓舞することができたと思います. 最後になりますが, ここまで支えてくれた両親に感謝しています.
 
