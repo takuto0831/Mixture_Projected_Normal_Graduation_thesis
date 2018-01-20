@@ -1,19 +1,19 @@
-\documentclass[dvipdfmx]{beamer}
+\documentclass[dvipdfmx]{beamer} %通常用
+%\documentclass[dvipdfm,handout]{beamer} #ハンドアウト作成用
 
 \AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}} % 栞の文字化けを制御(日本語の場合必須)
 \setbeamertemplate{navigation symbols}{} %ナビゲーションバーを消す
 
-%%% 以下3つはハンドアウト印刷用
-%\documentclass[dvipdfm,handout]{beamer}
-%\usepackage{pgfpages}
 \usepackage{comment}
 \usepackage{amsmath}
 \usepackage{algorithm}
 \usepackage{algorithmic}
+
+%%% 以下2つはハンドアウト印刷用
+%\usepackage{pgfpages}
 %\pgfpagesuselayout{4 on 1}[border shrink=3mm]
 
-
-% 付録をページ番号に含めないためのコマンド
+%%% 付録をページ番号に含めないためのコマンド
 \newcommand{\backupbegin}{
 \newcounter{framenumberappendix}
 \setcounter{framenumberappendix}{\value{framenumber}}
@@ -30,33 +30,34 @@
 %\usetheme{Darmstadt}
 %\usetheme{Hannover}
 %\usetheme{lankton-keynote}
-\usetheme{Luebeck}
+%\usetheme{Luebeck}
 %\usetheme{Marburg}
-%\usetheme{Madrid}
+\usetheme{Madrid}
 %\usetheme{boxes}
 %\usetheme{Bergen}
 %\usetheme{Boadilla}
 %\usetheme{Pittsburgh}
 %\usetheme{Rochester}
 
-\useinnertheme{rectangles}
-
+%%% テーマ
+%\useinnertheme{rectangles}
 %\useoutertheme{default}
 
 %%% カラーテーマ（省略可）
-\useoutertheme{infolines}
+%\useoutertheme{infolines}
 %\usecolortheme[RGB={64,64,64}]{structure}     
 %\definecolor{babyblue}{rgb}{0.54,0.81,0.94}                                                                                                
 %\usecolortheme{dolphin}
 %\usecolortheme{beaver}
 %\usecolortheme{beetle}
 %\usecolortheme{crane}
-\usecolortheme{dolphin}
+%\usecolortheme{dolphin}
 %\usecolortheme{seagull}
 %\usecolortheme{wolverine}
 %\usecolortheme{spruce}
 %\usecolortheme{rose}
 %\usecolortheme{seahorse}
+\setbeamertemplate{footline}[page number]
 
 %%% フォント
 \renewcommand{\kanjifamilydefault}{\gtdefault} % 日本語フォントをゴシック
@@ -93,8 +94,8 @@
 \definecolor {mycolorHeader} {rgb} {0.93, 0.935, 0.93}
 
 %ヘッダーとタイトルの色(fgで文字の色変えられる)
-\setbeamercolor{frametitle}{bg = mycolorHeader}
-\setbeamercolor{title}{bg = mycolorTitle}
+%\setbeamercolor{frametitle}{bg = mycolorHeader}
+%\setbeamercolor{title}{bg = mycolorTitle}
 
 \def\conpage{7}
 
@@ -218,7 +219,7 @@ Dhillon and Modha (2001) は, ユークリッド距離に基づく非類似度�
 
 %%%%%%%%%%%%% 混合射影正規分布 %%%%%%%%%%%%%%%
 \section{混合射影正規分布}
-\begin{frame}{射影正規分布(1/2)}
+\begin{frame}{射影正規分布(1/3)}
 
 Wang and Gelfand (2013)によると, $\mathcal{PN}_2(\bm \mu,\Sigma$)の円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度を式(\ref{PNC})に示す.
 
@@ -236,8 +237,33 @@ p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 $\ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
 
 \end{frame}
+\begin{frame}{射影正規分布(2/3)}
+\begin{itemize}
+	\item 平均方向の定義
+\end{itemize}
 
-\begin{frame}{射影正規分布(2/2)}
+\begin{figure}[bp]
+ \begin{tabular}{c}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 60mm]{data/sample_False.png}
+\caption{算術平均による平均の定義}
+\label{sample_mu1}
+  \end{center}
+ \end{minipage}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+ \includegraphics[clip,height= 60mm]{data/sample_True.png}
+\caption{円周上における平均方向の定義}
+\label{sample_mu2}
+  \end{center}
+ \end{minipage}
+\end{tabular}
+\label{sample_mu}
+\end{figure}
+\end{frame}
+
+\begin{frame}{射影正規分布(3/3)}
 Hernandez-Stumpfhauser et al. (2017) によると, $\mathcal{PN}_3(\bm \mu,\Sigma$)の球形データの場合, 単位球面上の方向を表す$U = (\cos\Theta_1 \sin \Theta_2, \sin\Theta_1 \sin \Theta_2, \cos \Theta_2)^T$における$\bm \theta = (\theta_1, \theta_2)^T$の確率密度を式(\ref{PNS})に示す.
 
 \vspace{-0.5cm}
@@ -257,7 +283,7 @@ $A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1}
 $I_{[0,2\pi)} (\cdot), I_{[0,\pi)}(\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である. 
 \end{frame}
 
-\begin{frame}{混合射影正規分布}
+\begin{frame}{混合射影正規分布(1/2)}
 
 $m$個のコンポーネントからなる球面上の射影正規分布の混合分布を式(\ref{MPNS})に示す. 
 
@@ -280,7 +306,45 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
     \end{array}
   \right),
 \end{eqnarray}
+\noindent
+ここで, $\Sigma^*_j$は$(2 \times 2)$の正定値対称行列, $\bm \gamma_j$は$(2 \times 1)$のベクトルである. パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \Sigma^*_1, \dots, \Sigma^*_m, \bm \gamma_1, \dots, \bm \gamma_m)^T$となる.
 
+\end{frame}
+
+\begin{frame}{混合射影正規分布(2/2)}
+角度データ $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を $p(\bm \eta| \bm \theta)$, パラメータベクトルの事前分布を $p(\bm \eta)$とすると事後分布は式(\ref{BAYES})で表せる. 
+
+\begin{eqnarray}
+\label{BAYES}
+p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \theta)} \propto p(\bm \theta | \bm \eta) p(\bm \eta)
+\end{eqnarray}
+
+\noindent
+すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. ここで, $p(\bm \theta)$はすでに得られた, データ$\bm \theta$にのみ依存する定数値であるので, $p(\bm \theta | \bm \eta) p(\bm \eta)$が $\bm \eta$  の事後分布の核関数を形成し, $p(\bm \theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単であるが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 球面上における混合射影正規分布の尤度関数を式(\ref{logPNS})に示す. 式中の$A(\bm \theta), C, D(\bm \theta)$は式(\ref{PNS})の下に示してある.
+
+\begin{eqnarray}
+\label{logPNS}
+\log p(\bm \theta | \bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j)\} \nonumber \\
+&=& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log 2\pi - \frac{3}{2} \log A(\bm \theta) - \frac{1}{2} \log |\Sigma_j| + C \right. \nonumber \\
+&&\  \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right)\right] \nonumber \\
+&\propto& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A(\bm \theta) - \frac{1}{2} \log |\Sigma_j| + C \right. \nonumber \\
+&&\ \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) \right], 
+\end{eqnarray}
+
+\end{frame}
+
+%%%%%%%%%%% 解析手法 %%%%%%%%%%%%%
+\section{解析手法}
+\begin{frame}{t-SNE}
+
+\end{frame}
+
+\begin{frame}{HMC}
+
+\end{frame}
+
+\begin{frame}{混合分布によるクラスタリング}
+混合分布によるクラスタリングは, 対象となるデータが$m$個のコンポーネントからなる混合データであると仮定し, 混合分布における各コンポーネントのパラメータベクトル$\bm \eta$を推定する. 得られたパラメータベクトルとデータから, 各データがどのコンポーネントに所属しているかを確率的に表すことができる. 最も高い確率を示す, コンポーネントの番号をデータのラベルとすることで, 各データをクラスタリングすることができる.　ここでの番号は, 各コンポーネントを表す, 名義尺度なので数値的な意味は存在しない. パラメトリックなクラスタリング手法では, 得られたパラメータベクトル$\bm \eta$の事後分布を用いて, 推定した混合分布の妥当性を検証することができる.	
 \end{frame}
 
 %%%%%%%%%%% シミュレーション %%%%%%%%%%%%%
@@ -304,16 +368,15 @@ Mixture von Mises 分布では元のデータと同じく4つの元となる分�
 \hline
  &  & \multicolumn{4}{c}{Predict} \\ \hline
  &  & 1 & 2 & 3 & 4  \\ \hline 
- & 1 & 94 & \textbf{301} & 78 & 27 \\ 
+ & 1 &  \textbf{301} & 27  & 94 & 78 \\ 
 True
- & 2 & 1 & 2 & 24 & \textbf{473} \\
- & 3 & \textbf{274} & 140 & 72 & 14 \\ 
- & 4 & 44 & 80 & \textbf{315} & 61 \\ 
+ & 2 & 2 & \textbf{473} & 1 & 24 \\
+ & 3 & 140 & 14 & \textbf{274} &72 \\ 
+ & 4 & 80 & 61 & 44 & \textbf{315} \\ 
 \hline
 \end{tabular}
 \end{center}
 \end{table}
-
 \end{frame}
 
 \begin{frame}{シュミレーション(2/2)}
@@ -374,7 +437,7 @@ True
 
 \end{frame}
 
-\begin{frame}{データ解析(1/2)}
+\begin{frame}{コンポーネントの評価指標}
 
 情報量基準(WAIC)を用いて, 混合分布のコンポーネントの選択を行う. AICやBICなどの情報量基準には, 事後分布が正規分布で近似されている必要があるなど, 様々な制約が存在するが, WAICは真の分布, 確率モデル, 事前分布がどのような場合でも用いることができる. WAICは式$(\ref{WAIC1})$で求められる.
 
@@ -403,6 +466,53 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 
 \end{frame}
 
+\begin{frame}{データ解析(1/2)}
+
+$9$個のデータにおいて, コンポーネントが$4$つのときWAICが最小になっていることがわかる. コンポーネントを$4$つと仮定して混合射影正規分布によるクラスタリングを行う. サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した. $4$つのコンポーネントにおける混合射影正規分布のパラメータを式(\ref{parameter})に示す. なお, $\hat {\bm w}$は各コンポーネントの混合比率を表し, パラメータの添え字は各コンポーネントの番号に対応している.
+
+\footnotesize %式を小さくする
+\begin{equation}
+\label{parameter}
+\begin{split}
+&\hat {\bm w} = \begin{pmatrix} 0.26 \\ 0.51 \\ 0.20 \\ 0.03 \\ \end{pmatrix},\ 
+\hat{\bm \mu}_1 = \begin{pmatrix} 0.44 \\ 2.85 \\ -1.67 \\ \end{pmatrix},\ 
+\hat \Sigma_1 = \begin{pmatrix}  2.40 & 1.52 &  0.06 \\ 1.52 & 2.20 & -0.25 \\ 0.06 & -0.25 &1.00 \\ \end{pmatrix},\\ 
+&\hat{\bm \mu}_2 = \begin{pmatrix} 0.14 \\ -0.50 \\ 1.09 \\ \end{pmatrix},\ 
+\hat \Sigma_2 = \begin{pmatrix}   0.28  & 0.14 &  0.20 \\ 0.14 & 0.61 & 0.06 \\  0.20 & 0.06 &1.00 \\ \end{pmatrix},\ 
+\hat{\bm \mu}_3 = \begin{pmatrix} -2.08  \\ -1.96 \\ -8.11 \\ \end{pmatrix},\\ 
+&\hat \Sigma_3 = \begin{pmatrix}  1.86  & -0.18 &  -0.10 \\-0.18 & 3.89 & 1.60 \\  -0.10 & 1.60 & 1.00 \\ \end{pmatrix},\ 
+\hat{\bm \mu}_4 = \begin{pmatrix} -12.29   \\ -2.48 \\ -4.84 \\ \end{pmatrix},\ 
+\hat \Sigma_4 = \begin{pmatrix} 15.19 & 4.01 &  0.12 \\ 4.01 & 1.88 & 0.08 \\ 0.12 & 0.08 &1.00 \\ \end{pmatrix}.
+\end{split}
+\end{equation}
+\normalsize
+\end{frame}
+
+
+\begin{frame}{データ解析(2/2)}
+
+\vspace{-1zh}
+\begin{figure}[H]
+\begin{tabular}{c}
+
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[clip,height= 40mm]{data/cluster_3d.png}
+\end{center}
+\end{minipage}
+
+\begin{minipage}{0.5\hsize}
+\begin{center}
+\includegraphics[clip,height= 40mm]{data/cluster_4.png}
+\end{center}
+\end{minipage}
+
+\end{tabular}
+\label{fig2}
+\caption{混合分布による, 球面上におけるクラスタリング結果(左), 混合分布による, 球面上の角度$\bm \theta = (\theta_1, \theta_2)^T$におけるクラスタリング結果(右)}
+\end{figure}
+\end{frame}
+
 %%%%%%%%%%%%%% まとめと今後の課題 %%%%%%%%%%%%%%%%%
 \section{まとめと今後の課題}
 \begin{frame}{まとめと今後の課題}
@@ -420,7 +530,7 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 \end{frame}
 
 \section{参考文献}
-\begin{frame}[allowframebreaks]{参考文献}
+\begin{frame}{参考文献}
 
 {\scriptsize
 \begin{thebibliography}{99}
