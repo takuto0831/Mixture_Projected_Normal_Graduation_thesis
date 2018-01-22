@@ -232,17 +232,21 @@ p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 \end{eqnarray}
 \normalsize
 
-%\noindent
+\noindent
 ここで, $\bm u^T = (\cos\theta,\sin\theta), \ A(\theta) = \bm u^T\Sigma^{-1}\bm u, \ B(\theta) = \bm u^T \Sigma^{-1} \bm \mu,$
 $\ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
 
 \end{frame}
 \begin{frame}{射影正規分布(2/3)}
+% 定義で囲むか, 箱で囲む
+\begin{itembox}[l]{平均方向の定義}
 \begin{itemize}
-	\item 平均方向の定義
+	\item 
+	二つの角度$\theta_1, \theta_2$の平均方向は, 円周上の座標 $(\cos \theta_1,\sin \theta_1), (\cos \theta_2,\sin \theta_2)$ と表し, $2$つの座標の平均を取ると $\frac{1}{2} (\cos \theta_1 + \cos \theta_2,\sin \theta_1 + \sin \theta_2)$と表すことができる.
 \end{itemize}
+\end{itembox}
 
-\begin{figure}[bp]
+\begin{figure}[H]
  \begin{tabular}{c}
  \begin{minipage}{0.5\hsize}
   \begin{center}
@@ -264,7 +268,7 @@ $\ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdo
 \end{frame}
 
 \begin{frame}{射影正規分布(3/3)}
-Hernandez-Stumpfhauser et al. (2017) によると, $\mathcal{PN}_3(\bm \mu,\Sigma$)の球形データの場合, 単位球面上の方向を表す$U = (\cos\Theta_1 \sin \Theta_2, \sin\Theta_1 \sin \Theta_2, \cos \Theta_2)^T$における$\bm \theta = (\theta_1, \theta_2)^T$の確率密度を式(\ref{PNS})に示す.
+Hernandez-Stumpfhauser et al. (2017) によると, $\mathcal{PN}_3(\bm \mu,\Sigma$)の球形の場合, 単位球面上の方向を表す$U = (\cos\Theta_1 \sin \Theta_2, \sin\Theta_1 \sin \Theta_2, \cos \Theta_2)^T$における$\bm \theta = (\theta_1, \theta_2)^T$の確率密度を式(\ref{PNS})に示す.
 
 \vspace{-0.5cm}
 \footnotesize %式を小さくする
@@ -283,11 +287,11 @@ $A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1}
 $I_{[0,2\pi)} (\cdot), I_{[0,\pi)}(\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である. 
 \end{frame}
 
-\begin{frame}{混合射影正規分布(1/2)}
+\begin{frame}{混合射影正規分布(1/3)}
 
 $m$個のコンポーネントからなる球面上の射影正規分布の混合分布を式(\ref{MPNS})に示す. 
 
-\vspace{-0.5cm}
+\vspace{-0.8cm}
 \begin{eqnarray}
 \label{MPNS}
 p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j),
@@ -311,8 +315,8 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
 
 \end{frame}
 
-\begin{frame}{混合射影正規分布(2/2)}
-角度データ $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を $p(\bm \eta| \bm \theta)$, パラメータベクトルの事前分布を $p(\bm \eta)$とすると事後分布は式(\ref{BAYES})で表せる. 
+\begin{frame}{混合射影正規分布(2/3)}
+角度 $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を $p(\bm \eta| \bm \theta)$, 事前分布を $p(\bm \eta)$とすると事後分布は式(\ref{BAYES})で表せる. 
 
 \begin{eqnarray}
 \label{BAYES}
@@ -320,8 +324,16 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 \end{eqnarray}
 
 \noindent
-すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. ここで, $p(\bm \theta)$はすでに得られた, データ$\bm \theta$にのみ依存する定数値であるので, $p(\bm \theta | \bm \eta) p(\bm \eta)$が $\bm \eta$  の事後分布の核関数を形成し, $p(\bm \theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単であるが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 球面上における混合射影正規分布の尤度関数を式(\ref{logPNS})に示す. 式中の$A(\bm \theta), C, D(\bm \theta)$は式(\ref{PNS})の下に示してある.
+すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. ここで, $p(\bm \theta)$はすでに得られた, データ$\bm \theta$にのみ依存する定数値であるので, $p(\bm \theta | \bm \eta) p(\bm \eta)$が $\bm \eta$  の事後分布の核関数を形成し, $p(\bm \theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単であるが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 
+\end{frame}
+\begin{frame}{混合射影正規分布(3/3)}
 
+\begin{itemize}
+	\item 球面上における混合射影正規分布の尤度関数を式(\ref{logPNS})に示す. 式中の$A(\bm \theta), C, D(\bm \theta)$は式(\ref{PNS})の下に示してある.
+\end{itemize}
+
+\vspace{-0.5cm}
+\footnotesize %式を小さくする
 \begin{eqnarray}
 \label{logPNS}
 \log p(\bm \theta | \bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j)\} \nonumber \\
@@ -330,22 +342,24 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 &\propto& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A(\bm \theta) - \frac{1}{2} \log |\Sigma_j| + C \right. \nonumber \\
 &&\ \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) \right], 
 \end{eqnarray}
+\normalsize
 
 \end{frame}
 
 %%%%%%%%%%% 解析手法 %%%%%%%%%%%%%
 \section{解析手法}
 \begin{frame}{t-SNE}
+
+高次元データ$\bm x$を低次元データ$\bm y$に近似するとき, 次元圧縮前の点$x_j$と点$x_i$の類似度を条件付確率$P_{j|i}$を用いて, 同時確率$P_{ij}$で表し, 次元圧縮後の点$y_j$と点$y_i$の類似度を同時確率$Q_{ij}$によって表す.
+
+\footnotesize
 \begin{eqnarray}
 \label{tsne1}
 P_{j|i} = \frac{\exp(-\|x_i - x_j\|^2 / 2\sigma_i^2}{\Sigma_{k \neq i}\exp(-\|x_i - x_k\|^2/ 2\sigma_i^2)},\ 
-P_{ij} = \frac{P_{j|i} + P_{i|j}}{2N},
-\end{eqnarray}
-
-\begin{eqnarray}
-\label{tsne2}
+P_{ij} = \frac{P_{j|i} + P_{i|j}}{2N},\ 
 Q_{ij} = \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\Sigma_{k \neq i}(1 + \|y_i - y_k\|^2)^{-1}},
 \end{eqnarray}
+\normalsize
 
 ここでは, 分布間の近さを測る方法として, KL(カルバック$\cdot$ライブラー)情報量を用いる. 圧縮前の確率分布と圧縮後の確率分布のKL
 情報量を損失関数$L$として, $L$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$L$を式$(\ref{tsne3})$に示す.
@@ -365,12 +379,13 @@ $\eta_j(0), q_j(0)$の初期値を設定する. $\eta_j(0)$は各パラメータ
 \item{}
 
 以下の式に従い, $\eta_j, \bm q_j$を更新する. $\epsilon$は状態変化のステップ幅を表す.
-
+\footnotesize
 \begin{eqnarray*}
-&&q_j(t+\frac{\epsilon}{2}) = q_j(t) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t)), \\
-&&\eta_j(t+\epsilon) = \eta_j(t) + \epsilon \frac{q_j(t + \frac{\epsilon}{2})}{M_j}, \\
-&&q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t + \epsilon)),
+q_j(t+\frac{\epsilon}{2}) = q_j(t) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t)),\ 
+\eta_j(t+\epsilon) = \eta_j(t) + \epsilon \frac{q_j(t + \frac{\epsilon}{2})}{M_j},\ 
+q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t + \epsilon)),
 \end{eqnarray*}
+\normalsize
 
 \item{}
 得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\eta^*_j, q^*_j$として,
@@ -388,7 +403,17 @@ r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
 \end{frame}
 
 \begin{frame}{混合分布によるクラスタリング}
-混合分布によるクラスタリングは, 対象となるデータが$m$個のコンポーネントからなる混合データであると仮定し, 混合分布における各コンポーネントのパラメータベクトル$\bm \eta$を推定する. 得られたパラメータベクトルとデータから, 各データがどのコンポーネントに所属しているかを確率的に表すことができる. 最も高い確率を示す, コンポーネントの番号をデータのラベルとすることで, 各データをクラスタリングすることができる.　ここでの番号は, 各コンポーネントを表す, 名義尺度なので数値的な意味は存在しない. パラメトリックなクラスタリング手法では, 得られたパラメータベクトル$\bm \eta$の事後分布を用いて, 推定した混合分布の妥当性を検証することができる.	
+\begin{itemize}
+\item
+混合分布によるクラスタリングは, 対象となるデータが$m$個のコンポーネントからなる混合データであると仮定し, 混合分布における各コンポーネントのパラメータベクトル$\bm \eta$を推定する. 
+\item
+得られたパラメータベクトルとデータから, 各データがどのコンポーネントに所属しているかを確率的に表すことができる. 最も高い確率を示す, コンポーネントの番号をデータのラベルとすることで, 各データをクラスタリングすることができる.　
+\item
+ここでの番号は, 各コンポーネントを表す, 名義尺度なので数値的な意味は存在しない. パラメトリックなクラスタリング手法では, 得られたパラメータベクトル$\bm \eta$の事後分布を用いて, 推定した混合分布の妥当性を検証することができる.	
+
+ 
+\end{itemize}
+
 \end{frame}
 
 %%%%%%%%%%% シミュレーション %%%%%%%%%%%%%
@@ -397,10 +422,11 @@ r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
 
 \begin{itemize}
 \item
-得られた混合分布は, ともに元の分布の特徴をとらえている元になった.
-
+$3$変量正規分布に従う乱数を生成し, 各$3$次元データをノルムで割り, 球面上の射影正規分布を得る. シミュレーションではコンポーネントを$4$として, $4$つの異なる射影正規分布に従う乱数を混合することで, 混合射影正規分布の人工データを生成する.
 \item
-Mixture von Mises 分布では元のデータと同じく4つの元となる分布を推定したが, Mixture Projected Normal 分布においては3つの元となる分布により以下の結果が得られた.
+サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した.
+\item
+横軸を真のコンポーネント, 縦軸を予測のコンポーネントとして集計表を表\ref{cross}に示す.
 
 \end{itemize}
 
@@ -446,7 +472,7 @@ True
 
 \begin{itemize}
 \item
-複数のvon Mises 分布に従う乱数を発生させて, 1つのデータにまとめることで混合データを作成する.
+各コンポーネントのデータが入り混じっている部分を, クラスタリングにより入り混じることなく分類されていることが分かる. 混合分布によるクラスタリングでは, 複数の分布が密集している部分では, 誤差が大きくなると考えられる.
 \end{itemize}
 
 \end{frame}
@@ -455,8 +481,7 @@ True
 \section{データ解析}
 \begin{frame}{解析データ}
 
-本研究では, GroupLens による公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個の評価値, 簡単なユーザ情報, コンテンツ情報から構成されている. 評価値において, $0$は見ていないことを表し, 評価については1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個の映画に対する評価値を持っている. コンテンツ情報, ユーザ情報について表\ref{MovieLens1}にまとめる. また表\ref{MovieLens2}にMovieLensデータセットの一部を示す.
-
+本研究では, GroupLens による公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個の評価値, 簡単なユーザ情報, コンテンツ情報から構成されている. 評価値において, $0$は見ていないことを表し, 評価については1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個の映画に対する評価値を持っている. コンテンツ情報, ユーザ情報について表\ref{MovieLens1}にまとめる. 
 
 \begin{table}[bp]
 \begin{center}
@@ -483,8 +508,9 @@ True
 
 \begin{frame}{コンポーネントの評価指標}
 
-情報量基準(WAIC)を用いて, 混合分布のコンポーネントの選択を行う. AICやBICなどの情報量基準には, 事後分布が正規分布で近似されている必要があるなど, 様々な制約が存在するが, WAICは真の分布, 確率モデル, 事前分布がどのような場合でも用いることができる. WAICは式$(\ref{WAIC1})$で求められる.
+情報量基準(WAIC)を用いて, 混合分布のコンポーネントの選択を行う. WAICは真の分布, 確率モデル, 事前分布がどのような場合でも用いることができる. WAICは式$(\ref{WAIC1})$で求められる.
 
+\vspace{-0.5cm}
 \begin{eqnarray}
 \label{WAIC1}
 \mbox{WAIC} = T + \frac{V}{n}, 
@@ -512,7 +538,7 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 
 \begin{frame}{データ解析(1/3)}
 
-$9$個のデータにおいて, コンポーネントが$4$つのときWAICが最小になっていることがわかる. コンポーネントを$4$つと仮定して混合射影正規分布によるクラスタリングを行う. サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した. $4$つのコンポーネントにおける混合射影正規分布のパラメータを式(\ref{parameter})に示す. なお, $\hat {\bm w}$は各コンポーネントの混合比率を表し, パラメータの添え字は各コンポーネントの番号に対応している.
+コンポーネントを$4$つと仮定して混合射影正規分布によるクラスタリングを行う. サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した. $4$つのコンポーネントにおける混合射影正規分布のパラメータを式(\ref{parameter})に示す. なお, $\hat {\bm w}$は各コンポーネントの混合比率を表し, パラメータの添え字は各コンポーネントの番号に対応している.
 
 \footnotesize %式を小さくする
 \begin{equation}
@@ -574,7 +600,12 @@ $9$個のデータにおいて, コンポーネントが$4$つのときWAICが�
 \begin{itemize}
 
 \item
-本研究では計算量の問題で高次元データをあらかじめ$3$次元に圧縮し, クラスタリングを試みたが, クラスターごとの特徴を明確に抽出することができなかった. 一般化射影正規分布では任意次元の超球面において分布を生成することができるので, 計算量の問題を解決し, 次元を圧縮することなく超球面上でのクラスタリングに取り組みたい. 本研究では数値データを球面上に配置し, クラスタリングを行ったのが, 超球面上でのクラスタリングは主にテキストマイニングや画像データに用いられているので, それらのデータに対するパラメトリックなクラスタリングを行い, 従来手法との比較を行いたい. 
+本研究では計算量の問題で高次元データをあらかじめ$3$次元に圧縮し, クラスタリングを試みたが, クラスターごとの特徴を明確に抽出することができなかった. 
+
+\item
+一般化射影正規分布では任意次元の超球面において分布を生成することができるので, 計算量の問題を解決し, 次元を圧縮することなく超球面上でのクラスタリングに取り組みたい. 
+\item
+数値データを球面上に配置し, クラスタリングを行ったのが, 超球面上でのクラスタリングは主にテキストマイニングや画像データに用いられているので, それらのデータに対するパラメトリックなクラスタリングを行い, 従来手法との比較を行いたい. 
 
 \end{itemize}
 
