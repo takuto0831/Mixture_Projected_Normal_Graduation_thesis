@@ -246,14 +246,14 @@ $\ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdo
  \begin{tabular}{c}
  \begin{minipage}{0.5\hsize}
   \begin{center}
-   \includegraphics[clip,height= 60mm]{data/sample_False.png}
+   \includegraphics[clip,height= 40mm]{data/sample_False.png}
 \caption{算術平均による平均の定義}
 \label{sample_mu1}
   \end{center}
  \end{minipage}
  \begin{minipage}{0.5\hsize}
   \begin{center}
- \includegraphics[clip,height= 60mm]{data/sample_True.png}
+ \includegraphics[clip,height= 40mm]{data/sample_True.png}
 \caption{円周上における平均方向の定義}
 \label{sample_mu2}
   \end{center}
@@ -336,10 +336,54 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 %%%%%%%%%%% 解析手法 %%%%%%%%%%%%%
 \section{解析手法}
 \begin{frame}{t-SNE}
+\begin{eqnarray}
+\label{tsne1}
+P_{j|i} = \frac{\exp(-\|x_i - x_j\|^2 / 2\sigma_i^2}{\Sigma_{k \neq i}\exp(-\|x_i - x_k\|^2/ 2\sigma_i^2)},\ 
+P_{ij} = \frac{P_{j|i} + P_{i|j}}{2N},
+\end{eqnarray}
 
+\begin{eqnarray}
+\label{tsne2}
+Q_{ij} = \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\Sigma_{k \neq i}(1 + \|y_i - y_k\|^2)^{-1}},
+\end{eqnarray}
+
+ここでは, 分布間の近さを測る方法として, KL(カルバック$\cdot$ライブラー)情報量を用いる. 圧縮前の確率分布と圧縮後の確率分布のKL
+情報量を損失関数$L$として, $L$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$L$を式$(\ref{tsne3})$に示す.
+
+\begin{eqnarray}
+\label{tsne3}
+L = KL(P || Q) = \Sigma_i \Sigma_j P_{ij} \log \frac{P_{ij}}{Q_{ij}}.
+\end{eqnarray}
 \end{frame}
 
 \begin{frame}{HMC}
+\begin{enumerate}
+
+\item{}
+$\eta_j(0), q_j(0)$の初期値を設定する. $\eta_j(0)$は各パラメータの事前分布からの設定し, $q_j(0)$は$N(0,M_j)$からランダムサンプリングする. $M_j$ は任意の分散パラメータである. 
+ 
+\item{}
+
+以下の式に従い, $\eta_j, \bm q_j$を更新する. $\epsilon$は状態変化のステップ幅を表す.
+
+\begin{eqnarray*}
+&&q_j(t+\frac{\epsilon}{2}) = q_j(t) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t)), \\
+&&\eta_j(t+\epsilon) = \eta_j(t) + \epsilon \frac{q_j(t + \frac{\epsilon}{2})}{M_j}, \\
+&&q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t + \epsilon)),
+\end{eqnarray*}
+
+\item{}
+得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\eta^*_j, q^*_j$として,
+現在が$t$回目の反復とすると, サンプルの棄却率は以下の式で定義する.
+
+\begin{eqnarray*}
+r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
+\end{eqnarray*}
+
+\item{}
+一様乱数 $u_j \sim U(0,1)$を発生し, $r_j > u_j$ならば, ランダムサンプル $\eta^*_j$を採択し, $r_j < u_j$ならば, $\eta_j(t-1)$を保持する. サンプル数$T$が任意の数に達したとき, MCMCサンプリングを終了する. 
+
+\end{enumerate}
 
 \end{frame}
 
@@ -466,7 +510,7 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 
 \end{frame}
 
-\begin{frame}{データ解析(1/2)}
+\begin{frame}{データ解析(1/3)}
 
 $9$個のデータにおいて, コンポーネントが$4$つのときWAICが最小になっていることがわかる. コンポーネントを$4$つと仮定して混合射影正規分布によるクラスタリングを行う. サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した. $4$つのコンポーネントにおける混合射影正規分布のパラメータを式(\ref{parameter})に示す. なお, $\hat {\bm w}$は各コンポーネントの混合比率を表し, パラメータの添え字は各コンポーネントの番号に対応している.
 
@@ -489,7 +533,7 @@ $9$個のデータにおいて, コンポーネントが$4$つのときWAICが�
 \end{frame}
 
 
-\begin{frame}{データ解析(2/2)}
+\begin{frame}{データ解析(2/3)}
 
 \vspace{-1zh}
 \begin{figure}[H]
@@ -513,6 +557,16 @@ $9$個のデータにおいて, コンポーネントが$4$つのときWAICが�
 \end{figure}
 \end{frame}
 
+\begin{frame}{データ解析(3/3)}
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[clip,height= 60mm]{data/cluster_plot.png}
+\end{center}
+\caption{クラスターごとのジャンルへの評価値}
+\label{clustergenre}
+\end{figure}
+
+\end{frame}
 %%%%%%%%%%%%%% まとめと今後の課題 %%%%%%%%%%%%%%%%%
 \section{まとめと今後の課題}
 \begin{frame}{まとめと今後の課題}
@@ -520,10 +574,7 @@ $9$個のデータにおいて, コンポーネントが$4$つのときWAICが�
 \begin{itemize}
 
 \item
-前日と前々日の混合分布で今日の風向の分布を予測.
-
-\item
-少数のデータで分布の予測.
+本研究では計算量の問題で高次元データをあらかじめ$3$次元に圧縮し, クラスタリングを試みたが, クラスターごとの特徴を明確に抽出することができなかった. 一般化射影正規分布では任意次元の超球面において分布を生成することができるので, 計算量の問題を解決し, 次元を圧縮することなく超球面上でのクラスタリングに取り組みたい. 本研究では数値データを球面上に配置し, クラスタリングを行ったのが, 超球面上でのクラスタリングは主にテキストマイニングや画像データに用いられているので, それらのデータに対するパラメトリックなクラスタリングを行い, 従来手法との比較を行いたい. 
 
 \end{itemize}
 
