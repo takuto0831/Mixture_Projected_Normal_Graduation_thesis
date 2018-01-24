@@ -219,33 +219,57 @@ Dhillon and Modha (2001) は, ユークリッド距離に基づく非類似度�
 
 %%%%%%%%%%%%% 混合射影正規分布 %%%%%%%%%%%%%%%
 \section{混合射影正規分布}
-\begin{frame}{射影正規分布(1/3)}
+\begin{frame}{円周上の射影正規分布(1/2)}
 
-Wang and Gelfand (2013)によると, $\mathcal{PN}_2(\bm \mu,\Sigma$)の円形データの場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度を式(\ref{PNC})に示す.
+Wang and Gelfand (2013)によると, $\mathcal{PN}_2(\bm \mu,\Sigma$)の場合, 単位円上の方向を表す$U = (\cos\Theta, \sin\Theta)^T$における$\theta$の確率密度を以下に示す.
 
-\vspace{-0.5cm}
+%\vspace{-0.5cm}
 \footnotesize
-\begin{eqnarray}
+\begin{eqnarray*}
 \label{PNC}
 p(\theta; \bm \mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}}
 \exp(C)\left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} I_{[0,2\pi)}(\theta),
-\end{eqnarray}
+\end{eqnarray*}
 \normalsize
 
 \noindent
 ここで, $\bm u^T = (\cos\theta,\sin\theta), \ A(\theta) = \bm u^T\Sigma^{-1}\bm u, \ B(\theta) = \bm u^T \Sigma^{-1} \bm \mu,$
 $\ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
 
+\begin{figure}[H]
+ \begin{tabular}{c}
+ %\hspace{0.5cm}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 30mm]{data/sample_asymmetry.png}
+  \end{center}
+ \end{minipage}
+ \hspace{-2.0cm}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+ \includegraphics[clip,height= 30mm]{data/sample_bimodal.png}
+  \end{center}
+ \end{minipage}
+\end{tabular}
+\caption{射影正規分布の分布例}
+\end{figure}
+
 \end{frame}
-\begin{frame}{射影正規分布(2/3)}
+
+\begin{frame}{円周上の射影正規分布(2/2)}
 % 定義で囲むか, 箱で囲む
 \begin{itembox}[l]{平均方向の定義}
+二つの角度$\theta_1, \theta_2$(実線)の平均方向は,
 \begin{itemize}
+	\item
+	算術平均では, $\frac{1}{2} (\theta_1 + \theta_2)$(破線)と定義する.
+	
 	\item 
-	二つの角度$\theta_1, \theta_2$の平均方向は, 円周上の座標 $(\cos \theta_1,\sin \theta_1), (\cos \theta_2,\sin \theta_2)$ と表し, $2$つの座標の平均を取ると $\frac{1}{2} (\cos \theta_1 + \cos \theta_2,\sin \theta_1 + \sin \theta_2)$と表すことができる.
+	円周上では, $\frac{1}{2} (\cos \theta_1 + \cos \theta_2,\sin \theta_1 + \sin \theta_2)$(破線)と定義する.
 \end{itemize}
 \end{itembox}
 
+\vspace{-0.3cm}
 \begin{figure}[H]
  \begin{tabular}{c}
  \begin{minipage}{0.5\hsize}
@@ -255,6 +279,7 @@ $\ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdo
 \label{sample_mu1}
   \end{center}
  \end{minipage}
+ \hspace{-0.5cm}
  \begin{minipage}{0.5\hsize}
   \begin{center}
  \includegraphics[clip,height= 40mm]{data/sample_True.png}
@@ -267,17 +292,17 @@ $\ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdo
 \end{figure}
 \end{frame}
 
-\begin{frame}{射影正規分布(3/3)}
-Hernandez-Stumpfhauser et al. (2017) によると, $\mathcal{PN}_3(\bm \mu,\Sigma$)の球形の場合, 単位球面上の方向を表す$U = (\cos\Theta_1 \sin \Theta_2, \sin\Theta_1 \sin \Theta_2, \cos \Theta_2)^T$における$\bm \theta = (\theta_1, \theta_2)^T$の確率密度を式(\ref{PNS})に示す.
+\begin{frame}{球面上の射影正規分布(1/2)}
+Hernandez-Stumpfhauser et al. (2017) によると, $\mathcal{PN}_3(\bm \mu,\Sigma$)の場合, 単位球面上の方向を表す$U = (\cos\Theta_1 \sin \Theta_2, \sin\Theta_1 \sin \Theta_2, \cos \Theta_2)^T$における$\bm \theta = (\theta_1, \theta_2)^T$の確率密度を以下に示す.
 
 \vspace{-0.5cm}
 \footnotesize %式を小さくする
-\begin{eqnarray}
+\begin{eqnarray*}
 \label{PNS}
 p(\bm \theta; \bm \mu, \Sigma) &=& \left(\frac{1}{2\pi A(\bm \theta)}\right)^{\frac{3}{2}} |\Sigma|^{-\frac{1}{2}}
 \exp(C) \nonumber \\ 
 && \hspace{-1.5cm} \times \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) I_{[0,2\pi)}(\theta_1) I_{[0,\pi)}(\theta_2),
-\end{eqnarray}
+\end{eqnarray*}
 \normalsize
 
 %\noindent
@@ -287,21 +312,42 @@ $A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1}
 $I_{[0,2\pi)} (\cdot), I_{[0,\pi)}(\cdot)$は指示関数, $\Phi(\cdot), \phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である. 
 \end{frame}
 
+\begin{frame}{球面上の射影正規分布(2/2)}
+三次元極座標では, 
+\begin{itemize}
+\item 
+$x$軸の正の向きと$OS$のなす角を$\theta_1$
+	
+\item 
+$z$軸の正の向きと$OR$のなす角を$\theta_2$
+\end{itemize}
+
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[clip,height= 50mm]{data/theta_sample.png}
+\end{center}
+\caption{三次元極座標での$\theta_1, \theta_2$の定義}
+\label{thetasample}
+\end{figure}
+\end{frame}
+
 \begin{frame}{混合射影正規分布(1/3)}
 
-$m$個のコンポーネントからなる球面上の射影正規分布の混合分布を式(\ref{MPNS})に示す. 
+$m$個のコンポーネントからなる球面上の混合射影正規分布を以下に示す. 
 
-\vspace{-0.8cm}
-\begin{eqnarray}
+\vspace{-0.3cm}
+\begin{eqnarray*}
 \label{MPNS}
 p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j),
-\end{eqnarray}
+\end{eqnarray*}
 
 \noindent
-ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 混合射影正規分布におけるパラメータは, $w, \bm \mu_j, \Sigma_j$であるが, 球面上の混合射影正規分布のパラメータについては識別性を考慮して分散共分散行列を定式化する必要がある. 分散共分散行列を式(\ref{SIGMA})に示す.
+ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 混合射影正規分布におけるパラメータは, $w, \bm \mu_j, \Sigma_j$であるが, 識別性を考慮して分散共分散行列を定式化する必要がある. 分散共分散行列を以下に示す.
+%% 識別性を考慮してとは？？？
+%% どこか1つを1と仮定すれば, そのスケールに合わせて他の変数が移動する的な.
 
 \vspace{-0.5cm}
-\begin{eqnarray}
+\begin{eqnarray*}
 \label{SIGMA}
  \Sigma_j = \left(
     \begin{array}{cc}
@@ -309,19 +355,19 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
       \bm \gamma_j^T & 1
     \end{array}
   \right),
-\end{eqnarray}
+\end{eqnarray*}
 \noindent
-ここで, $\Sigma^*_j$は$(2 \times 2)$の正定値対称行列, $\bm \gamma_j$は$(2 \times 1)$のベクトルである. パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1, \dots, \bm \mu_m, \Sigma^*_1, \dots, \Sigma^*_m, \bm \gamma_1, \dots, \bm \gamma_m)^T$となる.
+ここで, $\Sigma^*_j$は$(2 \times 2)$の正定値対称行列, $\bm \gamma_j$は$(2 \times 1)$のベクトルである. パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1^T, \dots, \bm \mu_m^T, \mbox{vec}(\Sigma^*_1), \dots, \mbox{vec}(\Sigma^*_m), \bm \gamma_1^T, \dots, \bm \gamma_m^T)^T$となる.
 
 \end{frame}
 
 \begin{frame}{混合射影正規分布(2/3)}
-角度 $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を $p(\bm \eta| \bm \theta)$, 事前分布を $p(\bm \eta)$とすると事後分布は式(\ref{BAYES})で表せる. 
+角度データ $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を, 事前分布を $p(\bm \eta)$を用いて以下で表せる.
 
-\begin{eqnarray}
+\begin{eqnarray*}
 \label{BAYES}
 p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \theta)} \propto p(\bm \theta | \bm \eta) p(\bm \eta)
-\end{eqnarray}
+\end{eqnarray*}
 
 \noindent
 すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. ここで, $p(\bm \theta)$はすでに得られた, データ$\bm \theta$にのみ依存する定数値であるので, $p(\bm \theta | \bm \eta) p(\bm \eta)$が $\bm \eta$  の事後分布の核関数を形成し, $p(\bm \theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単であるが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 
@@ -329,21 +375,22 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 \begin{frame}{混合射影正規分布(3/3)}
 
 \begin{itemize}
-	\item 球面上における混合射影正規分布の尤度関数を式(\ref{logPNS})に示す. 式中の$A(\bm \theta), C, D(\bm \theta)$は式(\ref{PNS})の下に示してある.
+	\item 球面上における混合射影正規分布の尤度関数を以下に示す.
 \end{itemize}
 
 \vspace{-0.5cm}
 \footnotesize %式を小さくする
-\begin{eqnarray}
+\begin{eqnarray*}
 \label{logPNS}
-\log p(\bm \theta | \bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j)\} \nonumber \\
-&=& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log 2\pi - \frac{3}{2} \log A(\bm \theta) - \frac{1}{2} \log |\Sigma_j| + C \right. \nonumber \\
-&&\  \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right)\right] \nonumber \\
-&\propto& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A(\bm \theta) - \frac{1}{2} \log |\Sigma_j| + C \right. \nonumber \\
-&&\ \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) \right], 
-\end{eqnarray}
+\log p(\bm \theta | \bm \eta) + \log p(\bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j)\} + \log p(\bm \eta) \\
+&\propto& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A(\bm \theta) - \frac{1}{2} \log |\Sigma_j| + C \right. \\
+&&\left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) \right] + \log p(\bm \eta), 
+\end{eqnarray*}
 \normalsize
 
+\noindent
+ここで, $D(\bm \theta) = B(\bm \theta) A^{-\frac{1}{2}}(\bm \theta),
+A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1} \bm \mu,$ $\ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$である.
 \end{frame}
 
 %%%%%%%%%%% 解析手法 %%%%%%%%%%%%%
@@ -361,8 +408,7 @@ Q_{ij} = \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\Sigma_{k \neq i}(1 + \|y_i - y_k\|^2
 \end{eqnarray}
 \normalsize
 
-ここでは, 分布間の近さを測る方法として, KL(カルバック$\cdot$ライブラー)情報量を用いる. 圧縮前の確率分布と圧縮後の確率分布のKL
-情報量を損失関数$L$として, $L$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$L$を式$(\ref{tsne3})$に示す.
+圧縮前の確率分布と圧縮後の確率分布のKL情報量を損失関数$L$として, $L$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$L$を式$(\ref{tsne3})$に示す.
 
 \begin{eqnarray}
 \label{tsne3}
@@ -381,9 +427,9 @@ $\eta_j(0), q_j(0)$の初期値を設定する. $\eta_j(0)$は各パラメータ
 以下の式に従い, $\eta_j, \bm q_j$を更新する. $\epsilon$は状態変化のステップ幅を表す.
 \footnotesize
 \begin{eqnarray*}
-q_j(t+\frac{\epsilon}{2}) = q_j(t) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t)),\ 
-\eta_j(t+\epsilon) = \eta_j(t) + \epsilon \frac{q_j(t + \frac{\epsilon}{2})}{M_j},\ 
-q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t + \epsilon)),
+&&q_j(t+\frac{\epsilon}{2}) = q_j(t) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t)),\ 
+\eta_j(t+\epsilon) = \eta_j(t) + \epsilon \frac{q_j(t + \frac{\epsilon}{2})}{M_j},\\ 
+&&q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t + \epsilon)),
 \end{eqnarray*}
 \normalsize
 
@@ -391,6 +437,7 @@ q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial 
 得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\eta^*_j, q^*_j$として,
 現在が$t$回目の反復とすると, サンプルの棄却率は以下の式で定義する.
 
+\vspace{-0.5cm}
 \begin{eqnarray*}
 r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
 \end{eqnarray*}
@@ -403,16 +450,17 @@ r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
 \end{frame}
 
 \begin{frame}{混合分布によるクラスタリング}
-\begin{itemize}
+%\begin{itemize}
+\begin{enumerate}
 \item
 混合分布によるクラスタリングは, 対象となるデータが$m$個のコンポーネントからなる混合データであると仮定し, 混合分布における各コンポーネントのパラメータベクトル$\bm \eta$を推定する. 
 \item
 得られたパラメータベクトルとデータから, 各データがどのコンポーネントに所属しているかを確率的に表すことができる. 最も高い確率を示す, コンポーネントの番号をデータのラベルとすることで, 各データをクラスタリングすることができる.　
 \item
 ここでの番号は, 各コンポーネントを表す, 名義尺度なので数値的な意味は存在しない. パラメトリックなクラスタリング手法では, 得られたパラメータベクトル$\bm \eta$の事後分布を用いて, 推定した混合分布の妥当性を検証することができる.	
-
  
-\end{itemize}
+%\end{itemize}
+\end{enumerate}
 
 \end{frame}
 
@@ -481,7 +529,7 @@ True
 \section{データ解析}
 \begin{frame}{解析データ}
 
-本研究では, GroupLens による公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個の評価値, 簡単なユーザ情報, コンテンツ情報から構成されている. 評価値において, $0$は見ていないことを表し, 評価については1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個の映画に対する評価値を持っている. コンテンツ情報, ユーザ情報について表\ref{MovieLens1}にまとめる. 
+本研究では, GroupLens による公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個の評価値, 簡単なユーザ情報, コンテンツ情報から構成されている. 評価値について, 0から6までの項目があり, 0は見ていないことを表し, 1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個の映画に対する評価値を持っている. コンテンツ情報, ユーザ情報について表\ref{MovieLens1}にまとめる. 
 
 \begin{table}[bp]
 \begin{center}
@@ -515,6 +563,10 @@ True
 \label{WAIC1}
 \mbox{WAIC} = T + \frac{V}{n}, 
 \end{eqnarray}
+
+\noindent
+ここで, $T = - \frac{1}{n} \Sigma^n_{i=1} \log E_{\bm \eta}[p(\bm \theta_i| \bm \eta)], 
+V = \Sigma^n_{i=1} \{ E_{\bm \eta}[(\log p(\bm \theta_i| \bm \eta))^2] - E_{\bm \eta}[\log p(\bm \theta_i| \bm \eta)]^2 \}$であり, $n$は$\bm \theta$のデータ数である. また$E_{\bm \eta}[\cdot]$は$\bm \eta$の事後分布の下で評価した期待値である.  
 
 \begin{table}[tbp]
 \caption{WAICによるコンポーネントの選択結果}
