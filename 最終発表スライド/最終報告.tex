@@ -346,7 +346,7 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
 %% 識別性を考慮してとは？？？
 %% どこか1つを1と仮定すれば, そのスケールに合わせて他の変数が移動する的な.
 
-\vspace{-0.5cm}
+\vspace{-0.3cm}
 \begin{eqnarray*}
 \label{SIGMA}
  \Sigma_j = \left(
@@ -370,7 +370,7 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 \end{eqnarray*}
 
 \noindent
-すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. ここで, $p(\bm \theta)$はすでに得られた, データ$\bm \theta$にのみ依存する定数値であるので, $p(\bm \theta | \bm \eta) p(\bm \eta)$が $\bm \eta$  の事後分布の核関数を形成し, $p(\bm \theta)$は正規化定数とみなすことができる. 尤度と事前分布の計算は簡単であるが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 
+すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. 尤度と事前分布の計算は簡単であるが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 
 \end{frame}
 \begin{frame}{混合射影正規分布(3/3)}
 
@@ -395,65 +395,11 @@ A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1} 
 
 %%%%%%%%%%% 解析手法 %%%%%%%%%%%%%
 \section{解析手法}
-\begin{frame}{t-SNE}
-
-高次元データ$\bm x$を低次元データ$\bm y$に近似するとき, 次元圧縮前の点$x_j$と点$x_i$の類似度を条件付確率$P_{j|i}$を用いて, 同時確率$P_{ij}$で表し, 次元圧縮後の点$y_j$と点$y_i$の類似度を同時確率$Q_{ij}$によって表す.
-
-\footnotesize
-\begin{eqnarray}
-\label{tsne1}
-P_{j|i} = \frac{\exp(-\|x_i - x_j\|^2 / 2\sigma_i^2}{\Sigma_{k \neq i}\exp(-\|x_i - x_k\|^2/ 2\sigma_i^2)},\ 
-P_{ij} = \frac{P_{j|i} + P_{i|j}}{2N},\ 
-Q_{ij} = \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\Sigma_{k \neq i}(1 + \|y_i - y_k\|^2)^{-1}},
-\end{eqnarray}
-\normalsize
-
-圧縮前の確率分布と圧縮後の確率分布のKL情報量を損失関数$L$として, $L$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$L$を式$(\ref{tsne3})$に示す.
-
-\begin{eqnarray}
-\label{tsne3}
-L = KL(P || Q) = \Sigma_i \Sigma_j P_{ij} \log \frac{P_{ij}}{Q_{ij}}.
-\end{eqnarray}
-\end{frame}
-
-\begin{frame}{HMC}
-\begin{enumerate}
-
-\item{}
-$\eta_j(0), q_j(0)$の初期値を設定する. $\eta_j(0)$は各パラメータの事前分布からの設定し, $q_j(0)$は$N(0,M_j)$からランダムサンプリングする. $M_j$ は任意の分散パラメータである. 
- 
-\item{}
-
-以下の式に従い, $\eta_j, \bm q_j$を更新する. $\epsilon$は状態変化のステップ幅を表す.
-\footnotesize
-\begin{eqnarray*}
-&&q_j(t+\frac{\epsilon}{2}) = q_j(t) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t)),\ 
-\eta_j(t+\epsilon) = \eta_j(t) + \epsilon \frac{q_j(t + \frac{\epsilon}{2})}{M_j},\\ 
-&&q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t + \epsilon)),
-\end{eqnarray*}
-\normalsize
-
-\item{}
-得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\eta^*_j, q^*_j$として,
-現在が$t$回目の反復とすると, サンプルの棄却率は以下の式で定義する.
-
-\vspace{-0.5cm}
-\begin{eqnarray*}
-r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
-\end{eqnarray*}
-
-\item{}
-一様乱数 $u_j \sim U(0,1)$を発生し, $r_j > u_j$ならば, ランダムサンプル $\eta^*_j$を採択し, $r_j < u_j$ならば, $\eta_j(t-1)$を保持する. サンプル数$T$が任意の数に達したとき, MCMCサンプリングを終了する. 
-
-\end{enumerate}
-
-\end{frame}
-
-\begin{frame}{混合分布によるクラスタリング}
+\begin{frame}{混合分布によるクラスタリング(1/2)}
 %\begin{itemize}
 \begin{enumerate}
 \item
-混合分布によるクラスタリングは, 対象となるデータが$m$個のコンポーネントからなる混合データであると仮定し, 混合分布における各コンポーネントのパラメータベクトル$\bm \eta$を推定する. 
+混合分布によるクラスタリングは, 対象となるデータが$m$個のコンポーネントからなる混合データであると仮定し, 混合分布におけるパラメータベクトル$\bm \eta$を推定する. 
 \item
 得られたパラメータベクトルとデータから, 各データがどのコンポーネントに所属しているかを確率的に表すことができる. 最も高い確率を示す, コンポーネントの番号をデータのラベルとすることで, 各データをクラスタリングすることができる.　
 \item
@@ -464,30 +410,69 @@ r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
 
 \end{frame}
 
+\begin{frame}{混合分布によるクラスタリング(2/2)}
+
+\begin{itemize}
+	\item 混合分布によるクラスタリングでは, $\alpha$は, コンポーネント1に所属し, $\beta$はコンポーネント2に所属する.
+\end{itemize}
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[clip,height= 50mm]{data/mix_cluster.png}
+\end{center}
+\caption{混合分布によるクラスタリング分析例}
+\label{mix_cluster}
+\end{figure}
+
+
+\end{frame}
+
 %%%%%%%%%%% シミュレーション %%%%%%%%%%%%%
 \section{シュミレーション}
-\begin{frame}{シュミレーション(1/2)}
+\begin{frame}{シュミレーション(1/3)}
 
 \begin{itemize}
 \item
-$3$変量正規分布に従う乱数を生成し, 各$3$次元データをノルムで割り, 球面上の射影正規分布を得る. シミュレーションではコンポーネントを$4$として, $4$つの異なる射影正規分布に従う乱数を混合することで, 混合射影正規分布の人工データを生成する.
+シミュレーションではコンポーネントを$4$として, $4$つの異なる射影正規分布に従う乱数を混合することで, 混合射影正規分布の人工データを生成する.
 \item
 サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した.
-\item
-横軸を真のコンポーネント, 縦軸を予測のコンポーネントとして集計表を表\ref{cross}に示す.
 
 \end{itemize}
 
 \begin{table}[tbp]
 \begin{center}
+\caption{MCMCによる混合射影正規分布のパラメータ推定}
+\label{cross1}
+\begin{tabular}{c|c c c c|c c c c}
+\hline
+  & \multicolumn{4}{c}{真値} & \multicolumn{4}{c}{予測値}\\ \hline
+  & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 \\ \hline 
+$\theta_1$ & 0 & 1.57 & 0.58 & 0.78 & 6.20 & 1.57 & 0.82 & 0.72 \\ 
+$\theta_2$ & 1.57 & 0.24 & 1.57 & 0.95 & 1.78 & 0.24 & 1.58 & 1.01\\
+$w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 & 0.27 & 0.20 & 0.29\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\end{frame}
+
+\begin{frame}{シュミレーション(2/3)}
+
+\begin{itemize}
+	\item 
+	横軸を真のコンポーネント, 縦軸を予測のコンポーネントとして集計表を表\ref{cross2}に示す.
+\end{itemize}
+
+\begin{table}[tbp]
+\begin{center}
 \caption{混合射影正規分布によるクラスタリング分析}
-\label{cross}
+\label{cross2}
 \begin{tabular}{c|c|c c c c}
 \hline
- &  & \multicolumn{4}{c}{Predict} \\ \hline
+ &  & \multicolumn{4}{c}{予測値} \\ \hline
  &  & 1 & 2 & 3 & 4  \\ \hline 
  & 1 &  \textbf{301} & 27  & 94 & 78 \\ 
-True
+真値
  & 2 & 2 & \textbf{473} & 1 & 24 \\
  & 3 & 140 & 14 & \textbf{274} &72 \\ 
  & 4 & 80 & 61 & 44 & \textbf{315} \\ 
@@ -497,7 +482,7 @@ True
 \end{table}
 \end{frame}
 
-\begin{frame}{シュミレーション(2/2)}
+\begin{frame}{シュミレーション(3/3)}
 
 \vspace{-1zh}
 \begin{figure}[H]
@@ -529,7 +514,7 @@ True
 \section{データ解析}
 \begin{frame}{解析データ}
 
-本研究では, GroupLens による公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての10万個の評価値, 簡単なユーザ情報, コンテンツ情報から構成されている. 評価値について, 0から6までの項目があり, 0は見ていないことを表し, 1から5までの5段階評価で数字が大きいほど高い評価である. 各ユーザは最低20個の映画に対する評価値を持っている. コンテンツ情報, ユーザ情報について表\ref{MovieLens1}にまとめる. 
+本研究では, GroupLens による公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての評価値が記録されている. 評価値について, 0から6までの項目があり, 0は見ていないことを表し, 1から5までの5段階評価で数字が大きいほど高い評価である. コンテンツ情報, ユーザ情報について表\ref{MovieLens1}にまとめる. 
 
 \begin{table}[bp]
 \begin{center}
@@ -572,7 +557,7 @@ V = \Sigma^n_{i=1} \{ E_{\bm \eta}[(\log p(\bm \theta_i| \bm \eta))^2] - E_{\bm 
 \caption{WAICによるコンポーネントの選択結果}
 \label{WAIC2}
 \begin{center}
-\scalebox{0.5}{
+\scalebox{0.55}{
 \begin{tabular}{l | c c c c c c c c c c}
 \hline
  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline 
@@ -699,6 +684,81 @@ GroupLensホームページ(http://movielens.org/.)
 }
 
 \end{frame}
+
+%%%%%%%%%%%%%%付録%%%%%%%%%%%%%%%%付録%%%%%%%%%%%%%%
+\backupbegin
+\begin{frame}{t-SNE(1/2)}
+
+t-SNEは高次元データの次元を圧縮するアルゴリズムであり, 特に高次元データを可視化する際に有用である. このアルゴリズムでは高次元空間における$2$点間の近さを確率分布として表現する. 高次元データ$\bm x$を低次元データ$\bm y$に近似するとき, 次元圧縮前の点$x_j$と点$x_i$の類似度を条件付確率$P_{j|i}$を用いて, 同時確率$P_{ij}$で表し, 次元圧縮後の点$y_j$と点$y_i$の類似度を同時確率$Q_{ij}$によって表す.
+
+\footnotesize
+\begin{eqnarray*}
+\label{tsne1}
+P_{j|i} = \frac{\exp(-\|x_i - x_j\|^2 / 2\sigma_i^2}{\Sigma_{k \neq i}\exp(-\|x_i - x_k\|^2/ 2\sigma_i^2)},\ 
+P_{ij} = \frac{P_{j|i} + P_{i|j}}{2N},\ 
+Q_{ij} = \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\Sigma_{k \neq i}(1 + \|y_i - y_k\|^2)^{-1}},
+\end{eqnarray*}
+\normalsize
+
+\noindent
+ここで, $\sigma_i$は点$x_i$を中心とした正規分布における, 任意の分散パラメータである.
+\end{frame}
+
+\begin{frame}{t-SNE(2/2)}
+
+圧縮前の確率分布と圧縮後の確率分布のKL情報量を損失関数$L$として, $L$が最小になるような$y_i$を求めることで, 低次元データ$\bm y$を取得する. 損失関数$L$を以下に示す.
+
+\begin{eqnarray*}
+\label{tsne3}
+L = KL(P || Q) = \Sigma_i \Sigma_j P_{ij} \log \frac{P_{ij}}{Q_{ij}}.
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{HMC(1/2)}
+
+MCMCアルゴリズムの一つである, ハミルトニアン$\cdot$モンテカルロ法(HMC)を用いて分布の推定を行う. ハミルトニアンとはポテンシャルエネルギー $U(\bm \eta)$ と運動エネルギー $V(\bm q)$ の和で定義される物理量 $H(\bm \eta, \bm q) = U(\bm \eta) + V(\bm q)$ のことであり. ここで, $\bm q = (q_1, \dots, q_d)^T$ は$\bm \eta$ と同じ$d$次元のベクトルである. $t$番目のステップにおける, ハミルトニアン方程式は以下で定義される. 
+
+\begin{eqnarray*}
+\label{HMC}
+\frac{d \eta_j(t)}{dt} = \frac{\partial V(\bm q)}{\partial q_j},\ \ \frac{d q_j(t)}{dt} = - \frac{\partial U(\bm \eta)}{\partial \eta_j},
+\end{eqnarray*}
+\end{frame}
+
+\begin{frame}{HMC(2/2)}
+
+\begin{enumerate}
+
+\item{}
+$\eta_j(0), q_j(0)$の初期値を設定する. $\eta_j(0)$は各パラメータの事前分布からの設定し, $q_j(0)$は$N(0,M_j)$からランダムサンプリングする. $M_j$ は任意の分散パラメータである. 
+ 
+\item{}
+
+以下の式に従い, $\eta_j, \bm q_j$を更新する. $\epsilon$は状態変化のステップ幅を表す.
+\footnotesize
+\begin{eqnarray*}
+&&q_j(t+\frac{\epsilon}{2}) = q_j(t) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t)),\ 
+\eta_j(t+\epsilon) = \eta_j(t) + \epsilon \frac{q_j(t + \frac{\epsilon}{2})}{M_j},\\ 
+&&q_j(t+\epsilon) = q_j(t+\frac{\epsilon}{2}) - \frac{\epsilon}{2} \frac{\partial U}{\partial \eta_j} (\bm \eta(t + \epsilon)),
+\end{eqnarray*}
+\normalsize
+
+\item{}
+得られたパラメータの採択, 棄却を決定する. 上記のステップで得られたパラメータを$\eta^*_j, q^*_j$として,
+現在が$t$回目の反復とすると, サンプルの棄却率は以下の式で定義する.
+
+\vspace{-0.5cm}
+\begin{eqnarray*}
+r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
+\end{eqnarray*}
+
+\item{}
+一様乱数 $u_j \sim U(0,1)$を発生し, $r_j > u_j$ならば, ランダムサンプル $\eta^*_j$を採択し, $r_j < u_j$ならば, $\eta_j(t-1)$を保持する. サンプル数$T$が任意の数に達したとき, MCMCサンプリングを終了する. 
+
+\end{enumerate}
+
+\end{frame}
+
+\backupend
 \end{document}
 
 %\vspace{-0.5cm}
