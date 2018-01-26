@@ -185,6 +185,23 @@
 
 \end{itemize}
 
+\begin{figure}[H]
+ \begin{tabular}{c}
+ %\hspace{0.5cm}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 30mm]{data/sample_mixture_miss2.png}
+  \end{center}
+ \end{minipage}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+ \includegraphics[clip,height= 30mm]{data/sample_mixture_miss1.png}
+  \end{center}
+ \end{minipage}
+\end{tabular}
+\caption{混合正規分布による誤った分類結果}
+\end{figure}
+
 \end{frame}
 
 \begin{frame}{背景}
@@ -357,7 +374,7 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
   \right),
 \end{eqnarray*}
 \noindent
-ここで, $\Sigma^*_j$は$(2 \times 2)$の正定値対称行列, $\bm \gamma_j$は$(2 \times 1)$のベクトルである. パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1^T, \dots, \bm \mu_m^T, \mbox{vec}(\Sigma^*_1), \dots, \mbox{vec}(\Sigma^*_m), \bm \gamma_1^T, \dots, \bm \gamma_m^T)^T$となる.
+ここで, $\Sigma^*_j$は$(2 \times 2)$の正定値対称行列, $\bm \gamma_j$は$(2 \times 1)$のベクトルである. パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1^T, \dots, \bm \mu_m^T, \mbox{vec}(\Sigma^*_1)^T, \dots, \mbox{vec}(\Sigma^*_m)^T, \bm \gamma_1^T, \dots, \bm \gamma_m^T)^T$となる.
 
 \end{frame}
 
@@ -413,7 +430,7 @@ A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1} 
 \begin{frame}{混合分布によるクラスタリング(2/2)}
 
 \begin{itemize}
-	\item 混合分布によるクラスタリングでは, $\alpha$は, コンポーネント1に所属し, $\beta$はコンポーネント2に所属する.
+	\item 混合分布によるクラスタリングでは, $\alpha$は, コンポーネント1に所属し, $\beta$はコンポーネント2に所属しているとする.
 \end{itemize}
 \begin{figure}[tbp]
 \begin{center}
@@ -512,9 +529,9 @@ $w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 & 0.27 & 0.20 & 0.29\\
 
 %%%%%%%%%  データ解析 %%%%%%%%%%%%
 \section{データ解析}
-\begin{frame}{解析データ}
+\begin{frame}{解析データ(1/2)}
 
-本研究では, GroupLens による公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての評価値が記録されている. 評価値について, 0から6までの項目があり, 0は見ていないことを表し, 1から5までの5段階評価で数字が大きいほど高い評価である. コンテンツ情報, ユーザ情報について表\ref{MovieLens1}にまとめる. 
+本研究では, GroupLens による公開データセットMovieLensの一部分を用いた. MovieLensデータセットは映画評価サイト''movielens.com''において1997年9月から1998年4月までの7ヶ月間の間に集められた943人のユーザ, 1682個の映画についての評価値が記録されている. 
 
 \begin{table}[bp]
 \begin{center}
@@ -531,6 +548,7 @@ $w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 & 0.27 & 0.20 & 0.29\\
                 & programmer, retired, salesman, scientist, student, technician, writer \\
 年齢 & 7歳 $\sim$ 73歳 \\
 性別 & male, female\\ 
+評価値 & 0 $\sim$ 6 (0は見ていない映画への評価) \\
 \hline
 \end{tabular}
 }
@@ -539,25 +557,37 @@ $w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 & 0.27 & 0.20 & 0.29\\
 
 \end{frame}
 
+\begin{frame}{解析データ(2/2)}
+
+\begin{enumerate}
+	\item 
+	943人のユーザの1682個の評価値を, $(943 \times 1682)$ の行列に表現する.
+	\item 
+	t-SNEを用いて, 行列データの次元を圧縮し, $(943 \times 3)$ の行列とする.
+	\item 
+	各ユーザのデータを正規化し, 単位球面上にデータを分布させることで, 混合射影正規分布によるクラスタリングを適用する.
+\end{enumerate}
+\end{frame}
+
+
 \begin{frame}{コンポーネントの評価指標}
 
-情報量基準(WAIC)を用いて, 混合分布のコンポーネントの選択を行う. WAICは真の分布, 確率モデル, 事前分布がどのような場合でも用いることができる. WAICは式$(\ref{WAIC1})$で求められる.
+情報量基準(WAIC)を用いて, 混合分布のコンポーネントの選択を行う. WAICは真の分布, 確率モデル, 事前分布がどのような場合でも用いることができる. WAICは以下で定式化される.
 
-\vspace{-0.5cm}
-\begin{eqnarray}
-\label{WAIC1}
+\vspace{-0.3cm}
+\begin{eqnarray*}
 \mbox{WAIC} = T + \frac{V}{n}, 
-\end{eqnarray}
+\end{eqnarray*}
 
 \noindent
-ここで, $T = - \frac{1}{n} \Sigma^n_{i=1} \log E_{\bm \eta}[p(\bm \theta_i| \bm \eta)], 
-V = \Sigma^n_{i=1} \{ E_{\bm \eta}[(\log p(\bm \theta_i| \bm \eta))^2] - E_{\bm \eta}[\log p(\bm \theta_i| \bm \eta)]^2 \}$であり, $n$は$\bm \theta$のデータ数である. また$E_{\bm \eta}[\cdot]$は$\bm \eta$の事後分布の下で評価した期待値である.  
+ここで, $V = \Sigma^n_{i=1} \{ E_{\bm \eta}[(\log p(\bm \theta_i| \bm \eta))^2] - E_{\bm \eta}[\log p(\bm \theta_i| \bm \eta)]^2 \},T = - \frac{1}{n} \Sigma^n_{i=1} \log E_{\bm \eta}[p(\bm \theta_i| \bm \eta)]$であり, $n$は$\bm \theta$のデータ数である. また$E_{\bm \eta}[\cdot]$は$\bm \eta$の事後分布の下で評価した期待値である.  
 
+\vspace{-0.3cm}
 \begin{table}[tbp]
 \caption{WAICによるコンポーネントの選択結果}
 \label{WAIC2}
 \begin{center}
-\scalebox{0.55}{
+\scalebox{0.60}{
 \begin{tabular}{l | c c c c c c c c c c}
 \hline
  & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 \\ \hline 
@@ -575,11 +605,15 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 
 \begin{frame}{データ解析(1/3)}
 
-コンポーネントを$4$つと仮定して混合射影正規分布によるクラスタリングを行う. サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した. $4$つのコンポーネントにおける混合射影正規分布のパラメータを式(\ref{parameter})に示す. なお, $\hat {\bm w}$は各コンポーネントの混合比率を表し, パラメータの添え字は各コンポーネントの番号に対応している.
-
+\begin{itemize}
+	\item 
+	コンポーネントを$4$つと仮定して混合射影正規分布によるクラスタリングを行う. サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した.
+	\item
+	$4$つのコンポーネントにおける混合射影正規分布のパラメータを以下に示す. なお, $\hat {\bm w}$は各コンポーネントの混合比率を表し, パラメータの添え字は各コンポーネントの番号に対応している.
+\end{itemize}
+ 
 \footnotesize %式を小さくする
-\begin{equation}
-\label{parameter}
+\begin{equation*}
 \begin{split}
 &\hat {\bm w} = \begin{pmatrix} 0.26 \\ 0.51 \\ 0.20 \\ 0.03 \\ \end{pmatrix},\ 
 \hat{\bm \mu}_1 = \begin{pmatrix} 0.44 \\ 2.85 \\ -1.67 \\ \end{pmatrix},\ 
@@ -591,7 +625,7 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 \hat{\bm \mu}_4 = \begin{pmatrix} -12.29   \\ -2.48 \\ -4.84 \\ \end{pmatrix},\ 
 \hat \Sigma_4 = \begin{pmatrix} 15.19 & 4.01 &  0.12 \\ 4.01 & 1.88 & 0.08 \\ 0.12 & 0.08 &1.00 \\ \end{pmatrix}.
 \end{split}
-\end{equation}
+\end{equation*}
 \normalsize
 \end{frame}
 
@@ -623,21 +657,22 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 \begin{frame}{データ解析(3/3)}
 \begin{figure}[tbp]
 \begin{center}
-\includegraphics[clip,height= 60mm]{data/cluster_plot.png}
+\includegraphics[clip,height= 55mm]{data/cluster_plot.png}
 \end{center}
 \caption{クラスターごとのジャンルへの評価値}
 \label{clustergenre}
 \end{figure}
 
+\begin{itemize}
+	\item コンポーネント2はすべてのジャンルへの評価値が高く, その他のコンポーネントでは, ジャンルへの評価値に差異が現れた.
+\end{itemize}
 \end{frame}
+
 %%%%%%%%%%%%%% まとめと今後の課題 %%%%%%%%%%%%%%%%%
 \section{まとめと今後の課題}
 \begin{frame}{まとめと今後の課題}
 
 \begin{itemize}
-
-\item
-本研究では計算量の問題で高次元データをあらかじめ$3$次元に圧縮し, クラスタリングを試みたが, クラスターごとの特徴を明確に抽出することができなかった. 
 
 \item
 一般化射影正規分布では任意次元の超球面において分布を生成することができるので, 計算量の問題を解決し, 次元を圧縮することなく超球面上でのクラスタリングに取り組みたい. 
@@ -687,6 +722,31 @@ GroupLensホームページ(http://movielens.org/.)
 
 %%%%%%%%%%%%%%付録%%%%%%%%%%%%%%%%付録%%%%%%%%%%%%%%
 \backupbegin
+\begin{frame}{識別性}
+\begin{itemize}
+	\item 
+	識別性とは, 異なるパラメータにおいて, $p(\theta; \mu_1, \Sigma_1)$と$p(\theta; \mu_2, \Sigma_2)$が異なるということである. 射影正規分布は異なるパラメータでも同様の確率分布をとることがあるため, 分散パラメータの$1$つを固定して, 識別性を保持する.
+\end{itemize}
+
+\begin{figure}[htbp]
+ \begin{tabular}{c}
+ %\hspace{0.5cm}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+   \includegraphics[clip,height= 30mm]{data/pn_sikibetu_real.png}
+  \end{center}
+ \end{minipage}
+ \begin{minipage}{0.5\hsize}
+  \begin{center}
+ \includegraphics[clip,height= 30mm]{data/pn_sikibetu_pred.png}
+  \end{center}
+ \end{minipage}
+\end{tabular}
+\caption{異なるパラメータにおける射影正規分布の分布例}
+\end{figure}
+
+\end{frame}
+
 \begin{frame}{t-SNE(1/2)}
 
 t-SNEは高次元データの次元を圧縮するアルゴリズムであり, 特に高次元データを可視化する際に有用である. このアルゴリズムでは高次元空間における$2$点間の近さを確率分布として表現する. 高次元データ$\bm x$を低次元データ$\bm y$に近似するとき, 次元圧縮前の点$x_j$と点$x_i$の類似度を条件付確率$P_{j|i}$を用いて, 同時確率$P_{ij}$で表し, 次元圧縮後の点$y_j$と点$y_i$の類似度を同時確率$Q_{ij}$によって表す.
@@ -758,6 +818,61 @@ r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
 
 \end{frame}
 
+\begin{frame}{ジャンルへの評価値の算出方法(1/2)}
+各ユーザの評価値と各映画のジャンル($19$種類)を用いて, ユーザごとに各ジャンルへの総評価値を算出する. 各映画には複数のジャンルが対応している. ユーザごとに全ての映画に対して, 
+
+\begin{equation*}
+\mbox{(任意の映画に対する評価値)} \times \mbox{(任意の映画のジャンル)},
+\end{equation*}
+
+\noindent
+を算出し, 総和をとることで, ユーザごとに各ジャンルへの総評価値を求めた. これらの計算は, ユーザー($943$人)$\times$コンテンツ($1682$個)の行列とコンテンツ($1682$個)$\times$ジャンル($19$個)の行列の演算に相当しており, 省略形を以下に示す. 
+
+\footnotesize %式を小さくする
+\begin{equation*}
+\label{user_genre_matrix}
+\begin{pmatrix} 
+5 & 3 & 4 & 3 & \ldots & 0 \\
+4 & 0 & 0 & 0 & \ldots & 0 \\
+\vdots & \vdots & \vdots & \vdots & \ddots & \vdots \\
+0 & 5 & 0 & 0 & \ldots & 0 \\
+\end{pmatrix} 
+\times
+\begin{pmatrix} 
+0 & 0 & \ldots & 0 \\
+0 & 1 & \ldots & 0 \\
+0 & 0 & \ldots & 0 \\
+0 & 1 & \ldots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \ldots & 0 \\
+\end{pmatrix}
+=
+\begin{pmatrix} 
+0 & 95 & \ldots & 4 \\
+0 & 17 & \ldots & 0 \\
+0 & 17 & \ldots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 227 & \ldots & 23 \\
+\end{pmatrix},
+\end{equation*}
+\normalsize
+
+\end{frame}
+
+\begin{frame}{ジャンルへの評価値の算出方法(2/2)}
+\noindent
+ここで, 得られたユーザごとジャンルへの評価値から, コンポーネントごとのジャンルへの評価値を求める. 図\ref{genre_count}に示すように, 各ジャンルは均等に出現していないので, 各ジャンルの影響を基準化する.
+
+\vspace{0.5cm}
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics[clip,height= 45mm]{data/genre_count.png}
+\end{center}
+\caption{コンテンツの各ジャンルの出現回数}
+\label{genre_count}
+\end{figure}
+\end{frame}
+	
 \backupend
 \end{document}
 
