@@ -359,11 +359,9 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
 \end{eqnarray*}
 
 \noindent
-ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 混合射影正規分布におけるパラメータは, $w, \bm \mu_j, \Sigma_j$であるが, 識別性を考慮して分散共分散行列を定式化する必要がある. 分散共分散行列を以下に示す.
-%% 識別性を考慮してとは？？？
-%% どこか1つを1と仮定すれば, そのスケールに合わせて他の変数が移動する的な.
+ただし, $w_j$は混合比率であり, $0 < w_j < 1$, $\sum^m_{j=1} w_j = 1$を満たす. 混合射影正規分布では, 識別性を考慮して分散共分散行列を以下の様に定式化する. 
 
-\vspace{-0.3cm}
+\vspace{-0.5cm}
 \begin{eqnarray*}
 \label{SIGMA}
  \Sigma_j = \left(
@@ -373,8 +371,9 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
     \end{array}
   \right),
 \end{eqnarray*}
+
 \noindent
-ここで, $\Sigma^*_j$は$(2 \times 2)$の正定値対称行列, $\bm \gamma_j$は$(2 \times 1)$のベクトルである. パラメータベクトルは$\bm \eta = (w_1, \dots, w_m, \bm \mu_1^T, \dots, \bm \mu_m^T, \mbox{vec}(\Sigma^*_1)^T, \dots, \mbox{vec}(\Sigma^*_m)^T, \bm \gamma_1^T, \dots, \bm \gamma_m^T)^T$となる.
+ここで, $\Sigma^*_j$は$(2 \times 2)$の正定値対称行列, $\bm \gamma_j$は$(2 \times 1)$のベクトルである. これらをパラメータ$w_j, \bm \mu_j$に加えて, パラメータベクトルを$\bm \eta = (w_1, \dots, w_m, \bm \mu_1^T, \dots, \bm \mu_m^T, \mbox{vec}(\Sigma^*_1)^T, \dots, \mbox{vec}(\Sigma^*_m)^T, \bm \gamma_1^T, \dots, \bm \gamma_m^T)^T$と定義する.
 
 \end{frame}
 
@@ -387,7 +386,7 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 \end{eqnarray*}
 
 \noindent
-すなわち, 事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例する. 尤度と事前分布の計算は簡単であるが, 周辺分布 $p(\bm \theta)$の計算は一般に簡単ではないので, 事後分布に比例する分布 $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 
+事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例するので, 事後分布の代わりに, $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 
 \end{frame}
 \begin{frame}{混合射影正規分布(3/3)}
 
@@ -419,8 +418,8 @@ A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1} 
 混合分布によるクラスタリングは, 対象となるデータが$m$個のコンポーネントからなる混合データであると仮定し, 混合分布におけるパラメータベクトル$\bm \eta$を推定する. 
 \item
 得られたパラメータベクトルとデータから, 各データがどのコンポーネントに所属しているかを確率的に表すことができる. 最も高い確率を示す, コンポーネントの番号をデータのラベルとすることで, 各データをクラスタリングすることができる.　
-\item
-ここでの番号は, 各コンポーネントを表す, 名義尺度なので数値的な意味は存在しない. パラメトリックなクラスタリング手法では, 得られたパラメータベクトル$\bm \eta$の事後分布を用いて, 推定した混合分布の妥当性を検証することができる.	
+%\item
+%ここでの番号は, 各コンポーネントを表す, 名義尺度なので数値的な意味は存在しない. パラメトリックなクラスタリング手法では, 得られたパラメータベクトル$\bm \eta$の事後分布を用いて, 推定した混合分布の妥当性を検証することができる.	
  
 %\end{itemize}
 \end{enumerate}
@@ -677,7 +676,7 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 \item
 一般化射影正規分布では任意次元の超球面において分布を生成することができるので, 計算量の問題を解決し, 次元を圧縮することなく超球面上でのクラスタリングに取り組みたい. 
 \item
-数値データを球面上に配置し, クラスタリングを行ったのが, 超球面上でのクラスタリングは主にテキストマイニングや画像データに用いられているので, それらのデータに対するパラメトリックなクラスタリングを行い, 従来手法との比較を行いたい. 
+数値データを球面上に配置し, クラスタリングを行ったが, 超球面上でのクラスタリングは主にテキストマイニングや画像データに用いられているので, それらのデータに対するパラメトリックなクラスタリングを行い, 従来手法との比較を行いたい. 
 
 \end{itemize}
 
@@ -745,6 +744,16 @@ GroupLensホームページ(http://movielens.org/.)
 \caption{異なるパラメータにおける射影正規分布の分布例}
 \end{figure}
 
+\end{frame}
+
+\begin{frame}{MCMC}
+\begin{itemize}
+	\item 
+	サンプリング数 : 発生させる各パラメータのMCMCサンプリング数.
+	\item
+	バーンイン期間 : 各パラーメータにおいて, 収束に要する期間のことであり, この期間中に得られたサンプリングは, 平均値を求める際に含めない.
+\end{itemize}
+	
 \end{frame}
 
 \begin{frame}{t-SNE(1/2)}
