@@ -180,7 +180,7 @@
 手法として, 注目を集めている.
 \vspace{0.2cm}
 \item 
-単位超球面上$(\mathbb{S}^{p-1})$ に分布するようなデータをユークリッド空間上のデータとして扱うと良い解析が行えない場合がある.
+単位超球面上$(\mathbb{S}^{p-1})$など, 幾何的な分布特性を持つデータをユークリッド空間上のデータとして扱うと良い解析が行えない場合がある.
 \end{itemize}
 
 \begin{figure}[H]
@@ -394,7 +394,7 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
 \end{frame}
 
 \begin{frame}{混合射影正規分布(2/3)}
-角度データ $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を, 事前分布を $p(\bm \eta)$を用いて以下で表せる.
+角度データ $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を, 事前分布$p(\bm \eta)$を用いて以下で表せる.
 
 \begin{eqnarray*}
 \label{BAYES}
@@ -402,23 +402,21 @@ p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \th
 \end{eqnarray*}
 
 \noindent
-事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta| \bm \theta)$の積に比例するので, 事後分布の代わりに, $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 
+事後分布$p(\bm \eta | \bm \theta)$は尤度$p(\bm \theta | \bm \eta)$と事前分布 $p(\bm \eta)$の積に比例するので, 事後分布の代わりに, $p(\bm \theta | \bm \eta) p(\bm \eta)$ から乱数サンプルを発生させる. この方法で得られたサンプルをMCMCサンプルと呼ぶ. 
 \end{frame}
 \begin{frame}{混合射影正規分布(3/3)}
 
 \begin{itemize}
-	\item 球面上における混合射影正規分布の尤度関数を以下に示す.
+	\item 球面上における混合射影正規分布のパラメータベクトル$\bm \eta$の対数事後分布を以下に示す.
 \end{itemize}
 
 \vspace{-0.5cm}
-\footnotesize %式を小さくする
-\begin{eqnarray*}
-\label{logPNS}
-\log p(\bm \theta | \bm \eta) + \log p(\bm \eta) &=& \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j)\} + \log p(\bm \eta) \\
-&\propto& \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A(\bm \theta) - \frac{1}{2} \log |\Sigma_j| + C \right. \\
-&&\left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) \right] + \log p(\bm \eta), 
-\end{eqnarray*}
-\normalsize
+\begin{align*}
+&\log p(\bm \theta | \bm \eta) + \log p(\bm \eta) \\
+&\quad \quad = \sum^m_{j=1} \{\log w_j + \log \mathcal{PN}_3(\bm \theta;\bm \mu_j, \Sigma_j)\} + \log p(\bm \eta) \\
+&\quad \quad \propto \sum^m_{j=1} \left[ \log w_j - \frac{3}{2} \log A(\bm \theta) - \frac{1}{2} \log |\Sigma_j| + C \right. \\
+&\quad \quad \quad \left. + \log \left( \left[1 + D(\bm \theta) \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right] D(\bm \theta) + \frac{\Phi \{D(\bm \theta)\}}{\phi \{D(\bm \theta)\}} \right) \right] + \log p(\bm \eta), 
+\end{align*}
 
 \noindent
 ここで, $D(\bm \theta) = B(\bm \theta) A^{-\frac{1}{2}}(\bm \theta),
@@ -427,7 +425,7 @@ A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1} 
 
 %%%%%%%%%%% 解析手法 %%%%%%%%%%%%%
 \section{解析手法}
-\begin{frame}{混合分布によるクラスタリング(1/2)}
+\begin{frame}{混合分布によるクラスタリング}
 %\begin{itemize}
 \begin{enumerate}
 \item
@@ -441,22 +439,6 @@ A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1} 
  
 %\end{itemize}
 \end{enumerate}
-
-\end{frame}
-
-\begin{frame}{混合分布によるクラスタリング(2/2)}
-
-\begin{itemize}
-	\item 混合分布によるクラスタリングでは, $\alpha$をコンポーネント1に, $\beta$をコンポーネント2に分類する.
-\end{itemize}
-
-\begin{figure}[tbp]
-\begin{center}
-\includegraphics[clip,height= 50mm]{data/mix_cluster.png}
-\end{center}
-\caption{混合分布によるクラスタリング分析例}
-\label{mix_cluster}
-\end{figure}
 
 \end{frame}
 
@@ -480,7 +462,7 @@ $4$つの異なる射影正規分布に従う乱数を混合することで, 混
 \label{cross1}
 \begin{tabular}{c|c c c c|c c c c}
 \hline
-  & \multicolumn{4}{c}{真値} & \multicolumn{4}{c}{予測値}\\ \hline
+  & \multicolumn{4}{c}{真値} & \multicolumn{4}{c}{事後平均}\\ \hline
   & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 \\ \hline 
 $\theta_1$ & \textbf{0} & 1.57 & 0.58 & 0.78 & \textbf{6.20} & 1.57 & 0.82 & 0.72 \\ 
 $\theta_2$ & 1.57 & 0.24 & 1.57 & 0.95 & 1.78 & 0.24 & 1.58 & 1.01\\
@@ -501,14 +483,14 @@ $w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 & 0.27 & 0.20 & 0.29\\
 
 \begin{table}[tbp]
 \begin{center}
-\caption{混合射影正規分布によるクラスタリング分析}
+\caption{混合射影正規分布による分類精度}
 \label{cross2}
 \begin{tabular}{c|c|c c c c}
 \hline
- &  & \multicolumn{4}{c}{予測値} \\ \hline
+ &  & \multicolumn{4}{c}{予測のカテゴリ} \\ \hline
  &  & 1 & 2 & 3 & 4  \\ \hline 
  & 1 &  \textbf{301} & 27  & 94 & 78 \\ 
-真値
+真のカテゴリ
  & 2 & 2 & \textbf{473} & 1 & 24 \\
  & 3 & 140 & 14 & \textbf{274} &72 \\ 
  & 4 & 80 & 61 & 44 & \textbf{315} \\ 
@@ -597,11 +579,12 @@ $w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 & 0.27 & 0.20 & 0.29\\
 
 \vspace{-0.2cm}
 \begin{eqnarray*}
-\mbox{WAIC} = T + \frac{V}{n}, 
+\mbox{WAIC} &=& - \frac{1}{n} \Sigma^n_{i=1} \log E_{\bm \eta}[p(\bm \theta_i| \bm \eta)] \\
+&&\quad + \frac{1}{n} \Sigma^n_{i=1} \{ E_{\bm \eta}[(\log p(\bm \theta_i| \bm \eta))^2] - E_{\bm \eta}[\log p(\bm \theta_i| \bm \eta)]^2 \}, 
 \end{eqnarray*}
 
 \noindent
-ここで, $V = \Sigma^n_{i=1} \{ E_{\bm \eta}[(\log p(\bm \theta_i| \bm \eta))^2] - E_{\bm \eta}[\log p(\bm \theta_i| \bm \eta)]^2 \},T = - \frac{1}{n} \Sigma^n_{i=1} \log E_{\bm \eta}[p(\bm \theta_i| \bm \eta)]$であり, $n$は$\bm \theta$のデータ数である. また$E_{\bm \eta}[\cdot]$は$\bm \eta$の事後分布の下で評価した期待値である.  
+ここで, $n$は$\bm \theta$のデータ数である. また$E_{\bm \eta}[\cdot]$は$\bm \eta$の事後分布の下で評価した期待値である.  
 
 \vspace{-0.3cm}
 \begin{table}[tbp]
@@ -772,6 +755,23 @@ GroupLensホームページ(http://movielens.org/.)
 
 \end{frame}
 
+\begin{frame}{混合分布によるクラスタリングの図例}
+
+\begin{itemize}
+	\item 混合分布によるクラスタリングでは, $\alpha$をコンポーネント1に, $\beta$をコンポーネント2に分類する.
+\end{itemize}
+
+\begin{figure}[tbp]
+\begin{center}
+\includegraphics[clip,height= 50mm]{data/mix_cluster.png}
+\end{center}
+\caption{混合分布によるクラスタリング分析例}
+\label{mix_cluster}
+\end{figure}
+
+\end{frame}
+
+
 \begin{frame}{MCMC}
 \begin{itemize}
 	\item 
@@ -797,7 +797,7 @@ Q_{ij} = \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\Sigma_{k \neq i}(1 + \|y_i - y_k\|^2
 \normalsize
 
 \noindent
-ここで, $\sigma_i$は点$x_i$を中心とした正規分布における, 任意の分散パラメータである.
+ここで, $\sigma_i$は点$x_i$を中心とした正規分布における, 任意の分散パラメータで, 本研究では30とした.
 \end{frame}
 
 \begin{frame}{t-SNE(2/2)}
