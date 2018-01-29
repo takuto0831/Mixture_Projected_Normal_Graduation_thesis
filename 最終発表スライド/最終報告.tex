@@ -224,7 +224,7 @@ Gopal and Yang (2014) は, von Mises Fisher 分布の混合分布を用いた, �
 \begin{block}{目的}
 \begin{itemize}
 \item
-本研究では, 方向データの分布として知られる, 射影正規分布$(\mathcal{PN}_k)$の混合分布によるクラスタリングの性能評価を行う.
+本研究では, 方向データの分布として知られる, 射影正規分布$(\mathcal{PN}_d)$の混合分布によるクラスタリングの性能評価を行う.
 \end{itemize}
 %\end{alertblock}
 \end{block}
@@ -397,8 +397,7 @@ p(\bm \theta;\bm w,\bm \mu, \Sigma) = \sum^m_{j=1} w_j \mathcal{PN}_3(\bm \theta
 角度データ $\bm \theta$ が得られたときの, パラメータベクトル $\bm \eta$の事後分布を, 事前分布$p(\bm \eta)$を用いて以下で表せる.
 
 \begin{eqnarray*}
-\label{BAYES}
-p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \theta)} \propto p(\bm \theta | \bm \eta) p(\bm \eta)
+p(\bm \eta | \bm \theta) = \frac{p(\bm \theta | \bm \eta) p(\bm \eta)}{p(\bm \theta)} \propto p(\bm \theta | \bm \eta) p(\bm \eta),
 \end{eqnarray*}
 
 \noindent
@@ -433,7 +432,7 @@ A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1} 
 
 \vspace{0.2cm}
 \item
-得られたパラメータベクトルとデータから, 各データがどのコンポーネントに所属しているかを確率的に表すことができる. 最も高い確率を示す, コンポーネントの番号をデータのラベルとすることで, 各データをクラスタリングすることができる.　
+得られたパラメータベクトルとデータから, 各データがどのカテゴリに所属しているかを確率的に表すことができる. 最も高い確率を示す, カテゴリの番号をデータのラベルとすることで, 各データをクラスタリングすることができる.　
 %\item
 %ここでの番号は, 各コンポーネントを表す, 名義尺度なので数値的な意味は存在しない. パラメトリックなクラスタリング手法では, 得られたパラメータベクトル$\bm \eta$の事後分布を用いて, 推定した混合分布の妥当性を検証することができる.	
  
@@ -448,27 +447,48 @@ A(\bm \theta) = \bm u^T \Sigma^{-1} \bm u,\ B(\bm \theta) = \bm u^T \Sigma^{-1} 
 
 \begin{itemize}
 \item
-$4$つの異なる射影正規分布に従う乱数を混合することで, 混合射影正規分布の人工データを生成する.
+$4$つの異なる射影正規分布に従う乱数を混合することで, 混合射影正規分布の人工データ(データ数$n=2000$)を生成する.
 
 \vspace{0.2cm}
 \item
 サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した.
 
+\vspace{0.2cm}
+\item
+シミュレーションにおけるパラメータ推定の一例を表\ref{cross1}に示す. 表中の( )内の値は, 95\%信頼区間である.
 \end{itemize}
+
+%\begin{table}[tbp]
+%\begin{center}
+%\caption{MCMCによる混合射影正規分布のパラメータ推定}
+%\label{cross1}
+%\begin{tabular}{c|c c c c|c c c c}
+%\hline
+%  & \multicolumn{4}{c}{真値} & \multicolumn{4}{c}{事後平均}\\ \hline
+%  & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 \\ \hline 
+%$\theta_1$ & \textbf{0} & 1.57 & 0.58 & 0.78 & \textbf{6.20} & 1.57 & 0.82 & 0.72 \\ 
+%$\theta_2$ & 1.57 & 0.24 & 1.57 & 0.95 & 1.78 & 0.24 & 1.58 & 1.01\\
+%$w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 & 0.27 & 0.20 & 0.29\\
+%\hline
+%\end{tabular}
+%\end{center}
+%\end{table}
 
 \begin{table}[tbp]
 \begin{center}
 \caption{MCMCによる混合射影正規分布のパラメータ推定}
 \label{cross1}
+\scalebox{0.6}{
 \begin{tabular}{c|c c c c|c c c c}
 \hline
   & \multicolumn{4}{c}{真値} & \multicolumn{4}{c}{事後平均}\\ \hline
   & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 \\ \hline 
-$\theta_1$ & \textbf{0} & 1.57 & 0.58 & 0.78 & \textbf{6.20} & 1.57 & 0.82 & 0.72 \\ 
-$\theta_2$ & 1.57 & 0.24 & 1.57 & 0.95 & 1.78 & 0.24 & 1.58 & 1.01\\
-$w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 & 0.27 & 0.20 & 0.29\\
+$\theta_1$ & \textbf{0} & 1.57 & 0.58 & 0.78 & \textbf{6.20} (5.00, 6.35)  & 1.57 (1.35, 3.72) & 0.82 (0.71, 2.04) & 0.72 (0.70, 0.79) \\ 
+$\theta_2$ & 1.57 & 0.24 & 1.57 & 0.95 & 1.78 (1.51, 2.57) & 0.24 (0.21, 0.44) & 1.58 (1.48, 2.38) & 1.01 (0.93, 1.03)\\
+$w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 (0.06, 0.38) & 0.27 (0.24, 0.30) & 0.20 (0.06, 0.42) & 0.29 (0.22, 0.36)\\
 \hline
 \end{tabular}
+}
 \end{center}
 \end{table}
 
@@ -478,7 +498,7 @@ $w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 & 0.27 & 0.20 & 0.29\\
 
 \begin{itemize}
 	\item 
-	横軸を真のコンポーネント, 縦軸を予測のコンポーネントとして集計表を表\ref{cross2}に示す.
+	横軸を真のカテゴリ, 縦軸を予測のカテゴリとして混合射影正規分布による分類精度を表\ref{cross2}に示す.
 \end{itemize}
 
 \begin{table}[tbp]
@@ -523,7 +543,7 @@ $w_j$ & 0.25 & 0.25 & 0.25 & 0.25 & 0.24 & 0.27 & 0.20 & 0.29\\
 
 \begin{itemize}
 \item
-各コンポーネントのデータが重なる部分を, クラスタリングにより明確に分類されている. 混合分布によるクラスタリングでは, 複数の分布が密集している部分では, 誤差が大きくなると考えられる.
+各カテゴリのデータが重なる部分を, クラスタリングにより明確に分類されている. 混合分布によるクラスタリングでは, 複数の分布が密集している部分では, 誤差が大きくなると考えられる.
 \end{itemize}
 
 \end{frame}
@@ -665,12 +685,12 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 \begin{center}
 \includegraphics[clip,height= 55mm]{data/cluster_plot.png}
 \end{center}
-\caption{クラスターごとのジャンルへの評価値}
+\caption{カテゴリごとのジャンルへの評価値}
 \label{clustergenre}
 \end{figure}
 
 \begin{itemize}
-	\item コンポーネント2はすべてのジャンルへの評価値が高く, その他のコンポーネントでは, ジャンルへの評価値に差異が現れた.
+	\item カテゴリ2はすべてのジャンルへの評価値が高く, その他のカテゴリでは, ジャンルへの評価値に差異が現れた.
 \end{itemize}
 \end{frame}
 
@@ -681,7 +701,7 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 \begin{itemize}
 
 \item
-一般化射影正規分布では任意次元の超球面において分布を生成することができるので, 計算量の問題を解決し, 次元を圧縮することなく超球面上でのクラスタリングに取り組みたい. 
+一般化射影正規分布では任意次元の超球面において分布を生成することができるので, 次元を圧縮することなく超球面上でのクラスタリングに取り組みたい. 
 
 \vspace{0.2cm}
 \item
@@ -758,7 +778,7 @@ GroupLensホームページ(http://movielens.org/.)
 \begin{frame}{混合分布によるクラスタリングの図例}
 
 \begin{itemize}
-	\item 混合分布によるクラスタリングでは, $\alpha$をコンポーネント1に, $\beta$をコンポーネント2に分類する.
+	\item 混合分布によるクラスタリングでは, $\alpha$をカテゴリ1に, $\beta$をカテゴリ2に分類する.
 \end{itemize}
 
 \begin{figure}[tbp]
@@ -769,18 +789,6 @@ GroupLensホームページ(http://movielens.org/.)
 \label{mix_cluster}
 \end{figure}
 
-\end{frame}
-
-
-\begin{frame}{MCMC}
-\begin{itemize}
-	\item 
-	サンプリング数 : 発生させる各パラメータのMCMCサンプリング数.
-	\vspace{0.2cm}
-	\item
-	バーンイン期間 : 各パラーメータにおいて, 収束に要する期間のことであり, この期間中に得られたサンプリングは, 平均値を求める際に含めない.
-\end{itemize}
-	
 \end{frame}
 
 \begin{frame}{t-SNE(1/2)}
@@ -797,7 +805,7 @@ Q_{ij} = \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\Sigma_{k \neq i}(1 + \|y_i - y_k\|^2
 \normalsize
 
 \noindent
-ここで, $\sigma_i$は点$x_i$を中心とした正規分布における, 任意の分散パラメータで, 本研究では30とした.
+ここで, $\sigma_i$は点$x_i$を中心とした正規分布における, 任意の分散パラメータである.
 \end{frame}
 
 \begin{frame}{t-SNE(2/2)}
@@ -809,6 +817,21 @@ Q_{ij} = \frac{(1 + \|y_i - y_j\|^2)^{-1}}{\Sigma_{k \neq i}(1 + \|y_i - y_k\|^2
 L = KL(P || Q) = \Sigma_i \Sigma_j P_{ij} \log \frac{P_{ij}}{Q_{ij}}.
 \end{eqnarray*}
 \end{frame}
+
+\begin{frame}{MCMC}
+
+マルコフ連鎖で表されるダイナミクスを用いて, 与えられた確率分布からのサンプルを得るアルゴリズムをマルコフ連鎖モンテカルロ法(Markov Chain Monte Carlo Methods)と呼ぶ.
+
+\begin{itemize}
+	\item 
+	サンプリング数 : 発生させる各パラメータのサンプリング数.
+	\vspace{0.2cm}
+	\item
+	バーンイン期間 : 各パラーメータにおいて, 収束に要する期間のことであり, この期間中に得られたサンプリングは, 平均値を求める際に含めない.
+\end{itemize}
+	
+\end{frame}
+
 
 \begin{frame}{HMC(1/2)}
 
@@ -896,7 +919,7 @@ r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
 \end{frame}
 
 \begin{frame}{ジャンルへの評価値の算出方法(2/2)}
-得られたユーザごとジャンルへの評価値から, コンポーネントごとのジャンルへの評価値を求める. 図\ref{genre_count}に示すように, 各ジャンルは均等に出現していないので, 各ジャンルの影響を基準化し, 各コンポーネントでジャンルへの評価値の平均値を算出する.
+得られたユーザごとジャンルへの評価値から, カテゴリごとのジャンルへの評価値を求める. 図\ref{genre_count}に示すように, 各ジャンルは均等に出現していないので, 各ジャンルの影響を基準化し, 各コンポーネントでジャンルへの評価値の平均値を算出する.
 
 \vspace{0.2cm}
 \begin{figure}[htbp]
@@ -910,12 +933,3 @@ r_j = \frac{p(\eta^*_j|\theta_j) p(q^*_j)}{p(\eta_j(t-1)|\theta_j) p(q_j(t-1))}.
 	
 \backupend
 \end{document}
-
-%\vspace{-0.5cm}
-%\begin{figure}[H]
-% \begin{center}
- % \includegraphics[width=40mm]{data/BN4.png}
- %\end{center}
- %\caption{ベイジアンネットワークの例}
- %\label{naive}
-%\end{figure}
