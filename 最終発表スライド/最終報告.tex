@@ -294,7 +294,7 @@ $\ C = -\frac{1}{2} \bm \mu^T \Sigma^{-1} \bm \mu$であり, $I_{[0,2\pi)} (\cdo
 	%算術平均 : $\frac{1}{2} (\theta_1 + \theta_2)$(破線)
 
 	\item 
-	二つの角度$\theta_1, \theta_2$(実線)について,円周上の平均方向は, $\frac{1}{2} (\cos \theta_1 + \cos \theta_2,\sin \theta_1 + \sin \theta_2)$(破線)と定義する.
+	二つの角度$\theta_1, \theta_2$(実線)に対して, 円周上の平均方向は, $\frac{1}{2} (\cos \theta_1 + \cos \theta_2,\sin \theta_1 + \sin \theta_2)$(破線)と定義する.
 	%円周上の平均方向 : $\frac{1}{2} (\cos \theta_1 + \cos \theta_2,\sin \theta_1 + \sin \theta_2)$(破線)
 \end{itemize}
 \end{itembox}
@@ -351,7 +351,7 @@ $I_{[0,2\pi)} (\cdot), I_{[0,\pi)}(\cdot)$は指示関数, $\Phi(\cdot), \phi(\c
 
 \begin{itemize}
 \item 
-三次元極座標では, $x$軸の正の向きと$OS$のなす角を$\theta_1$, $z$軸の正の向きと$OR$のなす角を$\theta_2$と定義する.
+図\ref{thetasample}における, $x$軸の正の向きと$OS$のなす角を$\theta_1$, $z$軸の正の向きと$OR$のなす角を$\theta_2$と定義する.
 \end{itemize}
 
 \vspace{-0.2cm}
@@ -634,7 +634,7 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 	コンポーネントを$4$つと仮定して混合射影正規分布によるクラスタリングを行う. サンプリング数を$20000$回, バーンイン期間を$10000$回として, MCMCサンプリングによりパラメータを推定した.
 	\vspace{0.2cm}
 	\item
-	$4$つのコンポーネントにおける混合射影正規分布のパラメータを以下に示す. なお, $\hat {\bm w}$は各コンポーネントの混合比率を表し, パラメータの添え字は各コンポーネントの番号に対応している.
+	$4$つのコンポーネントにおける混合射影正規分布のパラメータを以下に示す. なお, $\hat {\bm w}$は各カテゴリの混合比率を表し, パラメータの添え字は各カテゴリの番号に対応している.
 \end{itemize}
  
 \vspace{-0.2cm}
@@ -685,7 +685,7 @@ $m=4$ & \textbf{-1893.6} & \textbf{-1969.8} & \textbf{-1901.6} & \textbf{-1837.5
 \begin{center}
 \includegraphics[clip,height= 55mm]{data/cluster_plot.png}
 \end{center}
-\caption{カテゴリごとのジャンルへの評価値}
+\caption{カテゴリごとのジャンルへの平均評価値}
 \label{clustergenre}
 \end{figure}
 
