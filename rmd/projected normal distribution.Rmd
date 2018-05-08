@@ -1,0 +1,424 @@
+---
+title: "projected normal distribution"
+author: "takuto kotsubo"
+output:
+    html_document:
+      md_extensions: -ascii_identifiers
+      toc: true
+      toc_depth: 4
+---
+
+## 参考ページ
+[rstan fucntionsについて](http://watanabe-www.math.dis.titech.ac.jp/~nakamura_f/seminar_1022.pdf)
+
+[rstan 作成者のgithub 関数作成のヒント](https://github.com/avehtari/BDA_R_demos/blob/master/demos_rstan/gpareto.stan)
+
+[stan 事後処理](https://www.slideshare.net/daikihojo/stan-70425025)
+
+## 目的
+the general projected normal distribution of arbitrary dimension (任意の次元での一般化正規分布)
+に関する論文の概要
+
+```{r option, echo=FALSE, cache=FALSE,warning=FALSE}
+rm(list=ls())
+source('script/functions.R', encoding = 'UTF-8')
+library(knitr)
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+               cache = TRUE,
+	             prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+```{r,echo=FALSE,warning=FALSE}
+library(doParallel)
+library(dplyr)
+library(tidyverse)
+library(rgl)
+library(pipeR)
+library(foreach)
+library(rstan)
+library(coda)
+library(plotly)
+library(plot3D)
+```
+
+## 要旨
+
+general projected normal distribution は簡単かつ直感的モデル, 多次元の方向データにおいて.
+多変量正規乱数ベクトルをその長さで割って,そのベクトルを単位超球面上に投影する.
+このモデルの二次元制約の元での推論では,ベイズ理論が用いられ,潜在的な長さを発生させる.また,メトロポリスギブスアルゴリズムにより事後確率からサンプリングする.
+
+the general projected normal distribution は重要な三次元球面での場合も含み,あらゆる次元での推論を可能にする.
+この新しいパラメータ化において,未知のパラメータの完全な条件文は閉形式であり,拒絶の必要なしに潜在的な長さを描く新しいスライスサンプラーを提案する.
+
+ギブスサンプリングはこの新しいスキームを利用することで高速かつ簡易になり,ベイズ推論の向上に導く.
+たとえば,複雑な混合モデルや巨大なデータセットの回帰モデルからモデル選択を出来る.
+
+パラメータ化はまた,多変量正規分布の共分散行列への共変量の直接的な組み込みを可能にし,モデルの方向性データを独立回帰の関数として説明する能力を高める.
+
+円や球面の場合は細部を考慮したうえで,科学的適用を説明される.
+円形の場合,漁場からの釣り人の移動時刻の季節変化は,平均ベクトルと共分散行列の共変量を用いてモデル化される.
+球面の場合,タンパク質の主鎖に沿った炭素原子の相対的位置を表す対の角度を考慮する.
+
+私たちは,これらのデータにgeneral projected normals の混合モデルを適用する.
+最終的にシュミレーションによりこのメソッドの有意性を10次元および50次元の場合で示す.
+
+key words:circular data, directional data, Gibbs sampler, Markov chain Monte
+Carlo, protein structure analysis, spherical data.
+
+## 導入
+### 方向データ
+
+円形データや球面データの例, 過去の論文での手法を概観する.
+
+### Projected normal distribution
+
+射影分布(projected distribution)は平面または空間上の分布の放射状投影によって得られる. より一般的には, 多変量正規乱数ベクトルをその長さで割って, そのベクトルを単位超球面上に投影する.
+
+$k \geq 2$ の場合, 単位ランダムベクトル$U$が$U = X/||X|| \sim \mathcal{PN}_k(\mu,\Sigma)$に従い, general projected normal distribution のパラメータ$\mu, \Sigma$は多変量正規分布の$X \sim \mathcal{N}_k(\mu, \Sigma)$に従う.
+
+単位ベクトル$U$は, 座標系の適切な選択によって指向性ランダムベクトル$\Theta$として解釈される.
+円形の場合, ランダム方向$\Theta$は極座標上の$U = (\cos\Theta, \sin\Theta)^T$から得られる.
+
+Projected normal distributions は off-set normal distributions とも呼ばれる.
+
+Wang and Gelfand (2013) and Wang and Gelfand (2014) によると,$\Sigma \neq I$のもとで$\mathcal{PN}_2(\mu,\Sigma$)のとき, 特別な円形データの場合, $U = (\cos\Theta, \sin\Theta)^T$の密度は以下で示せる.
+
+$$ 
+p(\theta|\mu, \Sigma) = \frac{1}{2\pi A(\theta)}|\Sigma|^{-\frac{1}{2}} 
+\exp(C)\left\{1 + \frac{B(\theta)}{\sqrt{A(\theta)}} \frac{\Phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}{\phi \left(\frac{B(\theta)}{\sqrt{A(\theta)}}\right)}\right\} I_{[0,2\pi)} (\theta) \tag{1}
+$$
+
+$u^T = (\cos\theta,\sin\theta), A(\theta) = u^T\Sigma^{-1}u, B(\theta) = u^T \Sigma^{-1} \mu, C = -\frac{1}{2} \mu^T \Sigma^{-1} \mu$であり, $I_{[0,2\pi)} (\cdot)$は指示関数, $\Phi(\cdot),\phi(\cdot)$ は標準正規分布の確率密度関数と累積密度関数である.
+
+$\mathcal{PN}_k(\mu,\Sigma)$は非対称もしくは二峰性となる.$\mu$が$\Sigma$の固有ベクトルのいずれかと直交する場合, 分布は対称となる. ランダム変数$X$をスケール化しても, $U$の分布は変わらない. 識別可能性のためにパラメータに以下の制約が必要である.
+
+$$
+\Sigma = \left(
+    \begin{array}{cc}
+      \tau^2 & \rho \tau  \\
+      \rho \tau & 1 
+    \end{array}
+  \right) , \mu = (\mu_1, \mu_2)
+$$
+
+$\mu$は二変量正規事前分布$\mathcal N_2 (0,\lambda_0I)$, $\rho$は一様事前分布$\mathcal u(-1,1)$, $\tau^2$は逆ガンマ事前分布$\mathcal{IG}(a_{\tau},b_{\tau})$に従う. このパラメータ化の下で, $\tau^2$や$\rho$の閉形式でない完全な条件付事後確率が得られる. よって, メトロポリス・ヘイスティングスを通じて, $\tau^2$や$\rho$や潜在長を繰り返し求められる.
+
+## General projected normal distribution
+
+私たちはgeneral projected normal $\mathcal{PN}_k(\mu,\Sigma)$を任意の次元に適用する. 
+制約付き共分散行列の代替パラメータ化を使用することにより$(\Sigma \neq I)$, モデルの完全な条件付きパラメータのすべてを閉式的に得ることができる. 新しいパラメータ化は重要な球面を含む, いかなる次元にも適用でき, 共変量を共分散行列に組みこむことを可能にする.さらに,潜在長を描く新たなスライスサンプラーを提案する.
+
+### Reparameterizing the general projected normal 
+
+Wang and Gelfand（2013）の2次元の場合のように, 一般性を失うことなく, $k \times k$ 共分散行列$\Sigma$の対角項の1つを1に制限する.
+
+$$
+\Sigma = \left(
+    \begin{array}{cc}
+      \Gamma & \gamma \\
+      \gamma^T & 1 
+    \end{array}
+  \right)
+$$
+
+$\gamma$は$k-1$ベクトルの回帰係数であり, $\Sigma$は非負値である. 従って共分散行列は
+
+$$
+\Sigma = \left(
+    \begin{array}{cc}
+      \Sigma^* + \gamma \gamma^T & \gamma \\
+      \gamma^T & 1 
+    \end{array}
+  \right)
+$$
+
+ここで, $\Sigma^*$は,,, $\Sigma$は非負値であり, ランダムベクトル$Z = (I - \gamma) Y$を定義する. $Y$は平均 $0$かつ共分散行列$\Sigma$のランダムベクトルである. $var(Z) = \Gamma - \gamma \gamma^T = \Sigma^*$は非負値である. もし$\Sigma^*$が非負値なら, $(c^T,d)^T \in \mathbb{R}^k$は非ゼロベクトル$c\in \mathbb{R}^{k-1}$を用いて,
+
+$$
+\left(
+    \begin{array}{cc}
+      c^T & d 
+    \end{array}
+  \right)
+\left(
+    \begin{array}{cc}
+      \Sigma^* + \gamma \gamma^T & \gamma \\
+      \gamma^T & 1 
+    \end{array}
+  \right)
+\left(
+    \begin{array}{c}
+      c \\ d 
+    \end{array}
+  \right)
+  = c^T \Sigma^* c + (\gamma^Tc + d)^2 \geq 0
+$$
+
+よって$\Sigma$は非負値である.
+
+$\mu = (\mu_1,\mu_2,\ldots,\mu_k)^T, \mu_{-k} = (\mu_1,\mu_2,\ldots,\mu_{k-1}),(x_{1,i},x_{2,i},\ldots,,x_{k,i})^T = r_iu_i, ||u_i|| = 1$
+球面座標を作る, $u_i$は$k-1$角度列$(\theta_{1,i}, \theta_{2,i}, \ldots, \theta_{k-1,i})= \theta_i$である.
+$\theta_{k-1,i} \in [0,2\pi), \theta_{s,i} \in [0,\pi)$ただし$s = 1,\ldots,k-2$である.すなわち, $(r_i,\theta_i)$の結合密度は以下で示せる.
+
+$$
+\begin{eqnarray}
+p(r_i,\theta_i | \mu, \Sigma) &=& \left(\frac{1}{2\pi}\right)^{\frac{k}{2}} |\Sigma|^{-\frac{1}{2}}r_i^{k-1} \exp \left\{-\frac{1}{2}(r_i u_i - \mu)^T \Sigma^T (r_iu_i - \mu) \right\} \\
+&=& r_i^{k-1} p(x_{1,i},x_{2,i},\ldots,,x_{k,i}|x_{k,i}, \mu, \Sigma) p(\gamma^Tc + d)^2 \geq 0
+\end{eqnarray}
+$$
+
+$p(x_{1,i},x_{2,i},\ldots,,x_{k,i}|x_{k,i}, \mu, \Sigma)$は平均が$\mu_{-k} + \gamma(x_{k,i} - \mu_k)$かつ分散が$\Sigma^*$の正規分布の密度である.$p(x_{k,i}| \mu, \Sigma)$は平均$\mu_k$かつ分散$1$の正規分布の密度である.$\mu,\gamma$の事前分布や$\Sigma$の逆ウィシャート事前分布を置くことで, 完全で条件付な閉式を得られる.前式から私たちはproject normal density($p(\theta_i|\mu,\Sigma) = \int p(r_i, \theta_i| \mu, \Sigma)dr$)を獲得する.
+
+単位球面上の面容積は$d\theta_{k-1,i} \prod^{k-2}_{s=1}[sin(\theta_{s,i})]^{k-1-s}d\theta_{s,i \cdot}$である.
+
+
+### Incorporatingcovariates in the general projected normal
+
+i番目のケースで共変量が利用可能な場合, $\mu,\gamma$に共変量を組み込むことが可能になり, モデルの柔軟性が向上する.
+
+$z_{\mu,i}$を既知の共変量の$p$次元ベクトル, $z_{\gamma,i}$を既知の共変量の$q$次元ベクトルとする.
+
+### Slice sampling for latent lengths
+
+後述
+
+## Circular case
+
+円形の場合は$x_{1,i} = r_i \cos \theta_i, x_{2,i} = r_i\sin \theta_i, \mu = (\mu_1,\mu_2)$として,
+
+$$
+\Sigma = \left(
+    \begin{array}{cc}
+      \sigma^2 + \gamma^2& \gamma \\
+      \gamma & 1 
+    \end{array}
+  \right)
+$$
+
+さらに$(r_i,\theta_i)$の結合確率は,
+
+$$
+\begin{eqnarray}
+p(r_i,\theta_i|\mu,\Sigma) &=& \left(\frac{1}{2\pi\sigma}\right)^{\frac{k}{2}} r_i \exp \left\{-\frac{1}{2\sigma^2}(r_i u_i - \mu)^T \left(
+    \begin{array}{cc}
+      1 & -\gamma \\
+      -\gamma & \sigma^2 + \gamma^2 
+    \end{array}
+  \right) (r_iu_i - \mu) \right\} \\
+  &=& r_i p(x_{1,i}|x_{2,i}, \mu, \Sigma) p(x_{2,i}|\mu, \Sigma)
+\end{eqnarray}
+$$
+
+
+$p(x_{1,i}|x_{2,i}, \mu, \Sigma)$は平均が$\mu_1 + \gamma(x_{2,i} - \mu_2)$かつ分散が$\sigma^2$の正規分布の密度である. $p(x_{2,i}|\mu, \Sigma)$は平均$\mu_2$かつ分散$1$の正規分布の密度である.$\mu,\gamma$の事前分布や$\sigma$の逆ガンマ事前分布を置くことで, 完全で条件付な閉式を得られる. $\gamma, \sigma^2$の分布は,
+
+$$
+\begin{eqnarray}
+(\gamma|\cdot) &\sim& \mathcal N\left(\frac{\sigma^{-2} \sum^n_{i=1}(x_{1,i} - \mu_1)(x_{2,i} - \mu_2)
++ \mu_\gamma \sigma_\gamma^{-2}}{\sigma^{-2} \sum^n_{i=1}(x_{2,i} - \mu_2)^2
++ \sigma_\gamma^{-2}},\frac{1}{\sigma^{-2} \sum^n_{i=1}(x_{2,i} - \mu_2)^2
++ \sigma_\gamma^{-2}}   \right) \\
+
+(\sigma^2|\cdot) &\sim& \mathcal{IG}\left( 
+\frac{2}{n} + a, 
+\frac{1}{2} \sum_{i=1}^2 (x_{1,i} - \{\mu_1 + \gamma(x_{2,i} - \mu_2)\})^2 + b
+\right) 
+\end{eqnarray}
+$$
+
+$\sigma^2_\gamma,\mu_\gamma$はパラメータ$\gamma$の事前分散,事前平均であり, $a,b$は$\sigma^2$の事前パラメータ(shape,rate)である.
+
+### simulated circular data
+
+パラメータを$\mu = (-0.19, 2.09)^T, \sigma_1^2 = 1.58, \sigma_2^2 = 1.4 , \rho = -0.84$として, ギブスサンプリングを行う.
+
+[参考論文](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3773532/)
+
+```{r circular parameter}
+# ここからサンプリング
+# まずはパラメータ一覧
+mu = matrix(c(-0.19,2.09),ncol=1)
+sigma1 = 1.58
+sigma2 = 1.4
+rho = -0.84
+Sigma = matrix(c(sigma1^2,rho*sigma1*sigma2,
+                 rho*sigma1*sigma2,sigma2^2),ncol=2)
+```
+
+```{r circular prob sample}
+# projcted normal (式(1))
+# サンプルデータを作成する
+theta <- seq(0,2*pi,0.01)
+# 各thetaに対する確率
+x <- foreach(i=theta, .combine = c) %do% projected_normal_circular(i,mu,Sigma)
+# ggplot
+data.frame(theta = theta, prob = x) %>% 
+  ggplot(aes(x =theta,y=prob)) +
+  geom_point(size = 1)
+```
+
+```{r circular theta sample}
+# サンプル数
+iter = 1000
+# 確率分布からthetaの乱数を発生させる
+pn_sample <- PN_sample(x,theta,iter) # 確率:x 反復数:iter
+# ggplot
+data.frame(x = pn_sample) %>% 
+  ggplot(aes(x = x)) +
+  geom_histogram(binwidth = 0.1)
+```
+
+### mcmc でパラメータを予測する.
+
+[stan blog](http://blog.cybozu.io/entry/2015/10/21/110218)
+
+[ガウス過程シリーズ 2 高速化＆フルベイズ](http://statmodeling.hatenablog.com/entry/gaussian-process-2)
+
+[stan manual](https://heavywatal.github.io/rstats/stan.html)
+
+[stan manual 日本語版](https://stan-ja.github.io/gh-pages-html/#%E3%82%B0%E3%83%AB%E3%83%BC%E3%83%94%E3%83%B3%E3%82%B0%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E6%8B%AC%E5%BC%A7)
+
+```{r,include=FALSE}
+################################## 並列処理用 ##############################
+rstan_options(auto_write=TRUE)
+#options(mc.cores=parallel::detectCores())
+
+fit <- stan("stan/pn_circular_gamma.stan", 
+            data=list(N=iter,theta=pn_sample),
+            iter = 1000,
+            chains = 1,
+            open_progress = FALSE)
+```
+
+### 収束性の判定
+
+```{r}
+# 結果の確認
+all(summary(fit)$summary[,"Rhat"] <= 1.10, na.rm=T)
+stan_trace(fit)
+stan_ac(fit)
+```
+
+```{r circular predict plot}
+projected_normal_dist(fit)
+```
+
+### movM分布を用いた再現
+
+```{r,eval=FALSE,include=FALSE}
+# moVMFで再現
+library(movMF)
+y <- movMF(cbind(theta,x), 2, nruns = 10)
+x_movMF <- rmovMF(500,y$theta,y$alpha)
+plot(x_movMF)
+```
+
+## Spherical case
+
+球面データの場合は以下の式からランダム単位ベクトル$U$が得られる.
+
+$$
+U = (\cos \Theta_1 \sin \Theta_2, \sin \Theta_1 \sin \Theta_2, \cos \Theta_2)^T
+$$
+
+### simulation spherical data
+
+```{r sphere parameter}
+# パラメータ
+mu = matrix(c(1.26,-0.62,0.23),ncol=1)
+Sigma = diag(c(2.11,2.46,2.38),ncol = 3) %*%
+        matrix(c(1.0,0.32,-0.03,
+                 0.32,1,-0.12,
+                 -0.03,-0.12,1),ncol=3) %*%
+        diag(c(2.11,2.46,2.38),ncol = 3)
+# theta1,theta2の定義
+theta1 = seq(0, 2*pi, length = 40) #theta1
+theta2 = seq(0, pi,length = 40) # theta2
+#theta1 = seq(0,2*pi,0.1)
+#theta2 = seq(0,pi,0.1)
+```
+
+```{r sphere prob sample}
+# 並列処理
+cl <- makeCluster(detectCores())
+registerDoParallel(cl)
+x <- c()
+#normalizer <- sum(mu*mu) %>% sqrt()
+for(i in theta1){
+  foreach(j=theta2, .combine = cbind) %dopar%{
+    # mu長さ1にする
+    projected_normal_sphere(i,j,mu ,Sigma)
+  } -> tmp 
+  rbind(x,tmp) -> x
+} 
+stopCluster(cl)
+```
+
+[plotly 参考ページ](https://plot.ly/r/3d-line-plots/)
+
+plotlyを用いて, 各thetaに対する確率を3次元plot
+
+```{r sphere prob plot3d}
+# plotly
+plot_ly(x = ~theta2, y= ~theta1, z=~x) %>% add_surface()
+```
+
+### 乱数生成
+
+```{r sphere theta sample cant,eval=FALSE }
+library(mvtnorm)
+iter=2000
+rmvnorm(iter,mu,Sigma) %>% 
+  as.data.frame() %>% 
+  as.tbl() -> data
+
+data %>% 
+  mutate(r = sqrt(V1^2 + V2^2 + V3^2)) %>% 
+  mutate(x = V1/r, y = V2/r, z = V3/r) %>% 
+  mutate(theta2 = acos(z)) %>% 
+  mutate(theta1 = ifelse(y/sin(theta2) > 0, acos(x/sin(theta2)), - acos(x/sin(theta2)))) ->data1
+data1$theta1[data1$theta1 < 0] + 2*pi -> data1$theta1[data1$theta1 < 0]
+```
+
+### mcmc でパラメータを予測する.
+
+```{r,include=FALSE}
+################################## 並列処理用 ##############################
+rstan_options(auto_write=TRUE)
+#options(mc.cores=parallel::detectCores())
+
+fit <- stan("stan/pn_sphere_gamma.stan", 
+            #data=list(N=iter,theta=ans),
+            data=list(N=iter,theta1=data1$theta1,theta2=data1$theta2),
+            iter = 1000,
+            chains = 1,
+            open_progress = FALSE)
+```
+
+
+```{r sphere predict data}
+# 結果の確認
+pred <- projected_normal_sphere_dist(fit,theta1,theta2,projected_normal_sphere)
+```
+
+```{r sphere predict plot3d}
+# plotly
+plot_ly(x = ~theta2, y= ~theta1, z=~pred) %>% add_surface()
+```
+
+### 収束性の判定
+
+```{r}
+# 結果の確認
+all(summary(fit)$summary[,"Rhat"] <= 1.10, na.rm=T)
+stan_trace(fit)
+stan_ac(fit)
+```
+

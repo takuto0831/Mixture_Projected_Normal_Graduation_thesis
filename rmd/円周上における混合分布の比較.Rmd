@@ -1,0 +1,258 @@
+---
+title: "Clustering of mixture model "
+author: "takuto kotsubo"
+date: "`r Sys.Date()`"
+output:
+  rmdformats::readthedown:
+    code_folding: hide
+    highlight: kate
+    md_extensions: -ascii_identifiers
+    toc_depth: 3
+editor_options: 
+  chunk_output_type: console
+---
+
+## 混合projected normal distribution について
+
+複数パラメータのvon MF分布の乱数データを混合データとして、混合vonMF分布による推定、混合projected normal分布による推定を行い、精度を検証する。
+
+円周上かつ4つの混合分布を用いて検証する。
+
+```{r option, echo=FALSE, cache=FALSE,warning=FALSE}
+rm(list=ls())
+source('script/functions_mix_dist.R', encoding = 'UTF-8')
+source('script/functions.R', encoding = 'UTF-8')
+library(knitr)
+
+## Global options
+options(max.print="75")
+options(warn = -1)
+opts_chunk$set(echo=TRUE,
+               cache = TRUE,
+	             prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+```{r,include=FALSE,warning=FALSE}
+library(doParallel)
+library(dplyr)
+library(tidyverse)
+library(rgl)
+library(pipeR)
+library(foreach)
+library(rstan)
+library(coda)
+library(plotly)
+library(plot3D)
+library(movMF)
+library(circular)
+library(tibble)
+library(Rmisc)
+library(ggthemes)
+```
+
+## von mises による乱数生成
+
+```{r}
+# 4つの異なる乱数を生成
+N = 1000 ; weight = c(.4,.2,.3,.1);
+set.seed(31)
+rvonmises(N*weight[1],mu=circular(7*pi/4),2) -> data1
+set.seed(31)
+rvonmises(N*weight[2],mu=circular(2*pi/3),10) -> data2
+set.seed(31)
+rvonmises(N*weight[3],mu=circular(pi*5/4),5) -> data3
+set.seed(31)
+rvonmises(N*weight[4],mu=circular(pi/6),15) -> data4
+
+# データを連結する
+data <- c(data1 %>% as.vector(),data2 %>% as.vector(),
+          data3 %>% as.vector(),data4 %>% as.vector())
+dat <- length(data)
+
+# ラベル付け
+label <- c(rep(1,length(data1)),rep(2,length(data2)),rep(3,length(data3)),rep(4,length(data4)))
+
+# データリスト
+data_list <- list(data1 %>% as.vector(),data2 %>% as.vector(),
+                 data3 %>% as.vector(),data4 %>% as.vector())
+```
+
+## データの確認
+
+```{r}
+CheckData(data,label)
+```
+
+## mix vonMF によるパラメータ推定
+
+```{r,eval=FALSE,include=FALSE}
+################################## 並列処理用 ##############################
+rstan_options(auto_write=TRUE)
+#options(mc.cores=parallel::detectCores())
+
+fit4 <- stan("stan/mix_vonMF_circular.stan", 
+            data=list(N=dat,M=4,theta=data),
+            iter = 10000,
+            chains = 1,
+            open_progress = FALSE)
+```
+
+```{r,include=FALSE}
+# stan file の保存 読み込み
+#save(fit4, file="stan_fit/mix_vonMF_model.rda")
+load("stan_fit/mix_vonMF_model.rda", verbose = TRUE)
+
+# rdsfile の読み込み
+#tmp <- readRDS("stan/mix_vonMF_circular.rds")
+```
+
+### mcmc の確認
+
+```{r}
+# 結果の確認
+all(summary(fit4)$summary[,"Rhat"] <= 1.10, na.rm=T)
+stan_trace(fit4)
+stan_ac(fit4)
+```
+
+### 元の分布を推定する
+
+```{r}
+# 結果の確認
+options(max.print=100)
+print(fit4)
+VonMisesPlot(fit4,4)
+
+# 正解値と確認
+CheckData(data,label)
+```
+
+### クラスタリング分析
+
+横軸が実際のクラスタ-, 縦軸が推測したクラスターごとのvonMF分布である.
+
+```{r}
+ClusterVonMises(data_list,fit4,4)
+```
+
+## mix projected normal 
+
+[混合分布モデルのラベルスイッチング](https://stan-ja.github.io/gh-pages-html/#コンテナ値の入れ物-配列-vector-and-matrix)
+
+```{r,eval=FALSE,include=FALSE}
+################################## 並列処理用 ##############################
+rstan_options(auto_write=TRUE)
+#options(mc.cores=parallel::detectCores())
+
+fit3 <- stan("stan/mix_pn_circular.stan", 
+            data=list(N=dat,M=3,theta=data),
+            iter = 10000,
+            chains = 1,
+            open_progress = FALSE)
+```
+
+```{r,eval=FALSE,include=FALSE}
+#####################   変分ベイズ ######################
+model <- stan_model(file="stan/mix_pn_circular.stan")
+fit <- sampling(model, data = list(N=dat,M=3,theta=data), iter=1000, warmup=500, chains=4, seed=123)
+fit.vb <- rstan::vb(model,
+                    data = list(N=dat,M=3,theta=data),
+                    output_samples = 2000,
+                    seed = 123)
+```
+
+```{r,include=FALSE}
+# stan file の保存 読み込み
+#save(fit3, file="stan_fit/mix_pn_model_3.rda")
+load("stan_fit/mix_pn_model_3.rda", verbose = TRUE)
+
+# rdsfile の読み込み
+#tmp <- readRDS("stan/mix_pn_circular.rds")
+```
+
+### mcmc の確認
+
+```{r}
+# 結果の確認
+all(summary(fit3)$summary[,"Rhat"] <= 1.10, na.rm=T)
+stan_trace(fit3)
+stan_ac(fit3)
+```
+
+### 元の分布を推定する
+
+```{r circular predict plot}
+# 結果の確認
+options(max.print=1000)
+print(fit3)
+PNPlot(fit3,3)
+
+# 正解値の確認
+CheckData(data,label)
+```
+
+### クラスタリング分析
+
+横軸が実際のクラスタ-, 縦軸が推測したクラスターごとのPN分布である.
+
+```{r warning=FALSE}
+ClusterProjectedNormal(data_list,fit3,3)
+```
+
+```{r,eval=FALSE,include=FALSE}
+################################## 並列処理用 ##############################
+rstan_options(auto_write=TRUE)
+#options(mc.cores=parallel::detectCores())
+
+fit4 <- stan("stan/mix_pn_circular.stan", 
+            data=list(N=dat,M=4,theta=data),
+            iter = 10000,
+            chains = 1,
+            open_progress = FALSE)
+```
+
+```{r,include=FALSE}
+# stan file の保存 読み込み
+#save(fit4, file="stan_fit/mix_pn_model_4.rda")
+load("stan_fit/mix_pn_model_4.rda", verbose = TRUE)
+
+# rdsfile の読み込み
+#tmp <- readRDS("stan/mix_pn_circular.rds")
+```
+
+### mcmc の確認
+
+```{r}
+# 結果の確認
+all(summary(fit4)$summary[,"Rhat"] <= 1.10, na.rm=T)
+stan_trace(fit4)
+stan_ac(fit4)
+```
+
+### 元の分布を推定する
+
+```{r circular predict plot2}
+# 結果の確認
+options(max.print=1000)
+print(fit4)
+PNPlot(fit4,4) 
+
+# 正解値の確認
+CheckData(data,label)
+```
+
+### クラスタリング分析
+
+横軸が実際のクラスタ-, 縦軸が推測したクラスターごとのPN分布である.
+
+```{r warning=FALSE}
+ClusterProjectedNormal(data_list,fit4,4)
+```
+
+
+

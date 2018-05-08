@@ -1,0 +1,137 @@
+---
+title: "PN disribusion の分散事前分布の調査"
+output:
+    html_document:
+      md_extensions: -ascii_identifiers
+      toc: true
+      toc_depth: 3
+---
+
+```{r option, echo=FALSE, cache=FALSE,warning=FALSE}
+library(knitr)
+## Global options
+options(max.print="75")
+opts_chunk$set(echo=TRUE,
+               cache = TRUE,
+	             prompt=FALSE,
+               tidy=TRUE,
+               comment=NA,
+               message=FALSE,
+               warning=FALSE)
+opts_knit$set(width=75)
+```
+
+```{r,echo=FALSE}
+library(dplyr)
+library(tidyverse)
+library(rgl)
+library(pipeR)
+library(foreach)
+library(rstan)
+library(coda)
+```
+
+```{r}
+# ここからサンプリング
+# まずはパラメータ一覧
+mu = matrix(c(-0.19,2.09),ncol=1)
+sigma1 = 1.58
+sigma2 = 1.4
+rho = -0.84
+Sigma = matrix(c(sigma1^2,rho*sigma1*sigma2,
+                 rho*sigma1*sigma2,sigma2^2),ncol=2)
+```
+
+```{r}
+# projcted normal (式(1))
+# サンプルデータを作成する
+
+projected_normal_circular <- function(theta,mu,Sigma){
+  u = matrix(c(cos(theta),sin(theta)),ncol=1)
+  A = t(u) %*% solve(Sigma) %*% u
+  B = t(u) %*% solve(Sigma) %*% mu
+  C = (-1/2) * (t(mu) %*% solve(Sigma) %*% mu)
+  tmp = B/sqrt(A)
+  p = (1/(2*pi*A*sqrt(det(Sigma)))) * exp(C) * 
+      (1 + tmp*pnorm(tmp,0,1)/dnorm(tmp,0,1))
+  return(p)
+}
+```
+
+```{r}
+# sampling from projected normal distribution
+theta <- seq(0,2*pi,0.01)
+x <- foreach(i=theta, .combine = c) %do% projected_normal_circular(i,mu,Sigma)
+# 累積確率
+y <- foreach(i=1:length(x), .combine = c) %do% sum(x[1:i])
+# 一様分布的に求める
+PN_sample <- function(y,theta){
+  tmp <- runif(1,min = min(y),max = max(y))
+  for(i in 1:length(y)) if(tmp > y[i] && tmp < y[i+1]) return(theta[i])
+}
+# サンプル数
+iter = 100
+pn_sample <- foreach(i=1:iter, .combine = c) %do% PN_sample(y,theta)
+hist(pn_sample)
+```
+
+# mcmc でパラメータを予測する.
+
+## 分散を逆ガンマ事前分布とする
+
+```{r,echo=FALSE,include=FALSE}
+#rstan_options(auto_write=TRUE)
+#options(mc.cores=parallel::detectCores())
+fit <- stan("stan/pn_gamma.stan", data=list(N=100,theta=pn_sample),iter = 1000,chains = 1,open_progress = FALSE)
+```
+
+```{r}
+#結果の確認
+fit
+# 値の抽出
+fit_ext <- extract(fit,permuted=T)
+
+# シュミレーション値
+mu_ = matrix(c(fit_ext$mu[,1] %>% mean(),fit_ext$mu[,2] %>% mean()),ncol=1)
+Sigma_ = matrix(c(fit_ext$sigma[,1,1] %>% mean(),fit_ext$sigma[,1,2] %>% mean(),
+                 fit_ext$sigma[,2,1] %>% mean(),1),ncol=2)
+
+# 真値と予測値をプロット
+theta = seq(0,2*pi,0.01)
+x_gamma <- foreach(i=theta, .combine = c) %do% projected_normal_circular(i,mu_,Sigma_)
+data.frame(theta = theta,True = x,pred_gamma = x_gamma) %>%
+  gather(label,prob,-theta) %>% 
+  ggplot(aes(x=theta,y=prob)) + 
+  geom_line(aes(color = label))
+```
+
+## 分散をhalf-cauchyに変更
+
+```{r,echo=FALSE,include=FALSE}
+#rstan_options(auto_write=TRUE)
+#options(mc.cores=parallel::detectCores())
+fit <- stan("stan/pn_halfcauchy.stan",data=list(N=100,theta=pn_sample),iter = 1000,chains = 1,open_progress = FALSE)
+```
+
+```{r}
+#結果の確認
+fit
+# 値の抽出
+fit_ext <- extract(fit,permuted=T)
+
+# シュミレーション値
+mu_ = matrix(c(fit_ext$mu[,1] %>% mean(),fit_ext$mu[,2] %>% mean()),ncol=1)
+Sigma_ = matrix(c(fit_ext$sigma[,1,1] %>% mean(),fit_ext$sigma[,1,2] %>% mean(),
+                 fit_ext$sigma[,2,1] %>% mean(),1),ncol=2)
+
+# 真値と予測値をプロット
+theta = seq(0,2*pi,0.01)
+x_cauchy <- foreach(i=theta, .combine = c) %do% projected_normal_circular(i,mu_,Sigma_)
+data.frame(theta = theta,True = x,pred_gamma = x_gamma,pred_cauchy = x_cauchy) %>%
+  gather(label,prob,-theta) %>% 
+  ggplot(aes(x=theta,y=prob)) + 
+  geom_line(aes(color = label))
+```
+
+
+
