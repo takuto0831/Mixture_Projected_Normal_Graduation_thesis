@@ -1,17 +1,16 @@
 \documentclass[dvipdfmx]{beamer}
+%\documentclass[dvipdfm,handout]{beamer} %ハンドアウト印刷用
 
 \AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}} % 栞の文字化けを制御(日本語の場合必須)
 \setbeamertemplate{navigation symbols}{} %ナビゲーションバーを消す
 
-%%% 以下3つはハンドアウト印刷用
-%\documentclass[dvipdfm,handout]{beamer}
-%\usepackage{pgfpages}
 \usepackage{comment}
 \usepackage{amsmath}
 \usepackage{algorithm}
 \usepackage{algorithmic}
-%\pgfpagesuselayout{4 on 1}[border shrink=3mm]
 
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[border shrink=3mm]
 
 % 付録をページ番号に含めないためのコマンド
 \newcommand{\backupbegin}{
@@ -39,24 +38,19 @@
 %\usetheme{Pittsburgh}
 %\usetheme{Rochester}
 
-\useinnertheme{rectangles}
-
-%\useoutertheme{default}
-
 %%% カラーテーマ（省略可）
-\useoutertheme{infolines}
-\usecolortheme[RGB={64,64,64}]{structure}     
-%\definecolor{babyblue}{rgb}{0.54,0.81,0.94}                                                                                                
+%\usecolortheme[RGB={64,64,64}]{structure}                                                                                                
 %\usecolortheme{dolphin}
 %\usecolortheme{beaver}
 %\usecolortheme{beetle}
-\usecolortheme{crane}
+%\usecolortheme{crane}
 %\usecolortheme{dolphin}
 %\usecolortheme{seagull}
 %\usecolortheme{wolverine}
 %\usecolortheme{spruce}
 %\usecolortheme{rose}
 %\usecolortheme{seahorse}
+\setbeamertemplate{footline}[page number]
 
 %%% フォント
 \renewcommand{\kanjifamilydefault}{\gtdefault} % 日本語フォントをゴシック
@@ -71,8 +65,10 @@
 %\mathversion{bold} % 数式フォントをbold体
 
 %%% インナー, アウターテーマ（省略可）
-%\useinnertheme{circles}
-%\useoutertheme{infolines}
+\useinnertheme{circles}
+\useoutertheme{infolines}
+%\useinnertheme{rectangles}
+%\useoutertheme{default}
 
 %\logo{\includegraphics[width=1.5cm, height=1.5cm]{.jpg}} % ロゴをいれる
 \setbeamertemplate{navigation symbols}{} % ナビゲーションバーなし
@@ -88,7 +84,6 @@
 \definecolor {mycolor1} {rgb} {0.00, 0.39, 0.00}
 \definecolor {mycolor2} {rgb} {0.55, 0.27, 0.07}
 \definecolor {mycolor3} {rgb} {0.63, 0.13, 0.94}
-
 \definecolor {mycolorTitle} {rgb} {0.85, 0.855, 0.85}
 \definecolor {mycolorHeader} {rgb} {0.93, 0.935, 0.93}
 
